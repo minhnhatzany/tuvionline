@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tử Vi Online</title>
+<meta property="og:title" content="Tử Vi Online - An Sao Lập Số & Trạch Cát">
+<meta property="og:description" content="Hệ thống luận giải tử vi, xem ngày đại sự cưới hỏi, làm nhà, tang lễ chuẩn xác. Khám phá vận mệnh của bạn ngay!">
+<meta property="og:image" content="https://tuvionline.netlify.app/thumbnail.jpg">
+<meta property="og:url" content="https://tuvionline.netlify.app/">
+<meta property="og:type" content="website">
 <style>
 :root{--void:#050505;--void-2:#111;--cell:#1a1a1a;--cell-hi:#252525;--line:rgba(255,255,255,.1);--gold:#c4a265;--cinnabar:#a83e35;--jade:#4fa88c;--azure:#5b8fd4;--amber:#dd9440;--txt:#d0d0d0;--dim:#888;--dimmer:#555}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -792,19 +797,53 @@ document.addEventListener('click',e=>{const g=e.target.closest('.gl');
   tip.style.left=Math.max(8,Math.min(r.left,innerWidth-tip.offsetWidth-8))+'px';
   tip.style.top=(r.bottom+8+tip.offsetHeight>innerHeight?r.top-tip.offsetHeight-8:r.bottom+8)+'px';});
 
-function saveURL(){try{const p=new URLSearchParams({b:document.getElementById('bDob').value,g:document.getElementById('gDob').value,
-  y1:document.getElementById('y1').value,y2:document.getElementById('y2').value,l:document.getElementById('lDob').value,
-  h:document.getElementById('lHour').value,s:document.getElementById('lSex').value,xy:document.getElementById('lXemY').value,
-  nb:document.getElementById('nDob').value,ns:document.getElementById('nSex').value,ny:document.getElementById('nY').value,
-  ma1:document.getElementById('maDob').value,ma2:document.getElementById('maDeath').value,mah:document.getElementById('maHour').value,
-  mas:document.getElementById('maSex').value,t:document.querySelector('.tab.on').dataset.tab});
-  history.replaceState(null,'','?'+p);}catch(e){}}
-function loadURL(){const p=new URLSearchParams(location.search);if(![...p].length)return;
-  const set=(id,k)=>{if(p.get(k)!==null)document.getElementById(id).value=p.get(k);};
-  set('bDob','b');set('gDob','g');set('y1','y1');set('y2','y2');set('lDob','l');set('lHour','h');
-  set('lSex','s');set('lXemY','xy');set('nDob','nb');set('nSex','ns');set('nY','ny');
-  set('maDob','ma1');set('maDeath','ma2');set('maHour','mah');set('maSex','mas');
-  const tb=p.get('t')&&document.querySelector(`[data-tab="${p.get('t')}"]`);if(tb)tb.click();}
+function saveURL(){
+  try{
+    const tab=document.querySelector('.tab.on').dataset.tab;
+    let obj = {t:tab};
+    if(tab==='cuoi'){
+      obj.b=document.getElementById('bDob').value; obj.g=document.getElementById('gDob').value;
+      obj.y1=document.getElementById('y1').value; obj.y2=document.getElementById('y2').value;
+    } else if (tab==='laso'){
+      obj.l=document.getElementById('lDob').value; obj.h=document.getElementById('lHour').value;
+      obj.s=document.getElementById('lSex').value; obj.xy=document.getElementById('lXemY').value;
+    } else if (tab==='nha'){
+      obj.nb=document.getElementById('nDob').value; obj.ns=document.getElementById('nSex').value;
+      obj.ny=document.getElementById('nY').value;
+    } else if (tab==='ma'){
+      obj.ma1=document.getElementById('maDob').value; obj.ma2=document.getElementById('maDeath').value;
+      obj.mah=document.getElementById('maHour').value; obj.mas=document.getElementById('maSex').value;
+    }
+    const q = btoa(JSON.stringify(obj));
+    const p = new URLSearchParams();
+    p.set('q', q);
+    history.replaceState(null,'','?'+p.toString());
+  }catch(e){}
+}
+function loadURL(){
+  try {
+    const p=new URLSearchParams(location.search);
+    if(p.has('q')) {
+      const q = p.get('q');
+      const obj = JSON.parse(atob(q));
+      const set=(id,k)=>{if(obj[k]!==undefined)document.getElementById(id).value=obj[k];};
+      set('bDob','b');set('gDob','g');set('y1','y1');set('y2','y2');set('lDob','l');set('lHour','h');
+      set('lSex','s');set('lXemY','xy');set('nDob','nb');set('nSex','ns');set('nY','ny');
+      set('maDob','ma1');set('maDeath','ma2');set('maHour','mah');set('maSex','mas');
+      if(obj.t){
+        const tb=document.querySelector(`[data-tab="${obj.t}"]`);
+        if(tb)tb.click();
+      }
+    } else {
+      if(![...p].length)return;
+      const set=(id,k)=>{if(p.get(k)!==null)document.getElementById(id).value=p.get(k);};
+      set('bDob','b');set('gDob','g');set('y1','y1');set('y2','y2');set('lDob','l');set('lHour','h');
+      set('lSex','s');set('lXemY','xy');set('nDob','nb');set('nSex','ns');set('nY','ny');
+      set('maDob','ma1');set('maDeath','ma2');set('maHour','mah');set('maSex','mas');
+      const tb=p.get('t')&&document.querySelector(`[data-tab="${p.get('t')}"]`);if(tb)tb.click();
+    }
+  }catch(e){}
+}
 
 /* ═══ KHỞI TẠO ═══ */
 const sh=document.getElementById('lHour'),mah=document.getElementById('maHour');
