@@ -2,12 +2,11 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Tử Vi Online</title>
 <meta property="og:title" content="Tử Vi Online - An Sao Lập Số & Trạch Cát">
 <meta property="og:description" content="Hệ thống luận giải tử vi, xem ngày đại sự cưới hỏi, làm nhà, tang lễ chuẩn xác. Khám phá vận mệnh của bạn ngay!">
 <meta property="og:image" content="https://tuvionline.netlify.app/thumbnail.jpg">
-<meta property="og:url" content="https://tuvionline.netlify.app/">
 <meta property="og:type" content="website">
 <style>
 :root{--void:#050505;--void-2:#111;--cell:#1a1a1a;--cell-hi:#252525;--line:rgba(255,255,255,.1);--gold:#c4a265;--cinnabar:#a83e35;--jade:#4fa88c;--azure:#5b8fd4;--amber:#dd9440;--txt:#d0d0d0;--dim:#888;--dimmer:#555}
@@ -24,6 +23,7 @@
 #sao b{position:absolute;width:1px;height:1px;border-radius:50%;background:#fff;animation:nhapnhay 4s ease-in-out infinite}
 @keyframes nhapnhay{0%,100%{opacity:.1}50%{opacity:.6}}
 @keyframes hienlen{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+html,body{overscroll-behavior:none;touch-action:pan-y}
 body{background:var(--void);overflow-x:hidden;color:var(--txt);font-family:'Times New Roman',Times,serif;min-height:100vh;padding:15px 10px 50px;-webkit-font-smoothing:antialiased;line-height:1.4}
 .wrap{max-width:1000px;margin:0 auto;position:relative;z-index:1}
 header{text-align:center;margin-bottom:15px}
