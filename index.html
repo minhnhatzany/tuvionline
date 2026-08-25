@@ -404,40 +404,40 @@ function luanMenh(K){
   const amDuongLy = namAmDuong === cungAmDuong ? "Âm Dương thuận lý. Cuộc đời nhìn chung có nhiều điểm thuận lợi, dễ gặp thời vận, mưu sự dễ thành." : "Âm Dương nghịch lý. Nội lực mạnh mẽ, kiên cường. Dù gặp nhiều thử thách thăng trầm nhưng nhờ nỗ lực tự thân mà bứt phá vươn lên.";
 
   let t = '<h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Tổng quan Bản mệnh & Cá tính</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
-  t += \`<li><b>Âm Dương - Ngũ Hành:</b> Đương số mang mệnh <b>\${K.naNam}</b> (\${nh}), <b>\${CUC_TEN[K.cuc]}</b>. <b>\${amDuongLy}</b> Thế <b>\${menhCucText.split('.')[0]}</b>. \${menhCucText.split('. ').slice(1).join('. ')}</li>\`;
+  t += `<li><b>Âm Dương - Ngũ Hành:</b> Đương số mang mệnh <b>${K.naNam}</b> (${nh}), <b>${CUC_TEN[K.cuc]}</b>. <b>${amDuongLy}</b> Thế <b>${menhCucText.split('.')[0]}</b>. ${menhCucText.split('. ').slice(1).join('. ')}</li>`;
 
   const ch=Object.keys(K.S).filter(s=>K.S[s]===K.menh),pu=Object.keys(K.P).filter(s=>K.P[s]===K.menh);
   if(!ch.length){
-    t += \`<li><b>Cung Mệnh (Vô Chính Diệu):</b> Bản mệnh linh hoạt, dễ thích nghi với hoàn cảnh. Thường ra ngoài sẽ năng động và phát huy được nhiều tiềm năng hơn ở nhà.</li>\`;
+    t += `<li><b>Cung Mệnh (Vô Chính Diệu):</b> Bản mệnh linh hoạt, dễ thích nghi với hoàn cảnh. Thường ra ngoài sẽ năng động và phát huy được nhiều tiềm năng hơn ở nhà.</li>`;
     const di=m12(K.menh+6),chD=Object.keys(K.S).filter(s=>K.S[s]===di);
     if(chD.length){
-      t += \`<li><b>Thiên Di chiếu Mệnh:</b> Mượn <b>\${chD.join(', ')}</b> từ cung đối diện. \`;
+      t += `<li><b>Thiên Di chiếu Mệnh:</b> Mượn <b>${chD.join(', ')}</b> từ cung đối diện. `;
       chD.forEach(s=>{if(PHAN_SAO[s])t+=PHAN_SAO[s]+' ';});
-      t += \`</li>\`;
+      t += `</li>`;
     }
   }else{
-    t += \`<li><b>Cung Mệnh (\${ch.join(', ')} tọa thủ):</b> \`;
+    t += `<li><b>Cung Mệnh (${ch.join(', ')} tọa thủ):</b> `;
     ch.forEach(s=>{if(PHAN_SAO[s])t+=PHAN_SAO[s]+' ';});
-    t += \`</li>\`;
+    t += `</li>`;
   }
 
   const tuanTriet=[];if(K.TUAN.includes(K.menh))tuanTriet.push('Tuần');if(K.TRIET.includes(K.menh))tuanTriet.push('Triệt');
-  if(tuanTriet.length)t+=\`<li><b>Tác động của \${tuanTriet.join(' - ')}:</b> Giai đoạn tiền vận (trước 30-35 tuổi) thường trải qua nhiều thử thách rèn giũa. Trung và hậu vận bứt phá mạnh mẽ. Tuần/Triệt cũng giúp hóa giải bớt hung tinh nếu có.</li>\`;
+  if(tuanTriet.length)t+=`<li><b>Tác động của ${tuanTriet.join(' - ')}:</b> Giai đoạn tiền vận (trước 30-35 tuổi) thường trải qua nhiều thử thách rèn giũa. Trung và hậu vận bứt phá mạnh mẽ. Tuần/Triệt cũng giúp hóa giải bớt hung tinh nếu có.</li>`;
 
   const catM = pu.filter(s=>['Thiên Khôi','Thiên Việt','Tả Phụ','Hữu Bật','Văn Xương','Văn Khúc','Lộc Tồn','Thiên Mã'].includes(s));
   const dh = pu.filter(s=>['Đào Hoa','Hồng Loan','Thiên Hỷ'].includes(s));
   if(catM.length || dh.length) {
-    t += \`<li><b>Cát tinh hội tụ (\${[...catM, ...dh].join(', ')}):</b> Đương số \`;
-    if (dh.length) t += \`vui vẻ, thu hút, có duyên ngầm. \`;
-    if (catM.includes('Thiên Khôi') || catM.includes('Thiên Việt')) t += \`Sớm muộn cũng được quý nhân nâng đỡ. \`;
-    if (catM.includes('Văn Xương') || catM.includes('Văn Khúc')) t += \`Có tư chất thông minh, học hành sáng dạ, nhiều hoa tay. \`;
-    if (catM.includes('Tả Phụ') || catM.includes('Hữu Bật')) t += \`Có tài quán xuyến, hay được bạn bè trợ giúp. \`;
-    if (catM.includes('Lộc Tồn')) t += \`Rất có lộc kinh tế, giỏi tích lũy. \`;
-    t += \`</li>\`;
+    t += `<li><b>Cát tinh hội tụ (${[...catM, ...dh].join(', ')}):</b> Đương số `;
+    if (dh.length) t += `vui vẻ, thu hút, có duyên ngầm. `;
+    if (catM.includes('Thiên Khôi') || catM.includes('Thiên Việt')) t += `Sớm muộn cũng được quý nhân nâng đỡ. `;
+    if (catM.includes('Văn Xương') || catM.includes('Văn Khúc')) t += `Có tư chất thông minh, học hành sáng dạ, nhiều hoa tay. `;
+    if (catM.includes('Tả Phụ') || catM.includes('Hữu Bật')) t += `Có tài quán xuyến, hay được bạn bè trợ giúp. `;
+    if (catM.includes('Lộc Tồn')) t += `Rất có lộc kinh tế, giỏi tích lũy. `;
+    t += `</li>`;
   }
 
   const sat=pu.filter(s=>SAT_LIST.includes(s));
-  if(sat.length)t+=\`<li><span class="bad"><b>Sát tinh hội họp (\${sat.join(', ')}):</b> Tính cách mang phần ngang ngạnh, quyết liệt, dám nghĩ dám làm. Tuy nhiên cần chú ý rèn giũa sự kiên nhẫn, tránh bốc đồng để không rơi vào cảnh bạo phát bạo tàn.</span></li>\`;
+  if(sat.length)t+=`<li><span class="bad"><b>Sát tinh hội họp (${sat.join(', ')}):</b> Tính cách mang phần ngang ngạnh, quyết liệt, dám nghĩ dám làm. Tuy nhiên cần chú ý rèn giũa sự kiên nhẫn, tránh bốc đồng để không rơi vào cảnh bạo phát bạo tàn.</span></li>`;
   t += '</ul></div>';
   return '<div class="phan-box">'+t;
 }
@@ -446,58 +446,58 @@ function luanCacCung(K){
   let t = '<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Đường Học hành, Công danh & Tiền tài</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
   
   const ql=m12(K.menh+4),chQL=Object.keys(K.S).filter(s=>K.S[s]===ql);
-  t += \`<li><b>Quan Lộc (tại \${CHI[ql]}):</b> \`;
+  t += `<li><b>Quan Lộc (tại ${CHI[ql]}):</b> `;
   if(!chQL.length){
     const opp=m12(ql+6),chO=Object.keys(K.S).filter(s=>K.S[s]===opp);
-    t += \`Cung Vô Chính Diệu, mượn <b>\${chO.join(', ')}</b> chiếu về. Khả năng thích ứng trong công việc cực cao, dễ thuyên chuyển. \${chO.map(s=>PHAN_QL[s]).join(' ')}\`;
+    t += `Cung Vô Chính Diệu, mượn <b>${chO.join(', ')}</b> chiếu về. Khả năng thích ứng trong công việc cực cao, dễ thuyên chuyển. ${chO.map(s=>PHAN_QL[s]).join(' ')}`;
   } else {
-    t += \`Có <b>\${chQL.join(', ')}</b> tọa thủ. \${chQL.map(s=>PHAN_QL[s]).join(' ')}\`;
+    t += `Có <b>${chQL.join(', ')}</b> tọa thủ. ${chQL.map(s=>PHAN_QL[s]).join(' ')}`;
   }
-  t += \`</li>\`;
+  t += `</li>`;
 
   const tb=m12(K.menh+8),chTB=Object.keys(K.S).filter(s=>K.S[s]===tb);
-  t += \`<li><b>Tài Bạch (tại \${CHI[tb]}):</b> \`;
+  t += `<li><b>Tài Bạch (tại ${CHI[tb]}):</b> `;
   if(!chTB.length){
     const opp=m12(tb+6),chO=Object.keys(K.S).filter(s=>K.S[s]===opp);
-    t += \`Cung Vô Chính Diệu, tiền bạc đến đi linh hoạt, mượn <b>\${chO.join(', ')}</b> chiếu về. \${chO.map(s=>PHAN_TB[s]).join(' ')}\`;
+    t += `Cung Vô Chính Diệu, tiền bạc đến đi linh hoạt, mượn <b>${chO.join(', ')}</b> chiếu về. ${chO.map(s=>PHAN_TB[s]).join(' ')}`;
   } else {
-    t += \`Có <b>\${chTB.join(', ')}</b> tọa thủ. \${chTB.map(s=>PHAN_TB[s]).join(' ')}\`;
+    t += `Có <b>${chTB.join(', ')}</b> tọa thủ. ${chTB.map(s=>PHAN_TB[s]).join(' ')}`;
   }
-  t += \`</li></ul>\`;
+  t += `</li></ul>`;
 
   t += '<h3 style="color:var(--gold);margin-top:20px;font-size:18px;">☯ Hậu vận, Gia đạo & Sức khỏe</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
 
   const pt=m12(K.menh+10),chPT=Object.keys(K.S).filter(s=>K.S[s]===pt);
   const ptDH = Object.keys(K.P).filter(s=>K.P[s]===pt && ['Đào Hoa','Hồng Loan','Thiên Hỷ'].includes(s));
-  t += \`<li><b>Phu Thê (tại \${CHI[pt]}):</b> \`;
+  t += `<li><b>Phu Thê (tại ${CHI[pt]}):</b> `;
   if(!chPT.length){
     const opp=m12(pt+6),chO=Object.keys(K.S).filter(s=>K.S[s]===opp);
-    t += \`Cung Vô Chính Diệu, mượn <b>\${chO.join(', ')}</b> chiếu về. Tình duyên đôi khi muộn màng hoặc quen nhau trong hoàn cảnh bất ngờ. \${chO.map(s=>PHAN_PT[s]).join(' ')}\`;
+    t += `Cung Vô Chính Diệu, mượn <b>${chO.join(', ')}</b> chiếu về. Tình duyên đôi khi muộn màng hoặc quen nhau trong hoàn cảnh bất ngờ. ${chO.map(s=>PHAN_PT[s]).join(' ')}`;
   } else {
-    t += \`Có <b>\${chPT.join(', ')}</b> tọa thủ. \${chPT.map(s=>PHAN_PT[s]).join(' ')}\`;
+    t += `Có <b>${chPT.join(', ')}</b> tọa thủ. ${chPT.map(s=>PHAN_PT[s]).join(' ')}`;
   }
-  if (ptDH.length) t += \` Lại hội thêm <b>\${ptDH.join(', ')}</b> nên nửa kia có nhan sắc, phong cách cuốn hút, khéo léo.\`;
-  t += \`</li>\`;
+  if (ptDH.length) t += ` Lại hội thêm <b>${ptDH.join(', ')}</b> nên nửa kia có nhan sắc, phong cách cuốn hút, khéo léo.`;
+  t += `</li>`;
 
   const ta=m12(K.menh+7),chTA=Object.keys(K.S).filter(s=>K.S[s]===ta);
-  t += \`<li><b>Tật Ách (tại \${CHI[ta]}):</b> \`;
+  t += `<li><b>Tật Ách (tại ${CHI[ta]}):</b> `;
   if(!chTA.length){
-    t += \`Vô Chính Diệu là một lợi điểm, giúp giảm thiểu bệnh tật tai ương. Khi ốm đau cũng dễ gặp thầy gặp thuốc.\`;
+    t += `Vô Chính Diệu là một lợi điểm, giúp giảm thiểu bệnh tật tai ương. Khi ốm đau cũng dễ gặp thầy gặp thuốc.`;
   } else {
-    t += \`\${chTA.map(s=>PHAN_TA[s]).join(' ')}\`;
+    t += `${chTA.map(s=>PHAN_TA[s]).join(' ')}`;
   }
-  t += \`</li>\`;
+  t += `</li>`;
 
   const pd=m12(K.menh+2),chPD=Object.keys(K.S).filter(s=>K.S[s]===pd);
-  t += \`<li><b>Phúc Đức (tại \${CHI[pd]}):</b> Đánh giá gốc rễ tinh thần và may mắn của đời người. \`;
+  t += `<li><b>Phúc Đức (tại ${CHI[pd]}):</b> Đánh giá gốc rễ tinh thần và may mắn của đời người. `;
   if(K.HOA['Hóa Khoa'] === pd || K.P['Giải Thần'] === pd || K.P['Thiên Khôi'] === pd) {
-    t += \`Có đệ nhất Cát/Giải thần chiếu rọi, gặp nạn thường hóa cát, hay được bề trên che chở trong những lúc nguy nan nhất.\`;
+    t += `Có đệ nhất Cát/Giải thần chiếu rọi, gặp nạn thường hóa cát, hay được bề trên che chở trong những lúc nguy nan nhất.`;
   } else if(!chPD.length) {
-    t += \`Cung Vô Chính Diệu, họ hàng ly tán, đương số lập nghiệp phương xa thì dễ thành tựu hơn.\`;
+    t += `Cung Vô Chính Diệu, họ hàng ly tán, đương số lập nghiệp phương xa thì dễ thành tựu hơn.`;
   } else {
-    t += \`Có <b>\${chPD.join(', ')}</b> đóng tại Phúc, chi phối lớn đến vận may, tuổi thọ và đời sống nội tâm của đương số.\`;
+    t += `Có <b>${chPD.join(', ')}</b> đóng tại Phúc, chi phối lớn đến vận may, tuổi thọ và đời sống nội tâm của đương số.`;
   }
-  t += \`</li></ul></div>\`;
+  t += `</li></ul></div>`;
 
   return t;
 }
@@ -506,60 +506,60 @@ function luanDaiVan(K){
   if(K.daiVanCung<0)return'<div class="phan-box"><b>☳ ĐẠI VẬN</b><br><br>Chưa vào Đại Vận đầu tiên.</div>';
   const p=K.daiVanCung,cn=CUNG12[m12(p-K.menh)];
   const ch=Object.keys(K.S).filter(s=>K.S[s]===p),pu=Object.keys(K.P).filter(s=>K.P[s]===p);
-  let t=\`Đương số <b>\${K.lunarAge} tuổi</b> (âm), đang đi <b>Đại Vận cung \${cn}</b> (\${K.canCung(p)} \${CHI[p]}), từ \${K.daiVanStart}–\${K.daiVanStart+9} tuổi.<br><br>\`;
-  if(ch.length){t+=\`Chính tinh thủ Đại Vận: <b>\${ch.join(', ')}</b>. \`;
+  let t=`Đương số <b>${K.lunarAge} tuổi</b> (âm), đang đi <b>Đại Vận cung ${cn}</b> (${K.canCung(p)} ${CHI[p]}), từ ${K.daiVanStart}–${K.daiVanStart+9} tuổi.<br><br>`;
+  if(ch.length){t+=`Chính tinh thủ Đại Vận: <b>${ch.join(', ')}</b>. `;
     ch.forEach(s=>{if(PHAN_SAO[s])t+=PHAN_SAO[s].split('.')[0]+'. ';});t+='<br><br>';}
   else t+='Đại Vận vô chính diệu, vận trình uyển chuyển, phụ thuộc ngoại cảnh và quý nhân.<br><br>';
   const kyDV=ch.concat(pu).filter(s=>K.HOA[s]==='ky');
-  if(kyDV.length)t+=\`<b class="bad">⚠ Đại Vận có Hóa Kỵ</b> (\${kyDV.join(', ')}). Vận trình trắc trở, cần đề phòng.<br><br>\`;
+  if(kyDV.length)t+=`<b class="bad">⚠ Đại Vận có Hóa Kỵ</b> (${kyDV.join(', ')}). Vận trình trắc trở, cần đề phòng.<br><br>`;
   const satDV=pu.filter(s=>SAT_LIST.includes(s));
-  if(satDV.length)t+=\`Sát tinh trong Đại Vận: <b>\${satDV.join(', ')}</b>. Giai đoạn đòi hỏi bản lĩnh và kiên nhẫn.<br><br>\`;
+  if(satDV.length)t+=`Sát tinh trong Đại Vận: <b>${satDV.join(', ')}</b>. Giai đoạn đòi hỏi bản lĩnh và kiên nhẫn.<br><br>`;
   const catDV=pu.filter(s=>['Tả Phụ','Hữu Bật','Văn Xương','Văn Khúc','Thiên Khôi','Thiên Việt','Lộc Tồn'].includes(s));
-  if(catDV.length)t+=\`<span class="good"><b>Cát tinh phò tá:</b> \${catDV.join(', ')}.</span> Giúp đương số vượt qua khó khăn.<br><br>\`;
+  if(catDV.length)t+=`<span class="good"><b>Cát tinh phò tá:</b> ${catDV.join(', ')}.</span> Giúp đương số vượt qua khó khăn.<br><br>`;
   if(K.daiVanCan){const[lo,qu,kh,ky]=TU_HOA[K.daiVanCan];
-    t+=\`<b>Tứ Hóa Đại Vận</b> (can \${K.daiVanCan}): \${lo} Hóa Lộc · \${qu} Hóa Quyền · \${kh} Hóa Khoa · <b class="bad">\${ky} Hóa Kỵ</b>.<br>\`;
+    t+=`<b>Tứ Hóa Đại Vận</b> (can ${K.daiVanCan}): ${lo} Hóa Lộc · ${qu} Hóa Quyền · ${kh} Hóa Khoa · <b class="bad">${ky} Hóa Kỵ</b>.<br>`;
     const kyP=fsp(K,ky);if(kyP===K.menh)t+='<b class="bad">⚠ Hóa Kỵ Đại Vận phi về Mệnh!</b> Yếu tố hung hiểm.<br>';
     else if(kyP===m12(K.menh+6))t+='<b class="bad">⚠ Hóa Kỵ Đại Vận phi về Thiên Di xung chiếu Mệnh!</b><br>';}
-  return\`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☳ LUẬN ĐẠI VẬN HIỆN TẠI</h3>\${t}</div>\`;}
+  return`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☳ LUẬN ĐẠI VẬN HIỆN TẠI</h3>${t}</div>`;}
 
 function luanHanNam(K){
   const xY=K.LUU.nam,canX=CAN[((xY+6)%10+10)%10],[,,,kyNam]=TU_HOA[canX];
   const kyNamPos=fsp(K,kyNam),diPos=m12(K.menh+6);
   const factors=[];
-  if(kyNamPos===K.menh)factors.push(\`<b>\${kyNam}</b> Hóa Kỵ năm nay phi trúng <b>cung Mệnh</b>.\`);
-  else if(kyNamPos===diPos)factors.push(\`<b>\${kyNam}</b> Hóa Kỵ tọa Thiên Di, <b>xung chiếu về Mệnh</b>.\`);
+  if(kyNamPos===K.menh)factors.push(`<b>${kyNam}</b> Hóa Kỵ năm nay phi trúng <b>cung Mệnh</b>.`);
+  else if(kyNamPos===diPos)factors.push(`<b>${kyNam}</b> Hóa Kỵ tọa Thiên Di, <b>xung chiếu về Mệnh</b>.`);
   if(K.daiVanCung>=0){const chD=Object.keys(K.S).filter(s=>K.S[s]===K.daiVanCung),puD=Object.keys(K.P).filter(s=>K.P[s]===K.daiVanCung);
     const kyDV=chD.concat(puD).filter(s=>K.HOA[s]==='ky');
-    if(kyDV.length)factors.push(\`Gốc Đại Vận có <b>\${kyDV.join(', ')}</b> Hóa Kỵ án ngữ.\`);}
+    if(kyDV.length)factors.push(`Gốc Đại Vận có <b>${kyDV.join(', ')}</b> Hóa Kỵ án ngữ.`);}
   const kkM=['Địa Không','Địa Kiếp'].filter(s=>K.P[s]===K.menh||K.P[s]===K.than);
   if(kkM.length&&K.daiVanCung>=0){const chD=Object.keys(K.S).filter(s=>K.S[s]===K.daiVanCung).concat(Object.keys(K.P).filter(s=>K.P[s]===K.daiVanCung));
-    if(chD.some(s=>K.HOA[s]==='ky'))factors.push(\`Mệnh/Thân có <b>\${kkM.join(', ')}</b> (sát tinh bậc nhất) + đang đi Đại Vận Hóa Kỵ.\`);}
+    if(chD.some(s=>K.HOA[s]==='ky'))factors.push(`Mệnh/Thân có <b>${kkM.join(', ')}</b> (sát tinh bậc nhất) + đang đi Đại Vận Hóa Kỵ.`);}
   if(K.daiVanCan){const[,,,kyDVC]=TU_HOA[K.daiVanCan],kyDVCP=fsp(K,kyDVC);
-    if(kyDVCP===K.menh&&kyNamPos!==K.menh)factors.push(\`Can Đại Vận (\${K.daiVanCan}) phi <b>\${kyDVC}</b> Hóa Kỵ về Mệnh.\`);}
+    if(kyDVCP===K.menh&&kyNamPos!==K.menh)factors.push(`Can Đại Vận (${K.daiVanCan}) phi <b>${kyDVC}</b> Hóa Kỵ về Mệnh.`);}
   const satM=SAT_LIST.filter(s=>K.P[s]===K.menh);
   if(satM.length){const thP=K.LUU.tieuHan,chTH=Object.keys(K.S).filter(s=>K.S[s]===thP).concat(Object.keys(K.P).filter(s=>K.P[s]===thP));
-    if(chTH.some(s=>K.HOA[s]==='ky'||K.LUU.hoa[s]==='ky'))factors.push(\`Mệnh có sát tinh (\${satM.join(', ')}), Tiểu Hạn năm nay gặp Hóa Kỵ.\`);}
+    if(chTH.some(s=>K.HOA[s]==='ky'||K.LUU.hoa[s]==='ky'))factors.push(`Mệnh có sát tinh (${satM.join(', ')}), Tiểu Hạn năm nay gặp Hóa Kỵ.`);}
   const satTh=SAT_LIST.filter(s=>K.P[s]===K.than),hkTh=['Thiên Hình','Thiên Không'].filter(s=>K.P[s]===K.than);
-  if(satTh.length&&hkTh.length)factors.push(\`Thân có \${satTh.join(', ')} kèm \${hkTh.join(', ')}, năm Kỵ dễ kích phát.\`);
+  if(satTh.length&&hkTh.length)factors.push(`Thân có ${satTh.join(', ')} kèm ${hkTh.join(', ')}, năm Kỵ dễ kích phát.`);
   const tamHopM=[K.menh,m12(K.menh+4),m12(K.menh+8),m12(K.menh+6)];
   const rescues=[];const hoaLQK=[];
   Object.keys(K.HOA).forEach(s=>{const h=K.HOA[s],pos=fsp(K,s);
-    if((h==='loc'||h==='quyen'||h==='khoa')&&tamHopM.includes(pos))hoaLQK.push(\`\${s} Hóa \${{loc:'Lộc',quyen:'Quyền',khoa:'Khoa'}[h]}\`);});
+    if((h==='loc'||h==='quyen'||h==='khoa')&&tamHopM.includes(pos))hoaLQK.push(`${s} Hóa ${{loc:'Lộc',quyen:'Quyền',khoa:'Khoa'}[h]}`);});
   if(hoaLQK.length>=2)rescues.push(hoaLQK.join(', ')+' hội chiếu');
   if(tamHopM.includes(K.P['Thiên Khôi']))rescues.push('Thiên Khôi chiếu');
   if(tamHopM.includes(K.P['Thiên Việt']))rescues.push('Thiên Việt chiếu');
-  let t=\`Năm <b>\${yearName(xY)}</b>, <b class="bad">\${kyNam} Hóa Kỵ</b>.<br><br>\`;
-  if(!factors.length){t+=\`<span class="good">✓ Không phát hiện yếu tố hung hiểm nào.</span> Năm bình an, mọi việc thuận tự nhiên.<br>\`;}
-  else{t+=\`<b class="bad">Phát hiện \${factors.length}/6 yếu tố hung hiểm:</b><br>\`;
-    factors.forEach(f=>t+=\`<span class="bad">✗</span> \${f}<br>\`);t+='<br>';
+  let t=`Năm <b>${yearName(xY)}</b>, <b class="bad">${kyNam} Hóa Kỵ</b>.<br><br>`;
+  if(!factors.length){t+=`<span class="good">✓ Không phát hiện yếu tố hung hiểm nào.</span> Năm bình an, mọi việc thuận tự nhiên.<br>`;}
+  else{t+=`<b class="bad">Phát hiện ${factors.length}/6 yếu tố hung hiểm:</b><br>`;
+    factors.forEach(f=>t+=`<span class="bad">✗</span> ${f}<br>`);t+='<br>';
     if(factors.length===1)t+='Một yếu tố hung – năm có lúc vất vả nhưng vẫn kiểm soát được.';
-    else if(factors.length<=3)t+=\`<b>Chồng \${factors.length} tầng Hóa Kỵ</b> – năm hung hiểm, cần đề phòng sức khỏe, công việc, pháp lý. Hạn chế mạo hiểm.\`;
-    else t+=\`<b class="bad">Hạn cực nặng!</b> Chồng \${factors.length} tầng Hóa Kỵ. Hết sức cẩn trọng, tránh mọi rủi ro. Nên tích cực hành thiện, tích đức.\`;
+    else if(factors.length<=3)t+=`<b>Chồng ${factors.length} tầng Hóa Kỵ</b> – năm hung hiểm, cần đề phòng sức khỏe, công việc, pháp lý. Hạn chế mạo hiểm.`;
+    else t+=`<b class="bad">Hạn cực nặng!</b> Chồng ${factors.length} tầng Hóa Kỵ. Hết sức cẩn trọng, tránh mọi rủi ro. Nên tích cực hành thiện, tích đức.`;
     t+='<br><br>';
-    if(rescues.length){t+=\`<span class="good"><b>Cứu giải:</b> \${rescues.join('; ')}.</span> Tuy gặp hạn xấu nhưng vẫn có đường thoát. \`;
+    if(rescues.length){t+=`<span class="good"><b>Cứu giải:</b> ${rescues.join('; ')}.</span> Tuy gặp hạn xấu nhưng vẫn có đường thoát. `;
       if(hoaLQK.length>=3)t+='<b class="good">Đủ Tam Hóa (Khoa-Quyền-Lộc) – sức cứu giải rất mạnh, phùng hung hóa cát.</b>';}
     else if(factors.length>=2)t+='<span class="bad">Không tìm thấy bộ sao cứu giải mạnh hội chiếu Mệnh.</span> Đương số nên chủ động phòng ngừa, tích phúc đức.';}
-  return\`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☵ XEM HẠN NĂM \${xY}</h3>\${t}</div>\`;}
+  return`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☵ XEM HẠN NĂM ${xY}</h3>${t}</div>`;}
 
 /* ═══ TAB EVENT HANDLERS ═══ */
 let DAYS=[];
