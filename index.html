@@ -29,10 +29,10 @@ header .sub{font-size:14px;color:var(--dimmer);margin-top:4px;letter-spacing:.15
 #ad-banner:hover{background:rgba(196,162,101,.08);border-color:rgba(196,162,101,.4)}
 #ad-banner b{color:var(--gold);font-size:18px;margin:0 4px}
 .ad-tag{font-size:12px;background:#222;color:#999;padding:2px 5px;border:1px solid #444;margin-right:6px;vertical-align:1px}
-.phan-box{margin-top:12px;padding:14px 18px;background:rgba(196,162,101,.05);border-left:3px solid var(--gold);font-size:16px;color:#ddd;line-height:1.6}
+.phan-box{margin-top:12px;padding:14px 18px;background:rgba(196,162,101,.05);border-left:3px solid var(--gold);font-size:16px;color:#ddd;line-height:1.6; text-align: justify}
 .phan-box b{color:var(--gold)}.phan-box .bad{color:var(--cinnabar)}.phan-box .good{color:var(--jade)}
 .phan-box ul { padding-left: 15px; margin-bottom: 15px; }
-.phan-box li { margin-bottom: 8px; }
+.phan-box li { margin-bottom: 15px; }
 .tabs{display:flex;gap:4px;justify-content:center;margin-bottom:15px}
 .tab{padding:8px 16px;font-size:16px;cursor:pointer;background:transparent;border:1px solid var(--line);color:var(--dim);transition:.2s}
 .tab.on{background:rgba(255,255,255,.1);border-color:#666;color:#fff}
@@ -177,89 +177,7 @@ footer button{margin:0 auto 8px;display:flex}
 /* ═══ BẦU TRỜI SAO ═══ */
 const bg=document.getElementById('sao');let _s='';for(let i=0;i<150;i++)_s+=`<b style="left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*4}s"></b>`;bg.innerHTML=_s;
 
-/* ═══ TỪ ĐIỂN PHÁN (CẬP NHẬT CHI TIẾT & CÓ TÂM) ═══ */
-const PHAN_SAO={
-  "Tử Vi":"Đế tinh cai quản bầu trời. Khí chất trọng hậu, điềm đạm, có tài lãnh đạo thiên bẩm. Thường gặp quý nhân phù trợ, phùng hung hóa cát. Tuy nhiên, nếu thiếu các sao Tả Hữu hội họp, đôi khi sẽ hơi bảo thủ và ôm đồm công việc.",
-  "Thiên Cơ":"Phúc thiện tinh chủ về trí tuệ. Tư duy mưu cơ linh hoạt, tính toán nhanh nhạy, rất hợp với các công việc tham mưu, kỹ thuật, chiến lược. Người nhạy bén nhưng đôi khi hay lo nghĩ thái quá, cần học cách thả lỏng tinh thần.",
-  "Thái Dương":"Quyền quý tinh mang nguồn năng lượng ấm áp. Tính cách quang minh chính đại, hào sảng, thích lo toan việc lớn. Rất có tài ngoại giao, tuy nhiên đôi khi hơi nóng nảy và thích ôm rơm rặm bụng.",
-  "Vũ Khúc":"Đệ nhất tài tinh. Bản tính cương nghị, kiên quyết, làm việc dứt khoát. Cực kỳ nhạy bén với tiền bạc, có tài kinh doanh và quản lý tài chính xuất sắc. Bề ngoài có vẻ lạnh lùng nhưng bên trong rất trọng tình nghĩa.",
-  "Thiên Đồng":"Phúc tinh mang lại sự bình an. Ôn hòa, hiền hậu, mang tâm hồn nghệ sĩ và biết hưởng thụ cuộc sống. Tính tình không thích tranh giành, chuộng thanh nhàn. Cần rèn luyện thêm tính kiên định.",
-  "Liêm Trinh":"Đào hoa và Tù tinh. Bộc trực, thẳng thắn, làm việc đầy trách nhiệm và đam mê. Có sức hút mãnh liệt. Tuy nhiên tính cách đôi lúc bốc đồng, cần cẩn trọng trong các mối quan hệ tình cảm và pháp lý.",
-  "Thiên Phủ":"Tài khố tinh - kho chứa tiền của trời. Tính cách cẩn trọng, bao dung, chín chắn. Có biệt tài quản lý, giữ tiền xuất sắc, rất biết vun vén cho gia đình.",
-  "Thái Âm":"Phú tinh chủ về điền sản. Nhẹ nhàng, tinh tế, lãng mạn và vô cùng nhạy cảm. Rất có duyên với nhà đất, nghệ thuật và cái đẹp. Bản tính thích sự chỉn chu, chăm lo người khác chu đáo.",
-  "Tham Lang":"Đào hoa và Tài tinh. Con người đa tài, giao tiếp khéo léo, mang tham vọng vươn lên mạnh mẽ. Dễ bạo phát qua kinh doanh, giải trí. Cần chú ý cân bằng cảm xúc, tránh để tham vọng lấn át sự bình yên.",
-  "Cự Môn":"Ám tinh chủ về ngôn từ. Khả năng phân tích sắc sảo nhưng hay hoài nghi. Có tài hùng biện, rất hợp với nghề luật sư, tư vấn, giáo viên. Cần khéo léo trong lời ăn tiếng nói để tránh thị phi.",
-  "Thiên Tướng":"Ấn tinh mang phong thái uy nghi. Đường bệ, thích giúp đỡ người khác, trọng chữ tín. Rất chú trọng hình thức và có gu thẩm mỹ cao. Làm việc bài bản, cẩn thận.",
-  "Thiên Lương":"Thọ tinh mang bóng dáng người thầy. Hiền hậu, sống có nguyên tắc, thích che chở. Rất hợp với nghề giáo dục, y khoa. Cuộc đời hay gặp may mắn vào những lúc nguy nan nhất.",
-  "Thất Sát":"Quyền tinh cai quản sinh sát. Dũng mãnh, quyết đoán, dám nghĩ dám làm, mang tinh thần khởi nghiệp cao. Rất hợp với môi trường quân đội hoặc thương trường khốc liệt.",
-  "Phá Quân":"Hao tinh chủ về sự tiên phong. Mạnh mẽ, gai góc, thích phá vỡ khuôn mẫu cũ để lập nên cái mới. Cuộc đời nhiều biến động thăng trầm, nhưng chính từ đó tự tay gây dựng cơ đồ."
-};
-const PHAN_PT={
-  "Tử Vi":"Người hôn phối thường có tài năng, địa vị hoặc khí chất đĩnh đạc. Hôn nhân có thể đến muộn nhưng mang tính bền vững cao, người ấy sẽ là chỗ dựa vững chắc cho gia đình.",
-  "Thiên Cơ":"Tình duyên mang màu sắc trí tuệ, người bạn đời thông minh, khéo léo nhưng đôi khi hơi hay lo nghĩ. Cần nhiều sự sẻ chia để tránh xa cách tâm lý.",
-  "Thái Dương":"Nửa kia thường là người tháo vát, hào sảng, thích gánh vác việc chung. Đôi khi họ khá bận rộn với công việc bên ngoài, cần sự thông cảm và thấu hiểu từ đương số.",
-  "Vũ Khúc":"Người bạn đời cứng cỏi, tháo vát và rất giỏi kiếm tiền. Tuy nhiên, họ có thể hơi thực tế và thiếu đi sự lãng mạn ngọt ngào. Cần chủ động hâm nóng tình cảm gia đình.",
-  "Thiên Đồng":"Hôn nhân êm đềm, thuận hòa. Nửa kia hiền lành, biết nhường nhịn và thích chăm lo cho tổ ấm. Đôi lúc có vẻ bằng lòng với hiện tại nhưng lại mang đến sự bình yên đáng quý.",
-  "Liêm Trinh":"Tình duyên mang nhiều cung bậc cảm xúc. Nửa kia là người có sức hút, đa tài và cá tính mạnh. Hôn nhân đôi lúc có sóng gió, đòi hỏi sự bao dung và khéo léo dung hòa từ cả hai phía.",
-  "Thiên Phủ":"Người hôn phối rất đảm đang, biết lo toan và quản lý kinh tế gia đình xuất sắc. Hôn nhân mang tính ổn định cao, nửa kia là hậu phương vô cùng vững chắc.",
-  "Thái Âm":"Nửa kia có tính cách nhẹ nhàng, tinh tế và lãng mạn. Nam mệnh có số nhờ vợ giỏi nội trợ, nữ mệnh thì chồng là người tình cảm, biết quan tâm chăm sóc.",
-  "Tham Lang":"Tình duyên phong phú, nửa kia đa tài, giao tiếp rộng và rất cuốn hút. Cuộc sống hôn nhân cần nhiều sự mới mẻ để duy trì ngọn lửa tình yêu.",
-  "Cự Môn":"Người bạn đời thông minh, sắc sảo, giỏi ăn nói nhưng đôi khi hay bắt bẻ hoặc khắc khẩu. Vợ chồng nên tôn trọng không gian riêng và tránh tranh luận lúc nóng giận.",
-  "Thiên Tướng":"Nửa kia thường đẹp người, có gu thẩm mỹ và cư xử khéo léo. Hôn nhân nhìn chung êm đềm, ra ngoài hay được người khác ngưỡng mộ về sự xứng đôi vừa lứa.",
-  "Thiên Lương":"Người bạn đời hiền hậu, chững chạc và sống có nguyên tắc. Hôn nhân bền vững, đôi bên có sự nhường nhịn và che chở lẫn nhau như những người tri kỷ.",
-  "Thất Sát":"Nửa kia rất cá tính, độc lập và mạnh mẽ. Hôn nhân cần sự tôn trọng cái tôi của nhau, tránh áp đặt quan điểm để giữ vững hòa khí.",
-  "Phá Quân":"Hôn nhân thường trải qua thử thách trước khi tiến tới bến bờ vững chắc. Nửa kia tháo vát, dám nghĩ dám làm, cần sự đồng hành và thấu hiểu lớn từ đương số."
-};
-const PHAN_TB={
-  "Tử Vi":"Tài lộc sung túc, có khả năng quản lý tài chính lớn. Dễ kiếm tiền ở những vị trí quản lý hoặc làm chủ.",
-  "Thiên Cơ":"Tài lộc đến từ trí tuệ, kỹ năng chuyên môn. Khéo xoay xở nhưng thu nhập đôi khi có sự dao động, hợp làm tư vấn, thiết kế.",
-  "Thái Dương":"Kiếm tiền bằng danh tiếng và uy tín. Tiền bạc kiếm được nhiều nhưng cũng dễ chi tiêu hào phóng cho các mối quan hệ.",
-  "Vũ Khúc":"Cực kỳ nhạy bén với cơ hội. Có năng khiếu kinh doanh, buôn bán hoặc tài chính ngân hàng, dễ trở nên giàu có nhờ sự kiên định.",
-  "Thiên Đồng":"Tài lộc đến một cách nhẹ nhàng, tự nhiên. Thường không quá bận tâm về tiền bạc nhưng vẫn luôn có đủ ăn đủ tiêu, hay được lộc bất ngờ.",
-  "Liêm Trinh":"Kiếm tiền bằng khả năng sáng tạo, nghệ thuật hoặc các công việc đòi hỏi sự cạnh tranh. Tiền bạc dồi bảo nhưng cần tránh đầu tư mạo hiểm.",
-  "Thiên Phủ":"Tài lộc vô cùng vững chắc. Rất giỏi giữ tiền, quản lý chi tiêu bài bản, thường có xu hướng đầu tư an toàn. Cả đời hiếm khi rơi vào cảnh túng thiếu.",
-  "Thái Âm":"Rất có duyên với bất động sản, nhà đất. Kiếm tiền êm ái, nguồn thu ổn định và tăng dần theo thời gian.",
-  "Tham Lang":"Khát vọng làm giàu lớn, năng động tìm kiếm cơ hội. Dễ có khoản tiền lớn bất ngờ nhưng cũng dễ tiêu hao vào các thú vui.",
-  "Cự Môn":"Tài lộc gắn liền với khả năng ăn nói, thuyết phục. Cần cẩn trọng giấy tờ, hợp đồng để tránh thị phi tiền bạc.",
-  "Thiên Tướng":"Nguồn thu nhập khá ổn định và minh bạch. Hay được quý nhân giới thiệu cơ hội làm ăn. Thích chi tiêu cho cái đẹp.",
-  "Thiên Lương":"Tài lộc thanh nhàn, thường không bạo phát bạo tàn nhưng luôn có nền tảng vững chắc. Hay được người lớn tuổi nâng đỡ.",
-  "Thất Sát":"Kiếm tiền dựa vào bản lĩnh và sự xông pha. Tài vận trải qua những đợt thăng trầm lớn trước khi định hình vững chắc.",
-  "Phá Quân":"Tài lộc nhiều biến động, dám mạo hiểm. Dễ kiếm được những khoản tiền lớn nhờ ý tưởng đột phá."
-};
-const PHAN_QL={
-  "Tử Vi":"Có tố chất lãnh đạo, điều hành xuất sắc. Dễ thăng tiến lên các vị trí giám đốc, quản lý cấp cao.",
-  "Thiên Cơ":"Phù hợp với công việc đòi hỏi tư duy logic, chiến lược, IT hoặc nghiên cứu. Công việc hay có sự di chuyển.",
-  "Thái Dương":"Sự nghiệp rực rỡ, dễ vươn tới danh vọng. Phù hợp cơ quan nhà nước, ngoại giao hoặc những nơi đông người.",
-  "Vũ Khúc":"Cực kỳ hợp với ngành tài chính, ngân hàng, thương mại. Làm việc quyết đoán, hiệu suất cao.",
-  "Thiên Đồng":"Công việc thường thoải mái, ít áp lực. Phù hợp các ngành nghệ thuật, giáo dục, dịch vụ, hoặc ẩm thực.",
-  "Liêm Trinh":"Hợp với các ngành kỷ luật cao (công an, luật) hoặc lĩnh vực nghệ thuật. Đòi hỏi sự tập trung và đam mê.",
-  "Thiên Phủ":"Đường công danh bằng phẳng. Rất hợp vị trí quản lý kho tàng, tài chính, hoặc môi trường công sở bài bản.",
-  "Thái Âm":"Thuận lợi trong kinh doanh bất động sản, nhà hàng, khách sạn, hoặc các lĩnh vực liên quan đến phái đẹp.",
-  "Tham Lang":"Đa tài, có thể làm nhiều nghề một lúc. Hợp kinh doanh tự do, giải trí, truyền thông. Sự nghiệp cạnh tranh mạnh.",
-  "Cự Môn":"Công danh gắn liền với sự hùng biện. Rất hợp làm giáo viên, luật sư, MC, ngoại giao hoặc nghiên cứu.",
-  "Thiên Tướng":"Sự nghiệp hanh thông, dễ được cất nhắc nhờ năng lực và tận tâm. Phù hợp quản lý hành chính, nhân sự.",
-  "Thiên Lương":"Hợp nghề mang tính chất thanh cao, cứu người giúp đời (bác sĩ, giáo viên, chuyên gia). Có uy tín lớn.",
-  "Thất Sát":"Trải qua thử thách khốc liệt trước khi thành danh. Phù hợp quân đội, công an hoặc kinh doanh cạnh tranh.",
-  "Phá Quân":"Hợp với việc khởi nghiệp, khai phá lĩnh vực mới. Tính biến động cao, đòi hỏi dũng cảm đổi mới."
-};
-const PHAN_TA={
-  "Tử Vi":"Sức khỏe nhìn chung rất tốt. Về già chú ý các bệnh liên quan tiêu hóa hoặc cao huyết áp do suy nghĩ nhiều.",
-  "Thiên Cơ":"Hệ thần kinh nhạy cảm, dễ bị stress, mất ngủ. Cần chế độ nghỉ ngơi, thư giãn hợp lý.",
-  "Thái Dương":"Chú ý các bệnh về mắt, nhức đầu, hoặc tim mạch. Tránh làm việc quá sức và thức khuya.",
-  "Vũ Khúc":"Sức khỏe cơ bản tốt. Đề phòng chấn thương ngoại khoa, hoặc bệnh liên quan hô hấp, phổi.",
-  "Thiên Đồng":"Dễ mắc bệnh đường tiêu hóa, dạ dày. Có xu hướng tăng cân nên cần chú ý vận động.",
-  "Liêm Trinh":"Chú ý các bệnh về máu huyết, tim mạch. Giữ tinh thần thoải mái, tránh bực tức hại gan.",
-  "Thiên Phủ":"Tạng người khỏe mạnh. Về già nên chú ý bệnh tỳ vị, dạ dày do ăn uống ngon miệng.",
-  "Thái Âm":"Chú ý bệnh về mắt, thận, thần kinh. Tâm lý đôi khi hay u buồn, cần tìm cách giải tỏa căng thẳng.",
-  "Tham Lang":"Dễ mắc bệnh gan, thận hoặc do sinh hoạt không điều độ. Cần thiết lập lối sống lành mạnh.",
-  "Cự Môn":"Thường nhạy cảm vùng họng, miệng, hoặc đường tiêu hóa. Cẩn thận bệnh dị ứng da liễu.",
-  "Thiên Tướng":"Sức khỏe ổn định. Chú ý giữ gìn sắc vóc, đề phòng đau nhức xương khớp nhẹ.",
-  "Thiên Lương":"Sao thọ tinh mang lại sự bền bỉ, ốm đau mau khỏi. Chú ý bệnh dạ dày hoặc suy nhược nhẹ.",
-  "Thất Sát":"Dễ gặp chấn thương ngoại khoa. Tránh tham gia các hoạt động mạo hiểm thiếu an toàn.",
-  "Phá Quân":"Chú ý bệnh liên quan xương khớp, răng miệng. Sức khỏe có lúc trồi sụt, cần rèn luyện thường xuyên."
-};
-
-/* ═══ HẰNG SỐ ═══ */
+/* ═══ HẰNG SỐ & TỪ ĐIỂN ═══ */
 const CAN=['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
 const CHI=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
 const CUNG12=['Mệnh','Phụ Mẫu','Phúc Đức','Điền Trạch','Quan Lộc','Nô Bộc','Thiên Di','Tật Ách','Tài Bạch','Tử Tức','Phu Thê','Huynh Đệ'];
@@ -273,11 +191,113 @@ const KHOI_VIET={'Giáp':[1,7],'Mậu':[1,7],'Canh':[1,7],'Ất':[0,8],'Kỷ':[0
 const m12=n=>((n%12)+12)%12;
 const NA_IDX={};for(let i=0;i<60;i++)NA_IDX[CAN[i%10]+'-'+CHI[i%12]]=Math.floor(i/2);
 const GLOSS={'tam hợp':'Ba con giáp cách nhau 4 cung, hợp tính hòa thuận.','tứ hành xung':'Bốn con giáp khắc nhau, dễ sinh trắc trở.','lục xung':'Đối diện vòng chi, xung mạnh nhất.','lục hại':'Sáu cặp hại nhau, dễ mếch lòng.','lục hợp':'Sáu cặp hợp nhau, dễ đồng điệu.','nạp âm':'Mệnh ngũ hành năm sinh.','cung phi':'Bát trạch (Đông/Tây tứ mệnh).','kim lâu':'Năm hạn của Nữ, phạm thì cưới/làm nhà trục trặc.','tam tai':'Hạn 3 năm liên tiếp trắc trở.','hoàng đạo':'Ngày/giờ tốt, cát tinh chiếu.','tam nương':'Ngày âm xấu, kiêng việc lớn.','nguyệt kỵ':'Mùng 5, 14, 23 – ngày kỵ.','hoang ốc':'Tính tuổi xây nhà.','trạch tuổi':'Cửu trạch tính hướng sinh khí tốt xấu khi xây cất.'};
-const G=(t,k)=>`<span class="gl" data-g="${k||t.toLowerCase()}">${t}</span>`;
 const MVDH={"Tử Vi":"BĐMVĐVMĐVBĐV","Thiên Cơ":"ĐHVMHVĐHVHHĐ","Thái Dương":"HHVVVVMĐĐHHH","Vũ Khúc":"VMVĐMHHMVĐMH","Thiên Đồng":"VHMHHĐHHMHĐM","Liêm Trinh":"VĐMHHHVĐMHMH","Thiên Phủ":"MMMBVĐVĐĐBVV","Thái Âm":"MMHHHHHĐVVMM","Tham Lang":"HMVĐMHHMĐHMH","Cự Môn":"VHMMHĐVHMĐHV","Thiên Tướng":"MĐMĐVĐVĐMĐVĐ","Thiên Lương":"VVVVMHMVVHMH","Thất Sát":"MĐMHHVVĐMHHV","Phá Quân":"MVHĐVHMVHĐVH"};
 const MH_DAKIEM=new Set(["Tham LangTỵ","Liêm TrinhTỵ","Cự MônNgọ","Thiên TướngMùi","Thiên ĐồngThân","Thiên LươngThân","Vũ KhúcDậu","Thất SátDậu","Thái DươngTuất","Thiên CơTý","Tử ViSửu","Phá QuânSửu","Thiên PhủMão","Thái ÂmThìn","Thiên CơNgọ","Tử ViMùi","Phá QuânMùi","Thiên PhủDậu","Thái ÂmTuất","Liêm TrinhHợi","Tham LangHợi","Cự MônTý","Thiên TướngSửu","Thi ĐồngDần","Thiên LươngDần","Vũ KhúcMão","Thất SátMão","Thái DươngThìn","Thiên CơTỵ","Tử ViNgọ","Phá QuânThân","Thất SátThìn","Thái DươngMão","Thiên LươngMão","Liêm TrinhTuất","Thiên PhủTuất","Vũ KhúcDần","Thiên TướngDần","Thiên ĐồngSửu","Cự MônSửu","Tham LangTý","Thái ÂmHợi","Phá QuânTỵ","Vũ KhúcTỵ","Thái DươngNgọ","Thiên PhủMùi","Thái ÂmThân","Thiên CơThân","Thiên ĐồngThìn","Tử ViDậu","Tham LangDậu","Cự MônTuất","Thất SátSửu","Liêm TrinhSửu","Thiên LươngTý","Thiên TướngHợi","Thái ÂmTỵ","Tham LangNgọ","Thiên ĐồngMùi","Cự MônMùi","Thiên TướngThân","Vũ KhúcThân","Liêm TrinhThìn","Thiên PhủThìn","Thiên LươngDậu","Thái DươngDậu","Thất SátTuất","Tử ViTý","Thiên CơHợi","Phá QuânDần"]);
 const SAT_LIST=['Kình Dương','Đà La','Địa Không','Địa Kiếp','Hỏa Tinh','Linh Tinh'];
 const CAT_LIST=['Thiên Khôi','Thiên Việt','Tả Phụ','Hữu Bật','Văn Xương','Văn Khúc','Lộc Tồn','Long Trì','Phượng Các','Hồng Loan','Thiên Hỷ','Đào Hoa','Thiên Mã','Ân Quang','Thiên Quý','Tam Thai','Bát Tọa','Thiên Y','Thiên Không','Giải Thần'];
+const G=(t,k)=>`<span class="gl" data-g="${k||t.toLowerCase()}">${t}</span>`;
+
+/* ═══ THUẬT TOÁN LUẬN SÂU V14 ═══ */
+const SAO_HANH={"Tử Vi":"Thổ","Thiên Cơ":"Mộc","Thái Dương":"Hỏa","Vũ Khúc":"Kim","Thiên Đồng":"Thủy","Liêm Trinh":"Hỏa","Thiên Phủ":"Thổ","Thái Âm":"Thủy","Tham Lang":"Mộc","Cự Môn":"Thủy","Thiên Tướng":"Thủy","Thiên Lương":"Mộc","Thất Sát":"Kim","Phá Quân":"Thủy"};
+const SINH_H={'Kim':'Thủy','Thủy':'Mộc','Mộc':'Hỏa','Hỏa':'Thổ','Thổ':'Kim'};
+const KHAC_H={'Kim':'Mộc','Mộc':'Thổ','Thổ':'Thủy','Thủy':'Hỏa','Hỏa':'Kim'};
+function sinhKhac(hanhA, hanhB) {
+  if(hanhA === hanhB) return "bình hòa";
+  if(SINH_H[hanhA] === hanhB) return "sinh xuất";
+  if(SINH_H[hanhB] === hanhA) return "sinh nhập";
+  if(KHAC_H[hanhA] === hanhB) return "khắc xuất";
+  if(KHAC_H[hanhB] === hanhA) return "khắc nhập";
+  return "";
+}
+
+const DICT_SAO_TOT = {
+  "Tử Vi": "Đế tinh ngự trị vượng địa, mang cốt cách bậc bề trên, uy nghi đĩnh đạc. Bẩm sinh có tài tổ chức, lãnh đạo, toát ra khí chất khiến người khác nể trọng.",
+  "Thiên Cơ": "Phúc thiện tinh sáng sủa, báo hiệu bộ óc chiến lược, tư duy logic sâu sắc. Rất linh hoạt, mưu trí, hợp làm tham mưu, vạch định kế hoạch.",
+  "Thái Dương": "Mặt trời rực rỡ, mang tâm hồn quang minh chính đại, hào sảng trượng nghĩa. Sống cống hiến, thích giúp đời, sự nghiệp danh vọng thênh thang.",
+  "Vũ Khúc": "Đệ nhất tài tinh hội tụ, cực kỳ nhạy bén với tiền bạc. Tính cách kiên nghị, quyết đoán, làm việc dứt khoát lạnh lùng nhưng bên trong trọng tình nghĩa.",
+  "Thiên Đồng": "Phúc tinh tọa chiếu, xua tan tai ương. Bản tính ôn hòa, hiền hậu, tâm hồn lãng mạn. Không bon chen tranh giành nhưng lộc lá cứ tự nhiên kéo đến.",
+  "Liêm Trinh": "Tù tinh mang đậm nét sắc sảo, đào hoa. Bộc trực, thẳng thắn, làm việc với ngọn lửa đam mê hừng hực. Cá tính vô cùng cuốn hút và mạnh mẽ.",
+  "Thiên Phủ": "Kho đụn nhà trời mở rộng. Cẩn trọng, bao dung, làm gì cũng bài bản. Có biệt tài giữ tiền, sinh ra để quản lý những khối tài sản lớn.",
+  "Thái Âm": "Mặt trăng sáng vượng, mang sự tinh tế, dịu dàng và lãng mạn. Nhạy bén với nghệ thuật và điền sản. Cuộc đời êm ái, hậu vận sung túc.",
+  "Tham Lang": "Đại diện cho dục vọng và nghệ thuật, khả năng ngoại giao tuyệt đỉnh. Khôn khéo, biết tiến thoái, giỏi chớp thời cơ bạo phát. Nội tâm phong phú đa tình.",
+  "Cự Môn": "Ám tinh chủ miệng lưỡi sáng sủa. Khả năng hùng biện, phản biện sắc sảo, tư duy phân tích đỉnh cao. Một lời nói ra có thể xoay chuyển cục diện.",
+  "Thiên Tướng": "Mang phong thái quyền thần uy nghi, đường bệ, trọng chữ tín, sống trượng nghĩa. Chú trọng hình thức, làm việc kỷ luật đâu ra đó.",
+  "Thiên Lương": "Thọ tinh hiền hậu, từ bi, sống có nguyên tắc, thích che chở kẻ yếu. Cuộc đời hay gặp may mắn bất ngờ vào những lúc nguy nan nhất.",
+  "Thất Sát": "Quyền tinh cai quản sinh sát. Dũng mãnh, quyết đoán, dám nghĩ dám làm, mang tinh thần khởi nghiệp bất khuất. Thành công đến từ sự xông pha.",
+  "Phá Quân": "Hao tinh chủ sự tiên phong phá vỡ khuôn mẫu cũ. Mạnh mẽ, gai góc, tìm kiếm sự đổi mới. Tự tay gây dựng cơ đồ huy hoàng từ đống tro tàn."
+};
+
+const DICT_SAO_XAU = {
+  "Tử Vi": "Mang danh Đế tinh nhưng rơi thế yếu. Lý tưởng lớn, cái tôi cao nhưng hoàn cảnh thực tại thường trêu ngươi, dễ sinh bất mãn, tài năng không được trọng dụng.",
+  "Thiên Cơ": "Thông minh nhưng hay bị 'suy nghĩ quá độ'. Tính toán nhiều mà hành động ít, tự ôm lo âu vào lòng. Thần kinh nhạy cảm, dễ mất ngủ.",
+  "Thái Dương": "Ánh dương lạc hãm bị che mờ. Tâm bao dung nhưng hay làm ơn mắc oán, giúp người không được ghi nhận. Nam lận đận công danh, nữ vất vả phu quân.",
+  "Vũ Khúc": "Quá cứng nhắc, nguyên tắc đến mức cô độc. Mưu cầu lớn nhưng hay gãy đổ do thiếu sự mềm mỏng ngoại giao. Tình cảm khô khan, ít lãng mạn.",
+  "Thiên Đồng": "Quá hiền lành đâm ra nhu nhược, thiếu chí tiến thủ. Dễ hài lòng với hiện tại, cả thèm chóng chán, làm việc thiếu sự kiên trì tới cùng.",
+  "Liêm Trinh": "Cá tính quá mạnh dẫn đến bốc đồng, nóng nảy. Dễ vướng vào thị phi, kiện tụng pháp lý hoặc rắc rối trong các mối quan hệ tình cảm phức tạp.",
+  "Thiên Phủ": "Quá an toàn đến mức bảo thủ, bỏ lỡ nhiều cơ hội bứt phá. Đôi khi có xu hướng hẹp hòi trong tiền bạc, thiếu đi sự liều lĩnh cần thiết.",
+  "Thái Âm": "Tâm lý u buồn, nhạy cảm quá mức, dễ bị tổn thương bởi lời nói. Hay mơ mộng viển vông, đường tình cảm thường chông gai vất vả.",
+  "Tham Lang": "Lòng tham dễ bị kích phát. Tháo vát nhưng cả thèm chóng chán, dễ sa đà vào tửu sắc hoặc thú vui tốn kém. Cuộc đời hay thăng trầm vì khát kho không đáy.",
+  "Cự Môn": "Hay hoài nghi, đa nghi đa lo. Rất dễ vướng vào khẩu nghiệp, khắc khẩu với người thân, ra đường hay gặp thị phi đàm tiếu. Họa thường từ miệng ra.",
+  "Thiên Tướng": "Thích sĩ diện, ham hư vinh, đôi khi lo chuyện bao đồng mà rước họa vào thân. Sự bảo thủ trong cách làm việc dễ khiến giậm chân tại chỗ.",
+  "Thiên Lương": "Nguyên tắc thái quá thành ra cổ hủ, giáo điều. Đôi khi cứng nhắc, không chịu tiếp thu cái mới. Cuộc đời phải trải qua nhiều đợt tai ách rồi mới được cứu giải.",
+  "Thất Sát": "Quá liều lĩnh, dễ sa vào cảnh bạo phát bạo tàn. Tính tình nóng nảy, dễ gây thù chuốc oán. Cẩn trọng những tai nạn, thương tích trên cơ thể.",
+  "Phá Quân": "Phá hoại nhiều hơn xây dựng. Nóng nảy, dễ manh động chống đối. Sự nghiệp hay đứt gãy giữa chừng, phải trải qua nhiều lần trắng tay mới đúc kết được bài học."
+};
+
+function luanGiaiCung(K, idCung, tenCung) {
+  const ch = Object.keys(K.S).filter(s=>K.S[s]===idCung);
+  const pu = Object.keys(K.P).filter(s=>K.P[s]===idCung);
+  const tuantriet = (K.TUAN.includes(idCung)?1:0) + (K.TRIET.includes(idCung)?2:0);
+  const ts = K.V_TS[idCung];
+  
+  let t = `<li><b>Thấu thị cung ${tenCung} (tại ${CHI[idCung]}):</b> `;
+  
+  if (ch.length === 0) {
+     const di = m12(idCung + 6);
+     const chD = Object.keys(K.S).filter(s=>K.S[s]===di);
+     t += `Bản cung <b>Vô Chính Diệu</b> (không có chính tinh tọa thủ). Trong khoa Tử Vi, cung VCD như một căn nhà không nóc, vô định và chịu sự chi phối cực kỳ mạnh từ hoàn cảnh cũng như cung đối diện. Đương số trong lĩnh vực này thường thiếu đi sự kiên định ban đầu, dễ bị tác động. Tuy nhiên, sự uyển chuyển và linh hoạt lại là tuyệt đỉnh. Cung này buộc phải mượn sinh khí từ <b>${chD.join(', ')}</b> ở cung đối diện chiếu về để làm nền móng. `;
+  } else {
+     t += `Tại đây có sự cai quản của <b>${ch.join(' và ')}</b>. `;
+     ch.forEach(s => {
+        const mvdh = MVDH[s] ? MVDH[s][idCung] : 'B';
+        const isTot = ['M','V','D'].includes(mvdh);
+        const hsk = sinhKhac(SAO_HANH[s], K.naHanh);
+        
+        let saoText = isTot ? DICT_SAO_TOT[s] : DICT_SAO_XAU[s];
+        if(saoText) t += saoText + " ";
+        
+        if(hsk === 'sinh nhập') t += `<i>(Tương hợp Ngũ Hành: Sinh khí của ${sao} sinh nhập Bản mệnh, giúp đương số hưởng trọn vượng khí, tài lộc hay cơ hội tự nhiên tìm đến).</i> `;
+        else if(hsk === 'khắc xuất') t += `<i>(Đoạt được nghịch cảnh: Bản mệnh vất vả khắc chế ${sao}, cho thấy dù gặp bao thử thách chông gai, đương số vẫn đủ bản lĩnh thao túng cục diện).</i> `;
+        else if(hsk === 'khắc nhập') t += `<i>(Áp lực rèn giũa: Sao khắc Bản mệnh, tạo ra một áp lực khổng lồ. Buộc đương số phải trầy trật, nếm mật nằm gai mới thu phục được thời cơ).</i> `;
+     });
+  }
+
+  if (tuantriet === 1) t += `<br><br><b style="color:#aaa">✦ Tuần Không bủa vây:</b> Cung này bị Tuần Không phong tỏa. Mọi mưu sự tại đây sẽ có xu hướng bế tắc, lận đận và chậm chạp ở tiền vận (trước 35 tuổi), đòi hỏi ở bạn sự nhẫn nại tột cùng. Đừng vội nản, vì khi bước sang trung và hậu vận, sự vững chãi sẽ đền đáp xứng đáng. `;
+  if (tuantriet === 2) t += `<br><br><b style="color:#aaa">✦ Triệt Lộ án ngữ:</b> Rất cẩn trọng vì cung này dính Triệt. Triệt chủ về sự đứt đoạn bất thình lình. Mọi thứ ban đầu rất bạo phát, hanh thông nhưng dễ sụp đổ nhanh chóng nếu bạn không biết lui phòng giữ thành. Sau 35 tuổi, Triệt tháo gỡ thì cục diện mới rạng rỡ và an toàn hơn. `;
+  if (tuantriet === 3) t += `<br><br><b style="color:#aaa">✦ Ách Tuần - Triệt đồng cung:</b> Vùng đất này bị bưng bít hoàn toàn. Cát tinh mất thiêng mà hung tinh cũng tiêu tán họa. Mọi việc liên quan đến ${tenCung} hãy xem như mây khói, đừng đặt nặng mưu cầu vật chất ở đây, hãy để vạn sự tùy duyên ắt tâm sẽ an tịnh. `;
+
+  const satTinh = pu.filter(s=>SAT_LIST.includes(s));
+  if (satTinh.length >= 2) {
+     t += `<br><br><b class="bad">⚠ Kiếp số hung tinh:</b> Bản cung bị vây hãm bởi bầy hung sát tinh tàn khốc (${satTinh.join(', ')}). Báo hiệu sóng gió trùng trùng, họa phúc đan xen, làm gì cũng phải đổ máu, đổ mồ hôi sôi nước mắt. Cần một bản lĩnh thép mới đứng vững. `;
+  } else if (satTinh.length === 1) {
+     t += `<br><br><b class="bad">⚠ Thử thách:</b> Sự hiện diện của ${satTinh[0]} mang đến sự chông gai nhất định. Đừng quá lo lắng, nó chính là ngọn lửa thử vàng, rèn giũa ý chí của đương số. `;
+  }
+
+  const catTinh = pu.filter(s=>['Văn Xương','Văn Khúc','Thiên Khôi','Thiên Việt','Lộc Tồn','Tả Phụ','Hữu Bật'].includes(s));
+  if (catTinh.length >= 2) {
+     t += `<br><br><b class="good">✓ Quần vinh hội tụ:</b> May mắn thay, nơi đây quy tụ dàn sao Cát tinh sáng lóa (${catTinh.join(', ')}). Có điềm quý nhân âm thầm phò trợ, lúc nguy nan luôn có bàn tay vô hình kéo lên, cơ hội vàng thường đến rất bất ngờ. `;
+  }
+  
+  const hL = K.HOA['Hóa Lộc'], hQ = K.HOA['Hóa Quyền'], hK = K.HOA['Hóa Khoa'];
+  if(hL===idCung || hQ===idCung || hK===idCung) {
+      let th=[]; if(hL===idCung)th.push('Hóa Lộc'); if(hQ===idCung)th.push('Hóa Quyền'); if(hK===idCung)th.push('Hóa Khoa');
+      t += `<br><br><b class="good">✓ Tứ Hóa ngự trị:</b> Cung này ôm trọn vượng khí của <b>${th.join(', ')}</b>. Khẳng định đây là mảnh đất màu mỡ nhất trong lá số để đương số bạo phát tài danh, hóa rồng hóa phượng. `;
+  }
+
+  t += `<br><br><i>Nhìn sâu hơn, trường năng lượng của cung đang ở giai đoạn <b>${ts}</b> (thuộc vòng Tràng Sinh). Điều này cho thấy cục diện đang ở thế ${(ts==='Suy'||ts==='Bệnh'||ts==='Tử'||ts==='Mộ'||ts==='Tuyệt') ? 'âm ỉ, suy thoái, cần thu mình tích lũy chờ mây tan.' : (ts==='Tràng Sinh'||ts==='Đế Vượng'||ts==='Lâm Quan'||ts==='Quan Đới') ? 'thịnh vượng tột bậc, bùng nổ, có thể tự tin bung sức vẫy vùng.' : 'bình hòa, ươm mầm nuôi dưỡng chờ thời đợi vận.'}</i></li>`;
+  
+  return t;
+}
 
 /* ═══ ÂM LỊCH ═══ */
 const TZ=7;
@@ -344,10 +364,10 @@ function anSao({dd,mm,yy,gio,sex,xemY}){
   for(let c=0;c<12;c++){if(dv[c]!==undefined&&lunarAge>=dv[c]&&lunarAge<dv[c]+10){daiVanCung=c;daiVanStart=dv[c];break;}}
   const daiVanCan=daiVanCung>=0?canCung(daiVanCung):'';
   return{L,canNam,chiNam:CHI[cN],menh,than,cuc,nh,tv,S,P,HOA,dv,thuan,canCung,TUAN,TRIET,V_TS,V_TT,V_BS,LUU,
-    naNam:NA_TEN[NA_IDX[canNam+'-'+CHI[cN]]],daiVanCung,daiVanStart,daiVanCan,lunarAge,sex};
+    naNam:NA_TEN[NA_IDX[canNam+'-'+CHI[cN]]], naHanh: NAP_AM[NA_IDX[canNam+'-'+CHI[cN]]], daiVanCung,daiVanStart,daiVanCan,lunarAge,sex};
 }
 
-/* ═══ HỢP TUỔI ═══ */
+/* ═══ HỢP TUỔI & TRẠCH CÁT ═══ */
 const TAM_HOP=[[0,4,8],[1,5,9],[2,6,10],[3,7,11]];
 const TU_HANH_XUNG=[[0,3,6,9],[1,4,7,10],[2,5,8,11]];
 const LUC_HAI={0:7,7:0,1:6,6:1,2:5,5:2,3:4,4:3,8:11,11:8,9:10,10:9};
@@ -360,8 +380,7 @@ function checkChi(a,b){const o=[];
   if(LUC_HAI[a]===b)o.push({v:'mid',t:G('Lục hại','lục hại'),why:'Hại nhau.'});
   if(LUC_HOP[a]===b)o.push({v:'good',t:G('Lục hợp','lục hợp'),why:'Hợp nhau.'});
   if(!o.length)o.push({v:'mid',t:'Bình hòa',why:'Không xung không hợp.'});return o;}
-const SINH_H={'Kim':'Thủy','Thủy':'Mộc','Mộc':'Hỏa','Hỏa':'Thổ','Thổ':'Kim'};
-const KHAC_H={'Kim':'Mộc','Mộc':'Thổ','Thổ':'Thủy','Thủy':'Hỏa','Hỏa':'Kim'};
+
 const napAm=y=>{const i=NA_IDX[yearCan(y)+'-'+CHI[yearChiI(y)]];return{hanh:NAP_AM[i],ten:NA_TEN[i]};};
 function checkNapAm(y1,y2){const a=napAm(y1),b=napAm(y2),base=`Nam <b>${a.ten}</b> (${a.hanh}) · Nữ <b>${b.ten}</b> (${b.hanh}). `;
   if(SINH_H[a.hanh]===b.hanh||SINH_H[b.hanh]===a.hanh)return{v:'good',t:G('Tương sinh','nạp âm'),why:base};
@@ -371,11 +390,10 @@ const QUAI={1:'Khảm',2:'Khôn',3:'Chấn',4:'Tốn',6:'Càn',7:'Đoài',8:'C�
 const red=x=>{while(x>9)x=String(x).split('').reduce((a,b)=>a+ +b,0);return x;};
 function cungPhi(y,sex){const s=red(String(y).slice(-2).split('').reduce((a,b)=>a+ +b,0));let n=sex==='nam'?(y<2000?10:9)-s:s+(y<2000?5:6);while(n>9)n-=9;if(n<=0)n+=9;return n===5?(sex==='nam'?'Khôn':'Cấn'):QUAI[n];}
 function checkCungPhi(yB,yG){const b=cungPhi(yB,'nu'),g=cungPhi(yG,'nam'),same=(DONG_TU.includes(b))===(DONG_TU.includes(g));
-  return{v:same?'good':'mid',t:G('Bát trạch','cung phi'),why:`Nam <b>${g}</b> · Nữ <b>${b}</b>. `+(same?'Cùng nhóm tốt.':'Khác nhóm, cần dùng hướng bếp/giường dung hòa.')};}
+  return{v:same?'good':'mid',t:G('Bát trạch','cung phi'),why:`Nam <b>${g}</b> · Nữ <b>${b}</b>. `+(same?'Cùng nhóm Đông/Tây tứ mệnh, rất tốt.':'Khác nhóm, cần dùng hướng bếp/giường dung hòa.')};}
 function kimLau(yB,yL){const t=yL-yB+1,du=t%9,L={1:'Thân',3:'Thê',6:'Tử',8:'Lục Súc'};return{tuoiMu:t,du,pham:!!L[du],loai:L[du]||null};}
 function tamTai(c,yL){const g=TAM_HOP.find(x=>x.includes(c)),nam=TAM_TAI_MAP[g.join(',')],cy=yearChiI(yL);return nam.includes(cy)?{pham:true,thu:nam.indexOf(cy)+1}:{pham:false};}
 
-/* ═══ TRẠCH CÁT ═══ */
 const TRUC=['Kiến','Trừ','Mãn','Bình','Định','Chấp','Phá','Nguy','Thành','Thu','Khai','Bế'];
 const HOANG=[1,2,4,5,8,10];
 const TAM_NUONG=[3,7,13,18,22,27],NGUYET_KY=[5,14,23],DUONG_CONG={1:[13],2:[11],3:[9],4:[7],5:[5],6:[3],7:[8,29],8:[27],9:[25],10:[23],11:[21],12:[19]};
@@ -388,117 +406,38 @@ function xetNgay(d,m,y,ctx){const L=solar2Lunar(d,m,y),dc=dayChiIdx(d,m,y),can=C
   const gio=[];for(let h=0;h<12;h++)if(HOANG.includes(trucIdx(m12(dc-2),h)))gio.push(CHI[h]);
   return{d,m,y,L,can,chi:CHI[dc],truc,hoang,xau,gio,tot:xau.length===0};}
 
-/* ═══ LUẬN GIẢI LÁ SỐ ═══ */
+/* ═══ LUẬN LÁ SỐ (CHUYÊN SÂU V14) ═══ */
 function luanMenh(K){
   const cN=yearChiI(K.L.year);
-  const cucHanh = K.cuc === 2 ? 'Thủy' : K.cuc === 3 ? 'Mộc' : K.cuc === 4 ? 'Kim' : K.cuc === 5 ? 'Thổ' : 'Hỏa';
-  const nh = NAP_AM[NA_IDX[K.canNam+'-'+CHI[cN]]];
+  const cucHanh = K.cuc===2?'Thủy':K.cuc===3?'Mộc':K.cuc===4?'Kim':K.cuc===5?'Thổ':'Hỏa';
+  const nh = K.naHanh;
   let menhCucText = "";
-  if (nh === cucHanh) menhCucText = "Mệnh Cục bình hòa (cùng hành). Cuộc đời tương đối bình ổn, dễ hòa nhập với môi trường.";
-  else if (SINH_H[nh] === cucHanh) menhCucText = "Mệnh sinh Cục. Bản mệnh hào phóng, hay lo toan cho hoàn cảnh, đôi lúc chịu thiệt thòi nhưng được người đời nể trọng.";
-  else if (SINH_H[cucHanh] === nh) menhCucText = "Cục sinh Mệnh. Hoàn cảnh ưu ái, hay gặp may mắn, đi ra ngoài dễ được quý nhân hoặc môi trường nâng đỡ.";
-  else if (KHAC_H[nh] === cucHanh) menhCucText = "Mệnh khắc Cục. Hoàn cảnh nhiều thử thách nhưng bản lĩnh đương số rất lớn, kiên cường khắc phục khó khăn để tự tay vươn lên thành tựu.";
-  else if (KHAC_H[cucHanh] === nh) menhCucText = "Cục khắc Mệnh. Môi trường hay tạo áp lực. Cần sự nhẫn nại, ý chí bền bỉ để vượt qua nghịch cảnh.";
-  const namAmDuong = cN % 2 === 0 ? 'Dương' : 'Âm';
-  const cungAmDuong = K.menh % 2 === 0 ? 'Dương' : 'Âm';
-  const amDuongLy = namAmDuong === cungAmDuong ? "Âm Dương thuận lý. Cuộc đời nhìn chung có nhiều điểm thuận lợi, dễ gặp thời vận, mưu sự dễ thành." : "Âm Dương nghịch lý. Nội lực mạnh mẽ, kiên cường. Dù gặp nhiều thử thách thăng trầm nhưng nhờ nỗ lực tự thân mà bứt phá vươn lên.";
+  if (nh === cucHanh) menhCucText = "Mệnh Cục bình hòa. Đương số dễ hòa nhập, hoàn cảnh sống ổn định, ít biến động sốc.";
+  else if (SINH_H[nh] === cucHanh) menhCucText = "Mệnh sinh Cục. Bản mệnh có xu hướng hào phóng, hay lo toan cho vạn vật xung quanh, chịu nhiều vất vả thiệt thòi nhưng được người đời nể trọng.";
+  else if (SINH_H[cucHanh] === nh) menhCucText = "Cục sinh Mệnh. Hoàn cảnh đặc biệt ưu ái đương số, đi ra ngoài dễ gặp may mắn bất ngờ, hay được quý nhân hoặc môi trường nâng đỡ tận tình.";
+  else if (KHAC_H[nh] === cucHanh) menhCucText = "Mệnh khắc Cục. Hoàn cảnh nhiều thử thách nhưng bản lĩnh đương số vô cùng to lớn, kiên cường khắc phục nghịch cảnh để tự tay vươn lên thành tựu.";
+  else if (KHAC_H[cucHanh] === nh) menhCucText = "Cục khắc Mệnh. Môi trường hay tạo áp lực chèn ép. Đương số cần sự nhẫn nại, ý chí bền bỉ gấp năm mười lần người thường để vươn tới vinh quang.";
+  
+  const amDuongLy = (cN%2 === K.menh%2) ? "Âm Dương thuận lý. Cuộc đời nhìn chung có nhiều điểm thuận lợi, dễ gặp thời vận, mưu sự dễ thành hơn người." : "Âm Dương nghịch lý. Đòi hỏi nội lực mạnh mẽ. Dù gặp nhiều thử thách thăng trầm nhưng nhờ sự nỗ lực tự thân không ngừng nghỉ mà bứt phá.";
 
-  let t = '<h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Tổng quan Bản mệnh & Cá tính</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
-  t += `<li><b>Âm Dương - Ngũ Hành:</b> Đương số mang mệnh <b>${K.naNam}</b> (${nh}), <b>${CUC_TEN[K.cuc]}</b>. <b>${amDuongLy}</b> Thế <b>${menhCucText.split('.')[0]}</b>. ${menhCucText.split('. ').slice(1).join('. ')}</li>`;
-
-  const ch=Object.keys(K.S).filter(s=>K.S[s]===K.menh),pu=Object.keys(K.P).filter(s=>K.P[s]===K.menh);
-  if(!ch.length){
-    t += `<li><b>Cung Mệnh (Vô Chính Diệu):</b> Bản mệnh linh hoạt, dễ thích nghi với hoàn cảnh. Thường ra ngoài sẽ năng động và phát huy được nhiều tiềm năng hơn ở nhà.</li>`;
-    const di=m12(K.menh+6),chD=Object.keys(K.S).filter(s=>K.S[s]===di);
-    if(chD.length){
-      t += `<li><b>Thiên Di chiếu Mệnh:</b> Mượn <b>${chD.join(', ')}</b> từ cung đối diện. `;
-      chD.forEach(s=>{if(PHAN_SAO[s])t+=PHAN_SAO[s]+' ';});
-      t += `</li>`;
-    }
-  }else{
-    t += `<li><b>Cung Mệnh (${ch.join(', ')} tọa thủ):</b> `;
-    ch.forEach(s=>{if(PHAN_SAO[s])t+=PHAN_SAO[s]+' ';});
-    t += `</li>`;
-  }
-
-  const tuanTriet=[];if(K.TUAN.includes(K.menh))tuanTriet.push('Tuần');if(K.TRIET.includes(K.menh))tuanTriet.push('Triệt');
-  if(tuanTriet.length)t+=`<li><b>Tác động của ${tuanTriet.join(' - ')}:</b> Giai đoạn tiền vận (trước 30-35 tuổi) thường trải qua nhiều thử thách rèn giũa. Trung và hậu vận bứt phá mạnh mẽ. Tuần/Triệt cũng giúp hóa giải bớt hung tinh nếu có.</li>`;
-
-  const catM = pu.filter(s=>['Thiên Khôi','Thiên Việt','Tả Phụ','Hữu Bật','Văn Xương','Văn Khúc','Lộc Tồn','Thiên Mã'].includes(s));
-  const dh = pu.filter(s=>['Đào Hoa','Hồng Loan','Thiên Hỷ'].includes(s));
-  if(catM.length || dh.length) {
-    t += `<li><b>Cát tinh hội tụ (${[...catM, ...dh].join(', ')}):</b> Đương số `;
-    if (dh.length) t += `vui vẻ, thu hút, có duyên ngầm. `;
-    if (catM.includes('Thiên Khôi') || catM.includes('Thiên Việt')) t += `Sớm muộn cũng được quý nhân nâng đỡ. `;
-    if (catM.includes('Văn Xương') || catM.includes('Văn Khúc')) t += `Có tư chất thông minh, học hành sáng dạ, nhiều hoa tay. `;
-    if (catM.includes('Tả Phụ') || catM.includes('Hữu Bật')) t += `Có tài quán xuyến, hay được bạn bè trợ giúp. `;
-    if (catM.includes('Lộc Tồn')) t += `Rất có lộc kinh tế, giỏi tích lũy. `;
-    t += `</li>`;
-  }
-
-  const sat=pu.filter(s=>SAT_LIST.includes(s));
-  if(sat.length)t+=`<li><span class="bad"><b>Sát tinh hội họp (${sat.join(', ')}):</b> Tính cách mang phần ngang ngạnh, quyết liệt, dám nghĩ dám làm. Tuy nhiên cần chú ý rèn giũa sự kiên nhẫn, tránh bốc đồng để không rơi vào cảnh bạo phát bạo tàn.</span></li>`;
-  t += '</ul></div>';
-  return '<div class="phan-box">'+t;
+  let t = '<h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Nền tảng Bản mệnh & Cốt cách</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
+  t += `<li><b>Gốc rễ Âm Dương - Ngũ Hành:</b> Đương số mang mệnh <b>${K.naNam}</b> (${nh}), <b>${CUC_TEN[K.cuc]}</b>. Thuộc thế <b>${amDuongLy}</b> Tình thế vận động: <b>${menhCucText}</b></li>`;
+  t += luanGiaiCung(K, K.menh, 'Mệnh');
+  t += '</ul>';
+  return '<div class="phan-box">'+t+'</div>';
 }
 
 function luanCacCung(K){
-  let t = '<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Đường Học hành, Công danh & Tiền tài</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
-  
-  const ql=m12(K.menh+4),chQL=Object.keys(K.S).filter(s=>K.S[s]===ql);
-  t += `<li><b>Quan Lộc (tại ${CHI[ql]}):</b> `;
-  if(!chQL.length){
-    const opp=m12(ql+6),chO=Object.keys(K.S).filter(s=>K.S[s]===opp);
-    t += `Cung Vô Chính Diệu, mượn <b>${chO.join(', ')}</b> chiếu về. Khả năng thích ứng trong công việc cực cao, dễ thuyên chuyển. ${chO.map(s=>PHAN_QL[s]).join(' ')}`;
-  } else {
-    t += `Có <b>${chQL.join(', ')}</b> tọa thủ. ${chQL.map(s=>PHAN_QL[s]).join(' ')}`;
-  }
-  t += `</li>`;
+  let t = '<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Đường Học hành, Công danh & Tiền bạc</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
+  t += luanGiaiCung(K, m12(K.menh+4), 'Quan Lộc');
+  t += luanGiaiCung(K, m12(K.menh+8), 'Tài Bạch');
+  t += `</ul></div>`;
 
-  const tb=m12(K.menh+8),chTB=Object.keys(K.S).filter(s=>K.S[s]===tb);
-  t += `<li><b>Tài Bạch (tại ${CHI[tb]}):</b> `;
-  if(!chTB.length){
-    const opp=m12(tb+6),chO=Object.keys(K.S).filter(s=>K.S[s]===opp);
-    t += `Cung Vô Chính Diệu, tiền bạc đến đi linh hoạt, mượn <b>${chO.join(', ')}</b> chiếu về. ${chO.map(s=>PHAN_TB[s]).join(' ')}`;
-  } else {
-    t += `Có <b>${chTB.join(', ')}</b> tọa thủ. ${chTB.map(s=>PHAN_TB[s]).join(' ')}`;
-  }
-  t += `</li></ul>`;
-
-  t += '<h3 style="color:var(--gold);margin-top:20px;font-size:18px;">☯ Hậu vận, Gia đạo & Sức khỏe</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
-
-  const pt=m12(K.menh+10),chPT=Object.keys(K.S).filter(s=>K.S[s]===pt);
-  const ptDH = Object.keys(K.P).filter(s=>K.P[s]===pt && ['Đào Hoa','Hồng Loan','Thiên Hỷ'].includes(s));
-  t += `<li><b>Phu Thê (tại ${CHI[pt]}):</b> `;
-  if(!chPT.length){
-    const opp=m12(pt+6),chO=Object.keys(K.S).filter(s=>K.S[s]===opp);
-    t += `Cung Vô Chính Diệu, mượn <b>${chO.join(', ')}</b> chiếu về. Tình duyên đôi khi muộn màng hoặc quen nhau trong hoàn cảnh bất ngờ. ${chO.map(s=>PHAN_PT[s]).join(' ')}`;
-  } else {
-    t += `Có <b>${chPT.join(', ')}</b> tọa thủ. ${chPT.map(s=>PHAN_PT[s]).join(' ')}`;
-  }
-  if (ptDH.length) t += ` Lại hội thêm <b>${ptDH.join(', ')}</b> nên nửa kia có nhan sắc, phong cách cuốn hút, khéo léo.`;
-  t += `</li>`;
-
-  const ta=m12(K.menh+7),chTA=Object.keys(K.S).filter(s=>K.S[s]===ta);
-  t += `<li><b>Tật Ách (tại ${CHI[ta]}):</b> `;
-  if(!chTA.length){
-    t += `Vô Chính Diệu là một lợi điểm, giúp giảm thiểu bệnh tật tai ương. Khi ốm đau cũng dễ gặp thầy gặp thuốc.`;
-  } else {
-    t += `${chTA.map(s=>PHAN_TA[s]).join(' ')}`;
-  }
-  t += `</li>`;
-
-  const pd=m12(K.menh+2),chPD=Object.keys(K.S).filter(s=>K.S[s]===pd);
-  t += `<li><b>Phúc Đức (tại ${CHI[pd]}):</b> Đánh giá gốc rễ tinh thần và may mắn của đời người. `;
-  if(K.HOA['Hóa Khoa'] === pd || K.P['Giải Thần'] === pd || K.P['Thiên Khôi'] === pd) {
-    t += `Có đệ nhất Cát/Giải thần chiếu rọi, gặp nạn thường hóa cát, hay được bề trên che chở trong những lúc nguy nan nhất.`;
-  } else if(!chPD.length) {
-    t += `Cung Vô Chính Diệu, họ hàng ly tán, đương số lập nghiệp phương xa thì dễ thành tựu hơn.`;
-  } else {
-    t += `Có <b>${chPD.join(', ')}</b> đóng tại Phúc, chi phối lớn đến vận may, tuổi thọ và đời sống nội tâm của đương số.`;
-  }
-  t += `</li></ul></div>`;
-
+  t += '<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Hậu vận, Gia đạo & Nghiệp quả</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
+  t += luanGiaiCung(K, m12(K.menh+10), 'Phu Thê');
+  t += luanGiaiCung(K, m12(K.menh+7), 'Tật Ách');
+  t += luanGiaiCung(K, m12(K.menh+2), 'Ph Phúc Đức');
+  t += `</ul></div>`;
   return t;
 }
 
@@ -507,20 +446,25 @@ function luanDaiVan(K){
   const p=K.daiVanCung,cn=CUNG12[m12(p-K.menh)];
   const ch=Object.keys(K.S).filter(s=>K.S[s]===p),pu=Object.keys(K.P).filter(s=>K.P[s]===p);
   let t=`Đương số <b>${K.lunarAge} tuổi</b> (âm), đang đi <b>Đại Vận cung ${cn}</b> (${K.canCung(p)} ${CHI[p]}), từ ${K.daiVanStart}–${K.daiVanStart+9} tuổi.<br><br>`;
-  if(ch.length){t+=`Chính tinh thủ Đại Vận: <b>${ch.join(', ')}</b>. `;
-    ch.forEach(s=>{if(PHAN_SAO[s])t+=PHAN_SAO[s].split('.')[0]+'. ';});t+='<br><br>';}
-  else t+='Đại Vận vô chính diệu, vận trình uyển chuyển, phụ thuộc ngoại cảnh và quý nhân.<br><br>';
+  if(ch.length) t+=`Chính tinh quản vận: <b>${ch.join(' và ')}</b>. Thời kỳ năng lượng hội tụ vào tính chất của các vì sao này. `;
+  else t+='Đại Vận vô chính diệu, vận trình uyển chuyển, phụ thuộc ngoại cảnh và sự xoay chuyển linh hoạt rất nhiều. ';
+  
   const kyDV=ch.concat(pu).filter(s=>K.HOA[s]==='ky');
-  if(kyDV.length)t+=`<b class="bad">⚠ Đại Vận có Hóa Kỵ</b> (${kyDV.join(', ')}). Vận trình trắc trở, cần đề phòng.<br><br>`;
+  if(kyDV.length)t+=`<br><br><b class="bad">⚠ Đại Vận có Hóa Kỵ</b> (${kyDV.join(', ')}). Thời vận trắc trở, làm gì cũng phải kín kẽ đề phòng.`;
   const satDV=pu.filter(s=>SAT_LIST.includes(s));
-  if(satDV.length)t+=`Sát tinh trong Đại Vận: <b>${satDV.join(', ')}</b>. Giai đoạn đòi hỏi bản lĩnh và kiên nhẫn.<br><br>`;
+  if(satDV.length)t+=`<br><br><b>Thử thách sát tinh:</b> ${satDV.join(', ')}. Giai đoạn mài giũa bản lĩnh cực độ, có thể bạo phát bạo tàn.`;
   const catDV=pu.filter(s=>['Tả Phụ','Hữu Bật','Văn Xương','Văn Khúc','Thiên Khôi','Thiên Việt','Lộc Tồn'].includes(s));
-  if(catDV.length)t+=`<span class="good"><b>Cát tinh phò tá:</b> ${catDV.join(', ')}.</span> Giúp đương số vượt qua khó khăn.<br><br>`;
-  if(K.daiVanCan){const[lo,qu,kh,ky]=TU_HOA[K.daiVanCan];
-    t+=`<b>Tứ Hóa Đại Vận</b> (can ${K.daiVanCan}): ${lo} Hóa Lộc · ${qu} Hóa Quyền · ${kh} Hóa Khoa · <b class="bad">${ky} Hóa Kỵ</b>.<br>`;
-    const kyP=fsp(K,ky);if(kyP===K.menh)t+='<b class="bad">⚠ Hóa Kỵ Đại Vận phi về Mệnh!</b> Yếu tố hung hiểm.<br>';
-    else if(kyP===m12(K.menh+6))t+='<b class="bad">⚠ Hóa Kỵ Đại Vận phi về Thiên Di xung chiếu Mệnh!</b><br>';}
-  return`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☳ LUẬN ĐẠI VẬN HIỆN TẠI</h3>${t}</div>`;}
+  if(catDV.length)t+=`<br><br><span class="good"><b>Quý nhân phò tá:</b> Hội tụ ${catDV.join(', ')}.</span> Giúp đương số vượt qua sóng gió, đơm hoa kết trái.`;
+  
+  if(K.daiVanCan){
+    const[lo,qu,kh,ky]=TU_HOA[K.daiVanCan];
+    t+=`<br><br><b>Tứ Hóa Đại Vận</b> (can ${K.daiVanCan}): Phi ${lo} Hóa Lộc, ${qu} Hóa Quyền, ${kh} Hóa Khoa, và <b class="bad">phi ${ky} Hóa Kỵ</b>. `;
+    const kyP=fsp(K,ky);
+    if(kyP===K.menh)t+='<b class="bad">⚠ Chú ý: Hóa Kỵ Đại Vận phi thẳng về Mệnh!</b> Báo hiệu 10 năm nhiều sức ép tâm lý, thị phi vây quanh. ';
+    else if(kyP===m12(K.menh+6))t+='<b class="bad">⚠ Hóa Kỵ Đại Vận phi về Thiên Di xung chiếu Mệnh!</b> Ra ngoài làm ăn cần hết sức đề phòng tiểu nhân hãm hại.';
+  }
+  return`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☳ LUẬN ĐẠI VẬN HIỆN TẠI</h3>${t}</div>`;
+}
 
 function luanHanNam(K){
   const xY=K.LUU.nam,canX=CAN[((xY+6)%10+10)%10],[,,,kyNam]=TU_HOA[canX];
@@ -533,14 +477,14 @@ function luanHanNam(K){
     if(kyDV.length)factors.push(`Gốc Đại Vận có <b>${kyDV.join(', ')}</b> Hóa Kỵ án ngữ.`);}
   const kkM=['Địa Không','Địa Kiếp'].filter(s=>K.P[s]===K.menh||K.P[s]===K.than);
   if(kkM.length&&K.daiVanCung>=0){const chD=Object.keys(K.S).filter(s=>K.S[s]===K.daiVanCung).concat(Object.keys(K.P).filter(s=>K.P[s]===K.daiVanCung));
-    if(chD.some(s=>K.HOA[s]==='ky'))factors.push(`Mệnh/Thân có <b>${kkM.join(', ')}</b> (sát tinh bậc nhất) + đang đi Đại Vận Hóa Kỵ.`);}
+    if(chD.some(s=>K.HOA[s]==='ky'))factors.push(`Mệnh/Thân ôm Sát tinh Không Kiếp, lại đang đi qua Đại Vận Hóa Kỵ.`);}
   if(K.daiVanCan){const[,,,kyDVC]=TU_HOA[K.daiVanCan],kyDVCP=fsp(K,kyDVC);
     if(kyDVCP===K.menh&&kyNamPos!==K.menh)factors.push(`Can Đại Vận (${K.daiVanCan}) phi <b>${kyDVC}</b> Hóa Kỵ về Mệnh.`);}
   const satM=SAT_LIST.filter(s=>K.P[s]===K.menh);
   if(satM.length){const thP=K.LUU.tieuHan,chTH=Object.keys(K.S).filter(s=>K.S[s]===thP).concat(Object.keys(K.P).filter(s=>K.P[s]===thP));
-    if(chTH.some(s=>K.HOA[s]==='ky'||K.LUU.hoa[s]==='ky'))factors.push(`Mệnh có sát tinh (${satM.join(', ')}), Tiểu Hạn năm nay gặp Hóa Kỵ.`);}
+    if(chTH.some(s=>K.HOA[s]==='ky'||K.LUU.hoa[s]==='ky'))factors.push(`Mệnh có bầy Sát tinh, Tiểu Hạn năm nay lại đụng Hóa Kỵ.`);}
   const satTh=SAT_LIST.filter(s=>K.P[s]===K.than),hkTh=['Thiên Hình','Thiên Không'].filter(s=>K.P[s]===K.than);
-  if(satTh.length&&hkTh.length)factors.push(`Thân có ${satTh.join(', ')} kèm ${hkTh.join(', ')}, năm Kỵ dễ kích phát.`);
+  if(satTh.length&&hkTh.length)factors.push(`Thân có ${satTh.join(', ')} kèm ${hkTh.join(', ')}, năm Kỵ dễ kích phát tai ương.`);
   const tamHopM=[K.menh,m12(K.menh+4),m12(K.menh+8),m12(K.menh+6)];
   const rescues=[];const hoaLQK=[];
   Object.keys(K.HOA).forEach(s=>{const h=K.HOA[s],pos=fsp(K,s);
@@ -548,18 +492,20 @@ function luanHanNam(K){
   if(hoaLQK.length>=2)rescues.push(hoaLQK.join(', ')+' hội chiếu');
   if(tamHopM.includes(K.P['Thiên Khôi']))rescues.push('Thiên Khôi chiếu');
   if(tamHopM.includes(K.P['Thiên Việt']))rescues.push('Thiên Việt chiếu');
-  let t=`Năm <b>${yearName(xY)}</b>, <b class="bad">${kyNam} Hóa Kỵ</b>.<br><br>`;
-  if(!factors.length){t+=`<span class="good">✓ Không phát hiện yếu tố hung hiểm nào.</span> Năm bình an, mọi việc thuận tự nhiên.<br>`;}
-  else{t+=`<b class="bad">Phát hiện ${factors.length}/6 yếu tố hung hiểm:</b><br>`;
+  
+  let t=`Phân tích Lưu đồ năm <b>${yearName(xY)}</b>, lưu Hóa phi tinh báo <b>${kyNam} Hóa Kỵ</b>.<br><br>`;
+  if(!factors.length){t+=`<span class="good">✓ Không phát hiện lưới Hóa Kỵ bủa vây.</span> Năm nay vận trình khá êm ả mượt mà, vạn sự thuận theo tự nhiên mà đơm hoa kết trái.<br>`;}
+  else{t+=`<b class="bad">Phát hiện ${factors.length}/6 yếu tố Kỵ/Sát kích hoạt:</b><br>`;
     factors.forEach(f=>t+=`<span class="bad">✗</span> ${f}<br>`);t+='<br>';
-    if(factors.length===1)t+='Một yếu tố hung – năm có lúc vất vả nhưng vẫn kiểm soát được.';
-    else if(factors.length<=3)t+=`<b>Chồng ${factors.length} tầng Hóa Kỵ</b> – năm hung hiểm, cần đề phòng sức khỏe, công việc, pháp lý. Hạn chế mạo hiểm.`;
-    else t+=`<b class="bad">Hạn cực nặng!</b> Chồng ${factors.length} tầng Hóa Kỵ. Hết sức cẩn trọng, tránh mọi rủi ro. Nên tích cực hành thiện, tích đức.`;
+    if(factors.length===1)t+='Một yếu tố hung – năm nay có lúc vất vả, đau đầu nhưng tựu chung vẫn nằm trong tầm kiểm soát.';
+    else if(factors.length<=3)t+=`<b>Chồng ${factors.length} tầng Hóa Kỵ/Sát</b> – cảnh báo một năm hung hiểm, sóng gió bủa vây. Đương số cần đề phòng sức khỏe, công việc gãy đổ, pháp lý. Hạn chế tối đa đầu tư mạo hiểm.`;
+    else t+=`<b class="bad">HẠN CỰC NẶNG!</b> Chồng ${factors.length} tầng Kỵ Sát. Báo động đỏ toàn diện! Phải hết sức cẩn trọng đường đi nước bước, tránh mọi mưu cầu lớn. Tranh thủ hành thiện, phóng sinh tích phúc để hóa giải tai kiếp.`;
     t+='<br><br>';
-    if(rescues.length){t+=`<span class="good"><b>Cứu giải:</b> ${rescues.join('; ')}.</span> Tuy gặp hạn xấu nhưng vẫn có đường thoát. `;
-      if(hoaLQK.length>=3)t+='<b class="good">Đủ Tam Hóa (Khoa-Quyền-Lộc) – sức cứu giải rất mạnh, phùng hung hóa cát.</b>';}
-    else if(factors.length>=2)t+='<span class="bad">Không tìm thấy bộ sao cứu giải mạnh hội chiếu Mệnh.</span> Đương số nên chủ động phòng ngừa, tích phúc đức.';}
-  return`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☵ XEM HẠN NĂM ${xY}</h3>${t}</div>`;}
+    if(rescues.length){t+=`<span class="good"><b>Đường sinh tinh chiếu mạng:</b> ${rescues.join('; ')}.</span> Tuy trong hung có hiểm nhưng vẫn có cơ hội thoát hiểm ngoạn mục. `;
+      if(hoaLQK.length>=3)t+='<b class="good">Đủ Tam Hóa (Khoa-Quyền-Lộc) hội tụ – sức cứu giải vô cùng mạnh, phùng hung hóa cát, biển lửa hóa đài sen.</b>';}
+    else if(factors.length>=2)t+='<span class="bad">Không tìm thấy tổ hợp Cát tinh đủ mạnh hội chiếu Mệnh để hóa giải.</span> Đương số bắt buộc phải chủ động phòng ngừa, không được chủ quan lơ là.';}
+  return`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☵ XEM HẠN NĂM ${xY}</h3>${t}</div>`;
+}
 
 const GRID=[5,6,7,8,4,null,null,9,3,null,null,10,2,1,0,11];
 let SEL=null;
@@ -619,7 +565,7 @@ function center(K){const c=document.createElement('div');c.id='center';
    <div class="row hl"><span>Năm xem</span><span>${yearName(K.LUU.nam)}</span></div>
    <div class="row"><span>Tuổi (âm)</span><span>${K.lunarAge}</span></div>`;return c;}
 
-/* ═══ TAB EVENT HANDLERS ═══ */
+/* ═══ EVENT HANDLERS CÁC TABS CÒN LẠI ═══ */
 let DAYS=[];
 function runCuoi(){
   const eB=document.getElementById('bDob').value,eG=document.getElementById('gDob').value;
@@ -637,9 +583,9 @@ function runCuoi(){
   checks.forEach(c=>H+=`<div class="card"><div class="hd"><span class="t">${c.t}</span><span class="v ${c.v}">${c.v==='good'?'Hợp':c.v==='bad'?'Xung':'Bình'}</span></div><div class="why">${c.why}</div></div>`);
   
   let lb='';
-  if(!bad)lb="Hai tuổi rất hợp nhau, ngũ hành tương hòa. Kết duyên dễ bề làm ăn, gia đạo êm ấm.";
-  else if(bad===1)lb="Nhìn chung có sự tương giao tốt, tuy vướng chút xung khắc nhưng không đáng ngại. Vợ chồng biết nhường nhịn là được.";
-  else lb="Hai tuổi có phần xung khắc. Dễ bất đồng quan điểm, kinh tế thăng trầm. Tuy nhiên, 'Đức năng thắng số', sự chân thành và bao dung mới là gốc rễ bền vững.";
+  if(!bad)lb="Hai tuổi cực kỳ hòa hợp, ngũ hành tương sinh, can chi tương hòa. Kết duyên dễ bề làm ăn, gia đạo êm ấm viên mãn.";
+  else if(bad===1)lb="Nhìn chung có sự tương giao tốt, tuy vướng chút xung khắc nhẹ nhưng không đáng lo ngại. Vợ chồng biết nhường nhịn thấu hiểu là bách niên giai lão.";
+  else lb="Hai tuổi có nhiều điểm xung khắc rủi ro. Dễ bất đồng quan điểm, kinh tế thăng trầm. Tuy nhiên, 'Đức năng thắng số', sự chân thành và bao dung từ hai phía mới là gốc rễ bền vững để hóa giải.";
 
   const G_DAI_LOI={0:[6,12],1:[5,11],2:[2,8],3:[1,7],4:[4,10],5:[3,9],6:[6,12],7:[5,11],8:[2,8],9:[1,7],10:[4,10],11:[3,9]};
   const G_TIEU_LOI={0:[1,7],1:[4,10],2:[3,9],3:[6,12],4:[5,11],5:[2,8],6:[1,7],7:[4,10],8:[3,9],9:[6,12],10:[5,11],11:[2,8]};
@@ -647,9 +593,9 @@ function runCuoi(){
 
   H+=`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Luận giải Cung - Mệnh tình duyên</h3>
   <ul style="padding-left:20px;line-height:1.6">
-  <li><b>Tháng đại lợi (theo tuổi Nữ):</b> Nên chọn cưới hỏi vào <b>tháng ${dl.join(', ')} âm lịch</b> (Rất tốt, gia đạo êm ấm, dồi dào vượng khí). Nếu không sắp xếp được có thể dùng tháng Tiểu lợi là <b>tháng ${tl.join(', ')} âm lịch</b>.</li>
-  <li><b>Thiên Can:</b> Nam ${CAN[cG%10]} · Nữ ${CAN[cB%10]}. Sự hòa hợp Thiên can ảnh hưởng lớn tới tài lộc chung của gia đình sau này.</li>
-  <li><b>Lời bàn:</b> ${lb}</li>
+  <li><b>Tháng cưới đại lợi (theo tuổi Nữ):</b> Đương số nữ tuổi ${CHI[cB]}, tháng cưới hỏi đẹp nhất trong năm là <b>tháng ${dl.join(', ')} âm lịch</b> (Rất tốt, gia đạo êm ấm, dồi dào vượng khí). Nếu quá gấp rút hoặc lỡ dở, có thể dùng tạm tháng Tiểu lợi là <b>tháng ${tl.join(', ')} âm lịch</b>. Tuyệt đối kiêng những tháng kỵ phòng phu thê.</li>
+  <li><b>Hòa hợp Thiên Can:</b> Chú rể can ${CAN[cG%10]} · Cô dâu can ${CAN[cB%10]}. Thiên can chi phối lộc lá đất đai. Việc xem xét Can phối ngẫu hợp nhau mang lại nền tảng làm ăn vững vàng cho gia đình nhỏ.</li>
+  <li><b>Lời bàn chung:</b> ${lb}</li>
   </ul></div>`;
 
   H+=`<h3>${G('Kim Lâu','kim lâu')} &amp; ${G('Tam tai','tam tai')}</h3><table><thead><tr><th>Năm</th><th>Tuổi Nữ</th><th>Kim Lâu</th><th>Tam tai Nữ</th><th>Tam tai Nam</th></tr></thead><tbody>`;
@@ -660,7 +606,7 @@ function runCuoi(){
   DAYS=[];const months=[];
   for(let y=y1;y<=y2;y++)for(let mo=1;mo<=12;mo++){const dim=new Date(y,mo,0).getDate(),cells=[];
     for(let d=1;d<=dim;d++){const r=xetNgay(d,mo,y,ctx);cells.push(r);if(r.tot)DAYS.push(r);}months.push({y,mo,cells});}
-  H+=`<div class="tally"><div class="big">Tìm thấy ${DAYS.length} ngày trạch cát.</div><div class="note">Đã loại bỏ Hắc đạo, Tam nương, Nguyệt kỵ, Dương công kỵ và ngày xung tuổi.</div></div>`;
+  H+=`<div class="tally"><div class="big">Tìm thấy ${DAYS.length} ngày cát lợi.</div><div class="note">Thuật toán đã tự động lọc sạch Hắc đạo, Tam nương, Nguyệt kỵ, Dương công kỵ và ngày xung khắc tuổi.</div></div>`;
   const DOW=['CN','T2','T3','T4','T5','T6','T7'];
   months.forEach(({y,mo,cells})=>{if(!cells.some(c=>c.tot))return;
     H+=`<div class="mon"><h4>Tháng ${mo}/${y}</h4><div class="cal">${DOW.map(d=>`<div class="dow">${d}</div>`).join('')}`;
@@ -680,31 +626,37 @@ function runNha(){
   const ho=HOANG_OC[(t-10)%6],kl=kimLau(lb.year,yX),tt=tamTai(yearChiI(lb.year),yX);
   const trach=TRACH[t%9],trachV=['Phúc','Đức','Bảo','Lộc'].includes(trach)?'good':'bad';
   
-  let H=`<div class="tally"><div class="big">Gia chủ ${yearName(lb.year)} · Xây năm ${yearName(yX)} (Tuổi mụ: ${t})</div></div>`;
+  let H=`<div class="tally"><div class="big">Gia chủ ${yearName(lb.year)} · Khởi công năm ${yearName(yX)} (Tuổi mụ: ${t})</div></div>`;
   const row=(t2,vv,why)=>`<div class="card"><div class="hd"><span class="t">${t2}</span><span class="v ${vv}">${vv==='good'?'Cát':'Hung'}</span></div><div class="why">${why}</div></div>`;
   
-  let hoExp=ho.v==='good'?'Làm nhà năm này phúc lộc dồi dào, gia đạo an vui.':'Phạm Hoang Ốc, nếu làm nhà năm nay dễ sinh ốm đau, hao tài tốn của.';
-  let klExp=kl.pham?`Phạm Kim Lâu ${kl.loai}. `+(kl.loai==='Thân'?'Gây tai họa cho chính người chủ.':kl.loai==='Thê'?'Xấu cho người vợ.':kl.loai==='Tử'?'Xấu cho con cái.':'Kinh tế, chăn nuôi thất bát, làm ăn kém.'):'Không phạm Kim Lâu, rất tốt để đứng tên động thổ.';
-  let ttExp=tt.pham?`Đang trong hạn Tam Tai năm thứ ${tt.thu}. Làm nhà dễ gặp trắc trở, kiện cáo, thi công hay gặp sự cố.`:'Không vướng hạn Tam Tai, công việc thi công dễ bề thuận lợi.';
+  let hoExp=ho.v==='good'?'Làm nhà năm này phúc lộc dồi dào, gia đạo an vui, sự nghiệp hưng vượng.':'Cực xấu. Phạm Hoang Ốc sinh ốm đau, hao tài tốn của, dễ gặp xui xẻo rình rập.';
+  let klExp=kl.pham?`Phạm Kim Lâu ${kl.loai}. `+(kl.loai==='Thân'?'Đại kỵ cho chính bản thân người chủ, dễ gặp tai ương.':kl.loai==='Thê'?'Mang họa tổn thọ cho người vợ.':kl.loai==='Tử'?'Con cái ốm đau, khó nuôi.':'Làm ăn lụi bại, hao tổn kinh tế nghiêm trọng.'):'Hoàn toàn vượng khí, không vướng bận Kim Lâu, tha hồ đứng tên động thổ.';
+  let ttExp=tt.pham?`Hạn Tam Tai năm thứ ${tt.thu}. Trắc trở bủa vây, xây cất thi công hay xảy ra tai nạn, thị phi kiện cáo.`:'Thoát khỏi vòng kìm kẹp của Tam Tai, mọi mưu sự hanh thông dễ dàng.';
   
   H+=row(G('Hoang Ốc','hoang ốc')+' — '+ho.t,ho.v,hoExp);
   H+=row(G('Kim Lâu','kim lâu'),kl.pham?'bad':'good',klExp);
   H+=row(G('Tam tai','tam tai'),tt.pham?'bad':'good',ttExp);
-  H+=row(G('Cửu Trạch','trạch tuổi')+' — Trạch '+trach,trachV,trachV==='good'?'Trạch tuổi rất đẹp, tụ khí sinh tài, gia chủ phát đạt.':'Trạch tuổi xấu, mang năng lượng suy bại, không nên xây cất.');
+  H+=row(G('Cửu Trạch','trạch tuổi')+' — Trạch '+trach,trachV,trachV==='good'?'Trạch tuổi quá đẹp, vào đúng cung tụ khí sinh tài. Ngôi nhà đón lộc khí, gia chủ ngày càng phát đạt.':'Trạch tuổi u ám, mang năng lượng suy bại, hao mòn sức sống. Tuyệt đối nên cân nhắc kỹ.');
 
   const cp=cungPhi(lb.year,document.getElementById('nSex').value);
   const huong=DONG_TU.includes(cp)?'Đông, Đông Nam, Nam, Bắc':'Tây, Tây Nam, Tây Bắc, Đông Bắc';
   const xau=[ho.v==='bad',kl.pham,tt.pham].filter(Boolean).length;
   let lb2='';
-  if(!xau)lb2="Năm vô cùng cát lợi để tiến hành động thổ, xây nhà.";
-  else if(xau===1)lb2="Năm này vướng mắc nhẹ. Nếu bắt buộc làm nhà, gia chủ vẫn có thể tự làm hoặc cẩn thận mượn tuổi người khác cho chắc chắn.";
-  else lb2="Năm nay phạm kỵ nặng, gia chủ tuyệt đối không nên tự đứng ra động thổ mà bắt buộc phải mượn tuổi người thân để tránh tai ương.";
+  if(!xau)lb2="Năm vô cùng cát lợi để tiến hành động thổ. Thiên thời địa lợi nhân hòa đều hội tụ.";
+  else if(xau===1)lb2="Năm này vướng mắc nhẹ. Nếu bắt buộc làm nhà, gia chủ vẫn có thể tự làm hoặc nhờ cao nhân mượn tuổi để cẩn thận che chắn.";
+  else lb2="ĐẠI KỴ! Năm nay phạm kỵ quá nặng nề. Gia chủ tuyệt đối không tự ý đứng ra động thổ mà bắt buộc phải mượn tuổi người thân để tránh họa sát thân.";
+  
+  let muontuoi = xau ? `<li><b>Giải pháp Hóa Giải (Mượn tuổi):</b> Vì phạm kỵ, gia chủ tuyệt đối không tự tay cuốc đất. Bắt buộc phải mượn người nam giới lớn tuổi hơn (ưu tiên người trong họ), có gia đạo êm ấm, không vướng tang bụi và <b>không phạm Kim Lâu, Hoang Ốc, Tam Tai</b> trong năm ${yearName(yX)} để đứng ra làm lễ và cuốc những nhát đầu tiên.</li>` : `<li><b>Thủ tục Động Thổ:</b> Tuổi quá đẹp, gia chủ đích thân chủ trì. Chọn giờ Hoàng đạo, đứng ở mặt <b>${huong.split(', ')[0]}</b> (cung Sinh Khí) cuốc 5 nhát sâu xuống đất tượng trưng cho Ngũ Hành tương sinh, đâm chồi nảy lộc.</li>`;
 
-  H+=`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Hướng nhà & Lời khuyên</h3>
+  H+=`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Cẩm Nang Phong Thủy & Tâm Linh Xây Cất</h3>
   <ul style="padding-left:20px;line-height:1.6">
-  <li><b>Hướng nhà cát lợi:</b> Gia chủ phi cung <b>${cp}</b>, thuộc <b>${DONG_TU.includes(cp)?'Đông':'Tây'} tứ mệnh</b>. Các hướng tốt nhất để làm cửa chính, đặt bàn thờ là: <b>${huong}</b> (Đạt các khí Sinh Khí, Diên Niên, Thiên Y, Phục Vị).</li>
-  <li><b>Tổng kết năm ${yearName(yX)}:</b> ${lb2}</li>
+  <li><b>Tổng luận năm ${yearName(yX)}:</b> ${lb2}</li>
+  <li><b>Hướng xây cất & Bố cục:</b> Theo Bát Trạch, gia chủ mang phi cung <b>${cp}</b>, mệnh <b>${DONG_TU.includes(cp)?'Đông':'Tây'} tứ trạch</b>. Hướng vàng để trổ cửa chính, đặt ban thờ, kê đầu giường là: <b>${huong}</b> (Hứng trọn Sinh Khí, Diên Niên, Thiên Y, Phục Vị). Tránh tuyệt đối để cửa chính quay về các hướng ngược lại kẻo vướng Lục Sát, Tuyệt Mệnh, gia đạo suy vong.</li>
+  ${muontuoi}
+  <li><b>Lễ vật Động Thổ:</b> Chuẩn bị 1 mâm cúng tươm tất gồm: 1 con gà trống luộc nguyên con chéo cánh, 1 đĩa xôi gấc, mâm ngũ quả tươi, 3 cơi trầu cau, 9 bông hồng đỏ, 1 đĩa muối gạo, đinh vàng hoa, 5 chén rượu, 5 chén nước, nhang đèn đầy đủ.</li>
+  <li><b>Đại Kỵ khi thi công:</b> Ngày động thổ và đổ mái, cấm kỵ cho phụ nữ mang thai hoặc người đang mang trọng tang bước vào công trường. Cột nhà không được để đổ. Cửa chính không được đâm thẳng vào ngã ba, góc nhọn nhà hàng xóm, hoặc có cột điện chắn giữa cửa.</li>
   </ul></div>`;
+  
   document.getElementById('outNha').innerHTML=H;
 }
 document.getElementById('btnNha').onclick=runNha;
@@ -725,35 +677,34 @@ function runMa(){
     .forEach(([n,v,c])=>{
       const[ten,cls]=loai(c);
       arrTypes.push(ten);
-      let exp=ten==='Trùng tang'?'Hung hiểm. Vong hồn ra đi không dứt khoát, dễ vương vấn cõi trần và ảnh hưởng xấu tới người ở lại.':ten==='Thiên di'?'Trời định. Người mất ra đi thanh thản, do số mệnh đã tận, không hung không cát.':'Cực kỳ tốt. Người mất ra đi viên mãn, mồ yên mả đẹp, phù hộ độ trì cho con cháu.';
+      let exp=ten==='Trùng tang'?'Hung hiểm. Vong hồn ra đi không thanh thản, oán niệm còn vương, dễ quấy nhiễu kéo theo người thân cõi trần.':ten==='Thiên di'?'Trời định số tận. Vong hồn nhẹ nhàng rời đi theo quy luật tự nhiên, vô ưu vô lo.':'Cực kỳ tốt. Ra đi viên mãn, đạt được mồ yên mả đẹp. Năng lượng âm phần che chở, độ trì cho con cháu đắc lộc.';
       H+=`<div class="card"><div class="hd"><span class="t">${n} ${v} <b>→ ${CHI[c]}</b></span><span class="v ${cls}">${ten}</span></div><div class="why">${exp}</div></div>`;
     });
 
   let countTrung=arrTypes.filter(x=>x==='Trùng tang').length,countMo=arrTypes.filter(x=>x==='Nhập mộ').length;
   let kl='';
-  if(countTrung===4)kl='<b class="bad">ĐẠI HUNG: TRÙNG TANG LIÊN TÁNG.</b> Cực kỳ nguy hiểm. Phạm trùng tang toàn tập. Phải lập tức mời cao tăng hoặc pháp sư để hóa giải, gửi vong lên chùa, tuyệt đối không lập bàn thờ người mất ở nhà trong 3 năm đầu. Tránh để người hợp tuổi lại gần.';
-  else if(countTrung>=2)kl='<b class="bad">HUNG: Phạm Trùng Tang nặng.</b> Có yếu tố xui xẻo đeo bám. Nên làm lễ cầu siêu cẩn thận, gửi vong lên điện Tam Bảo để hóa giải oán khí.';
-  else if(countTrung===1)kl='Có phạm 1 Trùng tang nhẹ. Dù không quá nguy hiểm nhưng vẫn nên làm lễ siêu độ, người nhà tụng kinh niệm Phật để vong linh sớm siêu thoát.';
-  else if(countMo>=2)kl='<b class="good">ĐẠI CÁT: Được Nhập Mộ.</b> Người mất đi vào cõi an lành, mồ yên mả đẹp. Đây là phước đức lớn của gia đình, con cháu đời sau sẽ được âm phần phù hộ, làm ăn phát đạt.';
-  else kl='Bình hòa. Việc tang ma cứ thuận theo tự nhiên mà làm, chú ý chọn ngày giờ hạ huyệt tránh giờ hắc đạo là được.';
+  if(countTrung===4)kl='<b class="bad">ĐẠI HUNG: TRÙNG TANG LIÊN TÁNG TOÀN TẬP.</b> Lá số khai tử mang sát khí cực thịnh. Buộc phải tức tốc thỉnh cao tăng pháp sư trấn yểm. Linh cữu phải gửi lên chùa ngay, tuyệt nhiên cấm lập bàn thờ tại gia trong 3 năm đầu. Tránh để người hợp tuổi khóc lóc cạnh quan tài.';
+  else if(countTrung>=2)kl='<b class="bad">HUNG: Phạm Trùng Tang nặng nề.</b> Có bóng đen xui xẻo rình rập gia đạo. Phải làm lễ siêu độ cắt trùng thật chu toàn, tốt nhất nên rước linh vị vào nương nhờ cửa Phật để vong giải bớt oán khí.';
+  else if(countTrung===1)kl='Vướng 1 Trùng tang nhẹ. Dẫu không họa hại to lớn nhưng chớ vội chủ quan. Người nhà năng niệm Phật, tụng chú Đại Bi để dẫn lối cho vong hồn mau chóng siêu thoát.';
+  else if(countMo>=2)kl='<b class="good">ĐẠI CÁT: Được vòng Nhập Mộ.</b> Người mất nhẹ bước tiêu diêu cõi Phật. Đất lành chim đậu, mồ yên mả ấm. Sự viên mãn này chính là đại phước đức báu vật để lại cho con cháu, thế hệ sau hứa hẹn phát đạt rực rỡ.';
+  else kl='Cục diện bình hòa. Tang ma tiến hành theo nghi thức truyền thống thuận tự nhiên. Chỉ cần cẩn thận xem ngày giờ hạ huyệt tránh hắc đạo là vạn sự êm xuôi.';
 
-  H+=`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Luận giải & Lời khuyên Hậu sự</h3>
+  H+=`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Cẩm Nang Nghi Thức Hậu Sự & Hóa Giải</h3>
   <ul style="padding-left:20px;line-height:1.6">
-  <li><b>Tổng luận:</b> ${kl}</li>
-  <li><b>Ngày hạ huyệt:</b> Nên chọn ngày có các sao tốt như Hoàng Đạo, Trực Kiên, Trực Thành. Tuyệt đối tránh ngày Thọ Tử, Sát Chủ, Không Phòng (Tham khảo thêm sách Trạch Cát).</li>
+  <li><b>Phán quyết Trùng Tang & Mộ Phần:</b> ${kl}</li>
+  <li><b>Chọn ngày hạ huyệt:</b> Mọi sự hung cát của tuổi đều có thể dùng ngày/giờ tốt để dung hòa. Bắt buộc chọn ngày Hoàng Đạo, có các sao cát như Trực Kiên, Trực Thành chiếu rọi. Tuyệt đối tránh xa các ngày Thọ Tử, Sát Chủ, Không Phòng kẻo rước thêm tai ương.</li>
+  <li><b>Nghi thức Khâm Liệm (Nhập Quan):</b> Trước liệm phải làm lễ mộc dục (tắm gội thi hài bằng nước ngũ vị hương). Dùng vải lụa trắng sạch làm đồ đại/tiểu liệm. Phải cắt móng tay, móng chân, chải tóc gọn gàng, bọc vào một túi nhỏ đặt cùng vào quan tài. Tuyệt đối không dùng quần áo bằng nilon hay da.</li>
+  <li><b>Thiết lập Linh Tọa:</b> Trên linh tọa phải có ảnh bài vị, 2 bát cơm úp thành ngọn, 1 quả trứng luộc, 1 đôi đũa bông cắm thẳng, 7 ngọn nến (nếu người nam) hoặc 9 ngọn (nếu nữ). Nhang đèn phải giữ cháy liên tục không đứt đoạn trong suốt những ngày quàn tại gia để dẫn đường cho linh hồn.</li>
+  <li><b>Đại Kỵ trong Tang Ma:</b> 
+     <br>- Không để chó, mèo đen nhảy qua thi hài (tránh hiện tượng quỷ nhập tràng). 
+     <br>- Nước mắt người sống (đặc biệt là con cháu) tuyệt đối không được rơi vào thi hài lúc khâm liệm kẻo vong luyến trần không thể siêu thoát. 
+     <br>- Phụ nữ mang thai, người bị chó dại cắn, hoặc người có tuổi Tứ hành xung với người mất nên lánh mặt lúc hạ huyệt để tránh nhiễm âm khí.
+  </li>
   </ul></div>`;
+  
   document.getElementById('outMa').innerHTML=H;
 }
 document.getElementById('btnMa').onclick=runMa;
-
-/* ═══ TOOLTIP ═══ */
-const tip=document.getElementById('tip');
-document.addEventListener('click',e=>{const g=e.target.closest('.gl');
-  if(!g){tip.style.display='none';return;}
-  tip.innerHTML=`<b>${g.textContent}</b><br>${GLOSS[g.dataset.g]||''}`;tip.style.display='block';
-  const r=g.getBoundingClientRect();
-  tip.style.left=Math.max(8,Math.min(r.left,innerWidth-tip.offsetWidth-8))+'px';
-  tip.style.top=(r.bottom+8+tip.offsetHeight>innerHeight?r.top-tip.offsetHeight-8:r.bottom+8)+'px';});
 
 /* ═══ CALENDAR CLICK (CƯỚI HỎI) ═══ */
 document.addEventListener('click',e=>{
@@ -767,12 +718,29 @@ document.addEventListener('click',e=>{
   box.innerHTML=`<h3 style="margin-top:0;font-size:16px;color:var(--gold)">Chi tiết ngày ${String(r.d).padStart(2,'0')}/${String(r.m).padStart(2,'0')}/${r.y}</h3>
   <b>Âm lịch:</b> ${r.L.day}/${r.L.month} năm ${yearName(r.L.year)} · Ngày <b>${r.can} ${r.chi}</b><br>
   <b>Trực:</b> ${r.truc} (Hoàng đạo)<br>
-  <b>Giờ tốt:</b> ${r.gio.join(', ')}<br>
-  <span class="good" style="display:block;margin-top:8px">✓ Ngày cực kỳ thanh cát, rất đẹp để tiến hành đại sự, kết hôn, ăn hỏi.</span>`;
+  <b>Giờ đại cát:</b> ${r.gio.join(', ')}<br>
+  <div style="margin-top:12px; padding: 12px; background: rgba(196,162,101,.05); border-left: 3px solid var(--gold); font-size:15px; line-height:1.6">
+    <h4 style="color:var(--gold); margin:0 0 8px 0; font-size:16px;">☯ Cẩm nang Tiến hành Đại sự</h4>
+    <ul style="padding-left:18px; margin:0;">
+       <li style="margin-bottom:6px"><b>Giờ xuất hành & Rước dâu:</b> Căn cứ vào bảng giờ Hoàng đạo, gia chủ nên chọn 1 trong các cung giờ: <b>${r.gio[0]||'Tý'}, ${r.gio[1]||'Sửu'}</b> để khởi hành. Tuyệt đối né cung giờ hắc đạo hoặc giờ kỵ tuổi.</li>
+       <li style="margin-bottom:6px"><b>Hướng xuất hành:</b> Nên đi về hướng đón Hỷ Thần (thần may mắn) hoặc Tài Thần (thần tài lộc). Quá trình di chuyển ưu tiên đường lớn, bằng phẳng.</li>
+       <li style="margin-bottom:6px"><b>Trải giường tân hôn:</b> Mời người phụ nữ trong họ có gia đạo viên mãn, vợ chồng hòa thuận, con cái nếp tẻ đầy đủ để tự tay trải chiếu/giường tân hôn. Trẻ em trai lanh lợi có thể cho lăn lộn trên giường lấy vía sinh con quý tử.</li>
+       <li style="margin-bottom:6px"><b>Nghi thức gia tiên:</b> Lễ vật bắt buộc phải có mâm trầu cau (quả cau phải tròn trịa, lá trầu xanh thắm), rượu, chè, bánh phu thê. Chú rể phải đích thân thắp nhang trình báo tổ tiên xin rước dâu.</li>
+       <li><b>Kiêng kỵ cốt tử:</b> Mẹ đẻ không đưa con gái về nhà chồng. Khi qua đò, qua cầu hoặc ngã tư lớn phải rải tiền xu, muối gạo để xuôi chèo mát mái, xua đuổi tà linh. Cô dâu khi bước ra khỏi cổng nhà tuyệt đối hướng mắt thẳng, không ngoái đầu nhìn lại.</li>
+    </ul>
+  </div>`;
   box.scrollIntoView({behavior:'smooth',block:'nearest'});
 });
 
-/* ═══ URL STATE ═══ */
+/* ═══ URL STATE & TIP ═══ */
+const tip=document.getElementById('tip');
+document.addEventListener('click',e=>{const g=e.target.closest('.gl');
+  if(!g){tip.style.display='none';return;}
+  tip.innerHTML=`<b>${g.textContent}</b><br>${GLOSS[g.dataset.g]||''}`;tip.style.display='block';
+  const r=g.getBoundingClientRect();
+  tip.style.left=Math.max(8,Math.min(r.left,innerWidth-tip.offsetWidth-8))+'px';
+  tip.style.top=(r.bottom+8+tip.offsetHeight>innerHeight?r.top-tip.offsetHeight-8:r.bottom+8)+'px';});
+
 function saveURL(){try{const p=new URLSearchParams({b:document.getElementById('bDob').value,g:document.getElementById('gDob').value,
   y1:document.getElementById('y1').value,y2:document.getElementById('y2').value,l:document.getElementById('lDob').value,
   h:document.getElementById('lHour').value,s:document.getElementById('lSex').value,xy:document.getElementById('lXemY').value,
