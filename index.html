@@ -236,7 +236,7 @@ const DICT_SAO_XAU = {
   "Liêm Trinh": "Cá tính quá mạnh dẫn đến bốc đồng, nóng nảy. Dễ vướng vào thị phi, kiện tụng pháp lý hoặc rắc rối trong các mối quan hệ tình cảm phức tạp.",
   "Thiên Phủ": "Quá an toàn đến mức bảo thủ, bỏ lỡ nhiều cơ hội bứt phá. Đôi khi có xu hướng hẹp hòi trong tiền bạc, thiếu đi sự liều lĩnh cần thiết.",
   "Thái Âm": "Tâm lý u buồn, nhạy cảm quá mức, dễ bị tổn thương bởi lời nói. Hay mơ mộng viển vông, đường tình cảm thường chông gai vất vả.",
-  "Tham Lang": "Lòng tham dễ bị kích phát. Tháo vát nhưng cả thèm chóng chán, dễ sa đà vào tửu sắc hoặc thú vui tốn kém. Cuộc đời hay thăng trầm vì khát kho không đáy.",
+  "Tham Lang": "Lòng tham dễ bị kích phát. Tháo vát nhưng cả thèm chóng chán, dễ sa đà vào tửu sắc hoặc thú vui tốn kém. Cuộc đời hay thăng trầm vì khát khao không đáy.",
   "Cự Môn": "Hay hoài nghi, đa nghi đa lo. Rất dễ vướng vào khẩu nghiệp, khắc khẩu với người thân, ra đường hay gặp thị phi đàm tiếu. Họa thường từ miệng ra.",
   "Thiên Tướng": "Thích sĩ diện, ham hư vinh, đôi khi lo chuyện bao đồng mà rước họa vào thân. Sự bảo thủ trong cách làm việc dễ khiến giậm chân tại chỗ.",
   "Thiên Lương": "Nguyên tắc thái quá thành ra cổ hủ, giáo điều. Đôi khi cứng nhắc, không chịu tiếp thu cái mới. Cuộc đời phải trải qua nhiều đợt tai ách rồi mới được cứu giải.",
@@ -250,14 +250,21 @@ function luanGiaiCung(K, idCung, tenCung) {
   const tuantriet = (K.TUAN.includes(idCung)?1:0) + (K.TRIET.includes(idCung)?2:0);
   const ts = K.V_TS[idCung];
   
-  let t = `<li><b>Thấu thị cung ${tenCung} (tại ${CHI[idCung]}):</b> `;
+  const intos = [
+    `☯ <b>Luận về ${tenCung} (tại ${CHI[idCung]}):</b> `,
+    `☯ <b>Khảo sát cung ${tenCung}:</b> `,
+    `☯ <b>Với phương vị ${tenCung} (đóng tại ${CHI[idCung]}):</b> `,
+    `☯ <b>Nhìn vào mảng ${tenCung}:</b> `,
+    `☯ <b>Phân tích cung ${tenCung}:</b> `
+  ];
+  let t = `<p style="margin-bottom:12px; padding-bottom:12px; border-bottom: 1px solid rgba(255,255,255,0.05)">${intos[idCung % 5]}`;
   
   if (ch.length === 0) {
      const di = m12(idCung + 6);
      const chD = Object.keys(K.S).filter(s=>K.S[s]===di);
-     t += `Bản cung <b>Vô Chính Diệu</b> (không có chính tinh tọa thủ). Trong khoa Tử Vi, cung VCD như một căn nhà không nóc, vô định và chịu sự chi phối cực kỳ mạnh từ hoàn cảnh cũng như cung đối diện. Đương số trong lĩnh vực này thường thiếu đi sự kiên định ban đầu, dễ bị tác động. Tuy nhiên, sự uyển chuyển và linh hoạt lại là tuyệt đỉnh. Cung này buộc phải mượn sinh khí từ <b>${chD.join(', ')}</b> ở cung đối diện chiếu về để làm nền móng. `;
+     t += `Cung này <b>Vô Chính Diệu</b> (không có chính tinh tọa thủ). Trong khoa Tử Vi, cung vô chính diệu như một căn nhà không nóc, uyển chuyển và linh hoạt vô cùng, nhưng ban đầu lại thiếu đi cái gốc kiên định. Do đó, phương diện này sẽ chịu sự chi phối mạnh mẽ từ <b>${chD.join(' và ')}</b> ở cung đối diện chiếu về. `;
   } else {
-     t += `Tại đây có sự cai quản của <b>${ch.join(' và ')}</b>. `;
+     t += `Nơi đây có sự cai quản của <b>${ch.join(' và ')}</b>. `;
      ch.forEach(s => {
         const mvdh = MVDH[s] ? MVDH[s][idCung] : 'B';
         const isTot = ['M','V','D'].includes(mvdh);
@@ -266,147 +273,50 @@ function luanGiaiCung(K, idCung, tenCung) {
         let saoText = isTot ? DICT_SAO_TOT[s] : DICT_SAO_XAU[s];
         if(saoText) t += saoText + " ";
         
-        if(hsk === 'sinh nhập') t += `<i>(Tương hợp Ngũ Hành: Sinh khí của ${sao} sinh nhập Bản mệnh, giúp đương số hưởng trọn vượng khí, tài lộc hay cơ hội tự nhiên tìm đến).</i> `;
-        else if(hsk === 'khắc xuất') t += `<i>(Đoạt được nghịch cảnh: Bản mệnh vất vả khắc chế ${sao}, cho thấy dù gặp bao thử thách chông gai, đương số vẫn đủ bản lĩnh thao túng cục diện).</i> `;
-        else if(hsk === 'khắc nhập') t += `<i>(Áp lực rèn giũa: Sao khắc Bản mệnh, tạo ra một áp lực khổng lồ. Buộc đương số phải trầy trật, nếm mật nằm gai mới thu phục được thời cơ).</i> `;
+        if(hsk === 'sinh nhập') t += `Đặc biệt, sinh khí của ${s} tương sinh với bản mệnh, tựa như hổ mọc thêm cánh, giúp đương số thu hút vượng khí, tài lộc tự nhiên tìm đến. `;
+        else if(hsk === 'khắc xuất') t += `Tuy nhiên, bản mệnh phải hao tổn tâm lực để khắc chế ${s}. Dù chông gai thử thách, đương số vẫn đủ bản lĩnh để thao túng toàn bộ cục diện này. `;
+        else if(hsk === 'khắc nhập') t += `Cần lưu ý, năng lượng của ${s} khắc ngược lại bản mệnh. Đây là một áp lực khổng lồ, đòi hỏi đương số phải nếm mật nằm gai mới mong thu phục được thành quả. `;
      });
   }
 
-  if (tuantriet === 1) t += `<br><br><b style="color:#aaa">✦ Tuần Không bủa vây:</b> Cung này bị Tuần Không phong tỏa. Mọi mưu sự tại đây sẽ có xu hướng bế tắc, lận đận và chậm chạp ở tiền vận (trước 35 tuổi), đòi hỏi ở bạn sự nhẫn nại tột cùng. Đừng vội nản, vì khi bước sang trung và hậu vận, sự vững chãi sẽ đền đáp xứng đáng. `;
-  if (tuantriet === 2) t += `<br><br><b style="color:#aaa">✦ Triệt Lộ án ngữ:</b> Rất cẩn trọng vì cung này dính Triệt. Triệt chủ về sự đứt đoạn bất thình lình. Mọi thứ ban đầu rất bạo phát, hanh thông nhưng dễ sụp đổ nhanh chóng nếu bạn không biết lui phòng giữ thành. Sau 35 tuổi, Triệt tháo gỡ thì cục diện mới rạng rỡ và an toàn hơn. `;
-  if (tuantriet === 3) t += `<br><br><b style="color:#aaa">✦ Ách Tuần - Triệt đồng cung:</b> Vùng đất này bị bưng bít hoàn toàn. Cát tinh mất thiêng mà hung tinh cũng tiêu tán họa. Mọi việc liên quan đến ${tenCung} hãy xem như mây khói, đừng đặt nặng mưu cầu vật chất ở đây, hãy để vạn sự tùy duyên ắt tâm sẽ an tịnh. `;
+  if (tuantriet === 1) t += `Khúc triết thay, vùng không gian này lại bị <b>Tuần Không</b> bủa vây. Mọi mưu sự ở tiền vận (trước 35 tuổi) thường bế tắc, chậm chạp. Phải nhẫn nại qua trung vận thì sự vững chãi mới bắt đầu đền đáp. `;
+  if (tuantriet === 2) t += `Cần cực kỳ cẩn trọng vì có <b>Triệt Lộ</b> án ngữ. Triệt chủ sự đứt đoạn bất thình lình, ban đầu có thể bạo phát hanh thông nhưng dễ sụp đổ nhanh chóng nếu chủ quan hống hách. Vượt qua 35 tuổi, rào cản này sẽ dần được tháo gỡ. `;
+  if (tuantriet === 3) t += `Đáng tiếc, cung này bị phong tỏa hoàn toàn bởi lưới <b>Tuần - Triệt đồng cung</b>. Cát tinh mất thiêng mà hung tinh cũng tiêu tán. Những mong cầu mãnh liệt ở đây tốt nhất nên thuận theo tự nhiên, cưỡng cầu chỉ thêm chuốc lấy muộn phiền. `;
 
   const satTinh = pu.filter(s=>SAT_LIST.includes(s));
   if (satTinh.length >= 2) {
-     t += `<br><br><b class="bad">⚠ Kiếp số hung tinh:</b> Bản cung bị vây hãm bởi bầy hung sát tinh tàn khốc (${satTinh.join(', ')}). Báo hiệu sóng gió trùng trùng, họa phúc đan xen, làm gì cũng phải đổ máu, đổ mồ hôi sôi nước mắt. Cần một bản lĩnh thép mới đứng vững. `;
+     t += `Chưa kể, bầy hung sát tinh tàn khốc (${satTinh.join(', ')}) hội tụ về đây, mang đến sóng gió trùng trùng. Làm gì cũng đổ mồ hôi sôi nước mắt mới đạt được kết quả, đòi hỏi đương số phải rèn một bản lĩnh thép. `;
   } else if (satTinh.length === 1) {
-     t += `<br><br><b class="bad">⚠ Thử thách:</b> Sự hiện diện của ${satTinh[0]} mang đến sự chông gai nhất định. Đừng quá lo lắng, nó chính là ngọn lửa thử vàng, rèn giũa ý chí của đương số. `;
+     t += `Sự góp mặt của hung tinh ${satTinh[0]} mang đến đôi chút chông gai, đóng vai trò như ngọn lửa thử vàng rèn giũa ý chí. `;
   }
 
   const catTinh = pu.filter(s=>['Văn Xương','Văn Khúc','Thiên Khôi','Thiên Việt','Lộc Tồn','Tả Phụ','Hữu Bật'].includes(s));
   if (catTinh.length >= 2) {
-     t += `<br><br><b class="good">✓ Quần vinh hội tụ:</b> May mắn thay, nơi đây quy tụ dàn sao Cát tinh sáng lóa (${catTinh.join(', ')}). Có điềm quý nhân âm thầm phò trợ, lúc nguy nan luôn có bàn tay vô hình kéo lên, cơ hội vàng thường đến rất bất ngờ. `;
+     t += `Nhưng vạn sự vẹn toàn bù trừ, nơi đây hội tụ quần vinh cát tinh (${catTinh.join(', ')}). Báo hiệu quý nhân âm thầm phò trợ, lúc nguy nan luôn có cơ hội vàng bất ngờ xuất hiện kéo đương số vượt qua nghịch cảnh. `;
   }
   
   const hL = K.HOA['Hóa Lộc'], hQ = K.HOA['Hóa Quyền'], hK = K.HOA['Hóa Khoa'];
   if(hL===idCung || hQ===idCung || hK===idCung) {
       let th=[]; if(hL===idCung)th.push('Hóa Lộc'); if(hQ===idCung)th.push('Hóa Quyền'); if(hK===idCung)th.push('Hóa Khoa');
-      t += `<br><br><b class="good">✓ Tứ Hóa ngự trị:</b> Cung này ôm trọn vượng khí của <b>${th.join(', ')}</b>. Khẳng định đây là mảnh đất màu mỡ nhất trong lá số để đương số bạo phát tài danh, hóa rồng hóa phượng. `;
+      t += `Tuyệt vời hơn, ${tenCung} còn ôm trọn vượng khí của <b>${th.join(', ')}</b>. Đây chính là mảnh đất màu mỡ bậc nhất trên lá số để đương số bạo phát tài danh, hóa rồng hóa phượng. `;
   }
 
-  t += `<br><br><i>Nhìn sâu hơn, trường năng lượng của cung đang ở giai đoạn <b>${ts}</b> (thuộc vòng Tràng Sinh). Điều này cho thấy cục diện đang ở thế ${(ts==='Suy'||ts==='Bệnh'||ts==='Tử'||ts==='Mộ'||ts==='Tuyệt') ? 'âm ỉ, suy thoái, cần thu mình tích lũy chờ mây tan.' : (ts==='Tràng Sinh'||ts==='Đế Vượng'||ts==='Lâm Quan'||ts==='Quan Đới') ? 'thịnh vượng tột bậc, bùng nổ, có thể tự tin bung sức vẫy vùng.' : 'bình hòa, ươm mầm nuôi dưỡng chờ thời đợi vận.'}</i></li>`;
+  const badTS = ['Suy','Bệnh','Tử','Mộ','Tuyệt'];
+  const goodTS = ['Tràng Sinh','Đế Vượng','Lâm Quan','Quan Đới'];
+  if (badTS.includes(ts)) {
+      if (idCung % 2 === 0) t += `Tựu chung lại, trường năng lượng của cung đang rơi vào vòng <b>${ts}</b>. Khí vận âm ỉ suy thoái, khuyên đương số nên thu mình tích lũy, chờ đợi mây tan thay vì mạo hiểm vung tay quá trán.`;
+      else t += `Với khí số nằm ở vòng <b>${ts}</b>, vạn sự thiếu đi sức bật vươn cao, đành lấy sự bình ổn, tĩnh tại làm kim chỉ nam.`;
+  } else if (goodTS.includes(ts)) {
+      if (idCung % 2 === 0) t += `Cuối cùng, bao trùm lên tất cả là khí vận vượng phát đắc vòng <b>${ts}</b>. Giai đoạn bùng nổ, thịnh vượng tột bậc, hoàn toàn có thể tự tin bung sức vẫy vùng làm nên chuyện lớn.`;
+      else t += `Cộng hưởng khí thế <b>${ts}</b>, nội lực vùng này tuôn trào cuồn cuộn, mở ra cơ hội thăng tiến và thành tựu vang dội.`;
+  } else {
+      if (idCung % 3 === 0) t += `Năng lượng cung đắc địa ở thế <b>${ts}</b>, duy trì sự ươm mầm, bình hòa nuôi dưỡng chờ thời đợi vận.`;
+  }
   
+  t += `</p>`;
   return t;
 }
 
-/* ═══ ÂM LỊCH ═══ */
-const TZ=7;
-function jdFromDate(dd,mm,yy){const a=Math.floor((14-mm)/12),y=yy+4800-a,m=mm+12*a-3;let jd=dd+Math.floor((153*m+2)/5)+365*y+Math.floor(y/4)-Math.floor(y/100)+Math.floor(y/400)-32045;if(jd<2299161)jd=dd+Math.floor((153*m+2)/5)+365*y+Math.floor(y/4)-32083;return jd;}
-function newMoonDay(k,tz){const T=k/1236.85,T2=T*T,T3=T2*T,dr=Math.PI/180;let J=2415020.75933+29.53058868*k+.0001178*T2-.000000155*T3;J+=.00033*Math.sin((166.56+132.87*T-.009173*T2)*dr);const M=359.2242+29.10535608*k-.0000333*T2-.00000347*T3,Mp=306.0253+385.81691806*k+.0107306*T2+.00001236*T3,F=21.2964+390.67050646*k-.0016528*T2-.00000239*T3;let C=(.1734-.000393*T)*Math.sin(M*dr)+.0021*Math.sin(2*dr*M);C-=.4068*Math.sin(Mp*dr)+.0161*Math.sin(dr*2*Mp)-.0004*Math.sin(dr*3*Mp);C+=.0104*Math.sin(dr*2*F)-.0051*Math.sin(dr*(M+Mp))-.0074*Math.sin(dr*(M-Mp));C+=.0004*Math.sin(dr*(2*F+M))-.0004*Math.sin(dr*(2*F-M))-.0006*Math.sin(dr*(2*F+Mp));C+=.001*Math.sin(dr*(2*F-Mp))+.0005*Math.sin(dr*(2*Mp+M));const dt=T<-11?.001+.000839*T+.0002261*T2-.00000845*T3-.000000081*T*T3:-.000278+.000265*T+.000262*T2;return Math.floor(J+C-dt+.5+tz/24);}
-function sunLongitude(jdn,tz){const T=(jdn-2451545.5-tz/24)/36525,T2=T*T,dr=Math.PI/180;const M=357.5291+35999.0503*T-.0001559*T2-.00000048*T*T2,L0=280.46645+36000.76983*T+.0003032*T2;let DL=(1.9146-.004817*T-.000014*T2)*Math.sin(dr*M);DL+=(.019993-.000101*T)*Math.sin(dr*2*M)+.00029*Math.sin(dr*3*M);let L=(L0+DL)*dr;L-=Math.PI*2*Math.floor(L/(Math.PI*2));return Math.floor(L/Math.PI*6);}
-function lunarMonth11(yy,tz){const off=jdFromDate(31,12,yy)-2415021,k=Math.floor(off/29.530588853);let nm=newMoonDay(k,tz);if(sunLongitude(nm,tz)>=9)nm=newMoonDay(k-1,tz);return nm;}
-function leapMonthOffset(a11,tz){const k=Math.floor((a11-2415021.076998695)/29.530588853+.5);let last=0,i=1,arc=sunLongitude(newMoonDay(k+i,tz),tz);do{last=arc;i++;arc=sunLongitude(newMoonDay(k+i,tz),tz);}while(arc!==last&&i<14);return i-1;}
-function solar2Lunar(dd,mm,yy,tz=TZ){const dayNum=jdFromDate(dd,mm,yy),k=Math.floor((dayNum-2415021.076998695)/29.530588853);let monthStart=newMoonDay(k+1,tz);if(monthStart>dayNum)monthStart=newMoonDay(k,tz);let a11=lunarMonth11(yy,tz),b11=a11,lunarYear;if(a11>=monthStart){lunarYear=yy;a11=lunarMonth11(yy-1,tz);}else{lunarYear=yy+1;b11=lunarMonth11(yy+1,tz);}const lunarDay=dayNum-monthStart+1,diff=Math.floor((monthStart-a11)/29);let leap=0,lunarMonth=diff+11;if(b11-a11>365){const lo=leapMonthOffset(a11,tz);if(diff>=lo){lunarMonth=diff+10;if(diff===lo)leap=1;}}if(lunarMonth>12)lunarMonth-=12;if(lunarMonth>=11&&diff<4)lunarYear-=1;return{day:lunarDay,month:lunarMonth,year:lunarYear,leap};}
-const yearCan=y=>CAN[((y+6)%10+10)%10],yearChiI=y=>((y+8)%12+12)%12,yearName=y=>yearCan(y)+' '+CHI[yearChiI(y)];
-const dayChiIdx=(d,m,y)=>(jdFromDate(d,m,y)+1)%12,dayCanIdx=(d,m,y)=>(jdFromDate(d,m,y)+9)%10;
-const fsp=(K,s)=>K.S[s]!==undefined?K.S[s]:(K.P[s]!==undefined?K.P[s]:-1);
-
-/* ═══ AN SAO ═══ */
-function anSao({dd,mm,yy,gio,sex,xemY}){
-  const L=solar2Lunar(dd,mm,yy),ci=((L.year+6)%10+10)%10,canNam=CAN[ci],cN=yearChiI(L.year);
-  const menh=m12(2+(L.month-1)-gio),than=m12(2+(L.month-1)+gio);
-  const NGU_HO={0:2,5:2,1:4,6:4,2:6,7:6,3:8,8:8,4:0,9:0},canDan=NGU_HO[ci];
-  const canCung=i=>CAN[(canDan+m12(i-2))%10];
-  const nh=NAP_AM[NA_IDX[canCung(menh)+'-'+CHI[menh]]],cuc=CUC_SO[nh];
-  const n=Math.ceil(L.day/cuc),r=n*cuc-L.day,base=m12(1+n),tv=m12(r%2===1?base-r:base+r),ph=m12(4-tv),S={};
-  S['Tử Vi']=tv;S['Thiên Cơ']=m12(tv-1);S['Thái Dương']=m12(tv-3);S['Vũ Khúc']=m12(tv-4);
-  S['Thiên Đồng']=m12(tv-5);S['Liêm Trinh']=m12(tv-8);S['Thiên Phủ']=ph;S['Thái Âm']=m12(ph+1);
-  S['Tham Lang']=m12(ph+2);S['Cự Môn']=m12(ph+3);S['Thiên Tướng']=m12(ph+4);S['Thiên Lương']=m12(ph+5);
-  S['Thất Sát']=m12(ph+6);S['Phá Quân']=m12(ph+10);
-  const P={'Văn Xương':m12(10-gio),'Văn Khúc':m12(4+gio),'Tả Phụ':m12(3+L.month),'Hữu Bật':m12(11-L.month),
-    'Địa Kiếp':m12(11+gio),'Địa Không':m12(11-gio),'Lộc Tồn':LOC_TON[canNam],
-    'Kình Dương':m12(LOC_TON[canNam]+1),'Đà La':m12(LOC_TON[canNam]-1),
-    'Thiên Khôi':KHOI_VIET[canNam][0],'Thiên Việt':KHOI_VIET[canNam][1]};
-  const[lo,qu,kh,ky]=TU_HOA[canNam],HOA={};HOA[lo]='loc';HOA[qu]='quyen';HOA[kh]='khoa';HOA[ky]='ky';
-  const duong=[0,2,4,6,8].includes(ci),thuan=(duong&&sex==='nam')||(!duong&&sex==='nu');
-  const dv={};for(let i=0;i<12;i++)dv[m12(thuan?menh+i:menh-i)]=cuc+i*10;
-  const off=m12(cN-ci),TUAN=[m12(10+off),m12(11+off)],tb=m12(8-(ci%5)*2),TRIET=[tb,m12(tb+1)];
-  let sH,sL;
-  if([2,6,10].includes(cN)){sH=1;sL=3;}else if([8,0,4].includes(cN)){sH=2;sL=10;}
-  else if([5,9,1].includes(cN)){sH=3;sL=10;}else{sH=9;sL=10;}
-  P['Hỏa Tinh']=m12(thuan?sH+gio:sH-gio);P['Linh Tinh']=m12(thuan?sL-gio:sL+gio);
-  P['Long Trì']=m12(4+cN);P['Phượng Các']=m12(10-cN);P['Thiên Khốc']=m12(6-cN);P['Thiên Hư']=m12(6+cN);
-  P['Hồng Loan']=m12(3-cN);P['Thiên Hỷ']=m12(9-cN);
-  P['Đào Hoa']={0:9,4:9,8:9,2:3,6:3,10:3,5:6,9:6,1:6,11:0,3:0,7:0}[cN];
-  P['Thiên Mã']={8:2,0:2,4:2,2:8,6:8,10:8,5:11,9:11,1:11,11:5,3:5,7:5}[cN];
-  P['Cô Thần']={11:2,0:2,1:2,2:5,3:5,4:5,5:8,6:8,7:8,8:11,9:11,10:11}[cN];
-  P['Quả Tú']={11:10,0:10,1:10,2:1,3:1,4:1,5:4,6:4,7:4,8:7,9:7,10:7}[cN];
-  P['Thiên Hình']=m12(9+(L.month-1));P['Thiên Riêu']=m12(1+(L.month-1));P['Thiên Y']=P['Thiên Riêu'];
-  P['Ân Quang']=m12(P['Văn Xương']+(L.day-2));P['Thiên Quý']=m12(P['Văn Khúc']-(L.day-2));
-  P['Tam Thai']=m12(P['Tả Phụ']+(L.day-1));P['Bát Tọa']=m12(P['Hữu Bật']-(L.day-1));
-  P['Thiên Không']=m12(cN+1);
-  P['Giải Thần']={0:8,4:8,8:8,1:5,5:5,9:5,2:2,6:2,10:2,3:11,7:11,11:11}[cN];
-  const _TS=['Tràng Sinh','Mộc Dục','Quan Đới','Lâm Quan','Đế Vượng','Suy','Bệnh','Tử','Mộ','Tuyệt','Thai','Dưỡng'];
-  const _TT=['Thái Tuế','Thiếu Dương','Tang Môn','Thiếu Âm','Quan Phù','Tử Phù','Tuế Phá','Long Đức','Bạch Hổ','Phúc Đức','Điếu Khách','Trực Phù'];
-  const _BS=['Bác Sĩ','Lực Sĩ','Thanh Long','Tiểu Hao','Tướng Quân','Tấu Thư','Phi Liêm','Hỷ Thần','Bệnh Phù','Đại Hao','Phục Binh','Quan Phủ'];
-  const tsB={2:8,5:8,3:11,4:5,6:2}[cuc],bsB=LOC_TON[canNam];
-  const V_TS={},V_TT={},V_BS={};
-  for(let i=0;i<12;i++){V_TS[m12(thuan?tsB+i:tsB-i)]=_TS[i];V_TT[m12(cN+i)]=_TT[i];V_BS[m12(thuan?bsB+i:bsB-i)]=_BS[i];}
-  const xY=xemY||L.year,cX=yearChiI(xY),canX=CAN[((xY+6)%10+10)%10];
-  const th0={2:4,6:4,10:4,8:10,0:10,4:10,5:7,9:7,1:7,11:1,3:1,7:1}[cN];
-  const dif=xY-L.year,lLoc=LOC_TON[canX];
-  const LUU={nam:xY,tieuHan:m12(sex==='nam'?th0+dif:th0-dif),thaiTue:cX,
-    loc:lLoc,kinh:m12(lLoc+1),da:m12(lLoc-1),
-    ma:{8:2,0:2,4:2,2:8,6:8,10:8,5:11,9:11,1:11,11:5,3:5,7:5}[cX],
-    khoc:m12(6-cX),hu:m12(6+cX),khoi:KHOI_VIET[canX][0],viet:KHOI_VIET[canX][1],
-    hoa:(()=>{const[a,b,c,e]=TU_HOA[canX],H={};H[a]='loc';H[b]='quyen';H[c]='khoa';H[e]='ky';return H;})()};
-  const lunarAge=xY-L.year+1;let daiVanCung=-1,daiVanStart=0;
-  for(let c=0;c<12;c++){if(dv[c]!==undefined&&lunarAge>=dv[c]&&lunarAge<dv[c]+10){daiVanCung=c;daiVanStart=dv[c];break;}}
-  const daiVanCan=daiVanCung>=0?canCung(daiVanCung):'';
-  return{L,canNam,chiNam:CHI[cN],menh,than,cuc,nh,tv,S,P,HOA,dv,thuan,canCung,TUAN,TRIET,V_TS,V_TT,V_BS,LUU,
-    naNam:NA_TEN[NA_IDX[canNam+'-'+CHI[cN]]], naHanh: NAP_AM[NA_IDX[canNam+'-'+CHI[cN]]], daiVanCung,daiVanStart,daiVanCan,lunarAge,sex};
-}
-
-/* ═══ HỢP TUỔI & TRẠCH CÁT ═══ */
-const TAM_HOP=[[0,4,8],[1,5,9],[2,6,10],[3,7,11]];
-const TU_HANH_XUNG=[[0,3,6,9],[1,4,7,10],[2,5,8,11]];
-const LUC_HAI={0:7,7:0,1:6,6:1,2:5,5:2,3:4,4:3,8:11,11:8,9:10,10:9};
-const LUC_HOP={0:1,1:0,2:11,11:2,3:10,10:3,4:9,9:4,5:8,8:5,6:7,7:6};
-const TAM_TAI_MAP={"0,4,8":[2,3,4],"1,5,9":[11,0,1],"2,6,10":[8,9,10],"3,7,11":[5,6,7]};
-function checkChi(a,b){const o=[];
-  const th=TAM_HOP.find(g=>g.includes(a)&&g.includes(b));if(th&&a!==b)o.push({v:'good',t:G('Tam hợp','tam hợp'),why:`Cùng nhóm ${th.map(i=>CHI[i]).join(' – ')}.`});
-  const tx=TU_HANH_XUNG.find(g=>g.includes(a)&&g.includes(b));if(tx&&a!==b)o.push({v:'bad',t:G('Tứ hành xung','tứ hành xung'),why:`Cùng nhóm ${tx.map(i=>CHI[i]).join(' – ')}.`});
-  if(m12(a-b)===6)o.push({v:'bad',t:G('Lục xung','lục xung'),why:'Đối diện vòng chi.'});
-  if(LUC_HAI[a]===b)o.push({v:'mid',t:G('Lục hại','lục hại'),why:'Hại nhau.'});
-  if(LUC_HOP[a]===b)o.push({v:'good',t:G('Lục hợp','lục hợp'),why:'Hợp nhau.'});
-  if(!o.length)o.push({v:'mid',t:'Bình hòa',why:'Không xung không hợp.'});return o;}
-
-const napAm=y=>{const i=NA_IDX[yearCan(y)+'-'+CHI[yearChiI(y)]];return{hanh:NAP_AM[i],ten:NA_TEN[i]};};
-function checkNapAm(y1,y2){const a=napAm(y1),b=napAm(y2),base=`Nam <b>${a.ten}</b> (${a.hanh}) · Nữ <b>${b.ten}</b> (${b.hanh}). `;
-  if(SINH_H[a.hanh]===b.hanh||SINH_H[b.hanh]===a.hanh)return{v:'good',t:G('Tương sinh','nạp âm'),why:base};
-  if(KHAC_H[a.hanh]===b.hanh||KHAC_H[b.hanh]===a.hanh)return{v:'bad',t:G('Tương khắc','nạp âm'),why:base};
-  return{v:'mid',t:G('Bình hòa','nạp âm'),why:base};}
-const QUAI={1:'Khảm',2:'Khôn',3:'Chấn',4:'Tốn',6:'Càn',7:'Đoài',8:'Cấn',9:'Ly'},DONG_TU=['Khảm','Ly','Chấn','Tốn'];
-const red=x=>{while(x>9)x=String(x).split('').reduce((a,b)=>a+ +b,0);return x;};
-function cungPhi(y,sex){const s=red(String(y).slice(-2).split('').reduce((a,b)=>a+ +b,0));let n=sex==='nam'?(y<2000?10:9)-s:s+(y<2000?5:6);while(n>9)n-=9;if(n<=0)n+=9;return n===5?(sex==='nam'?'Khôn':'Cấn'):QUAI[n];}
-function checkCungPhi(yB,yG){const b=cungPhi(yB,'nu'),g=cungPhi(yG,'nam'),same=(DONG_TU.includes(b))===(DONG_TU.includes(g));
-  return{v:same?'good':'mid',t:G('Bát trạch','cung phi'),why:`Nam <b>${g}</b> · Nữ <b>${b}</b>. `+(same?'Cùng nhóm Đông/Tây tứ mệnh, rất tốt.':'Khác nhóm, cần dùng hướng bếp/giường dung hòa.')};}
-function kimLau(yB,yL){const t=yL-yB+1,du=t%9,L={1:'Thân',3:'Thê',6:'Tử',8:'Lục Súc'};return{tuoiMu:t,du,pham:!!L[du],loai:L[du]||null};}
-function tamTai(c,yL){const g=TAM_HOP.find(x=>x.includes(c)),nam=TAM_TAI_MAP[g.join(',')],cy=yearChiI(yL);return nam.includes(cy)?{pham:true,thu:nam.indexOf(cy)+1}:{pham:false};}
-
-const TRUC=['Kiến','Trừ','Mãn','Bình','Định','Chấp','Phá','Nguy','Thành','Thu','Khai','Bế'];
-const HOANG=[1,2,4,5,8,10];
-const TAM_NUONG=[3,7,13,18,22,27],NGUYET_KY=[5,14,23],DUONG_CONG={1:[13],2:[11],3:[9],4:[7],5:[5],6:[3],7:[8,29],8:[27],9:[25],10:[23],11:[21],12:[19]};
-const trucIdx=(mTh,dc)=>m12(dc-mTh);
-function xetNgay(d,m,y,ctx){const L=solar2Lunar(d,m,y),dc=dayChiIdx(d,m,y),can=CAN[dayCanIdx(d,m,y)];
-  const ti=trucIdx(L.month-1,dc),truc=TRUC[ti],hoang=HOANG.includes(ti);const xau=[];
-  if(!hoang)xau.push(`hắc đạo (${truc})`);if(TAM_NUONG.includes(L.day))xau.push('tam nương');
-  if(NGUYET_KY.includes(L.day))xau.push('nguyệt kỵ');if((DUONG_CONG[L.month]||[]).includes(L.day))xau.push('Dương Công kỵ');
-  if(m12(dc-ctx.cB)===6)xau.push(`xung ${CHI[ctx.cB]}`);if(m12(dc-ctx.cG)===6)xau.push(`xung ${CHI[ctx.cG]}`);
-  const gio=[];for(let h=0;h<12;h++)if(HOANG.includes(trucIdx(m12(dc-2),h)))gio.push(CHI[h]);
-  return{d,m,y,L,can,chi:CHI[dc],truc,hoang,xau,gio,tot:xau.length===0};}
-
-/* ═══ LUẬN LÁ SỐ (CHUYÊN SÂU V14) ═══ */
 function luanMenh(K){
   const cN=yearChiI(K.L.year);
   const cucHanh = K.cuc===2?'Thủy':K.cuc===3?'Mộc':K.cuc===4?'Kim':K.cuc===5?'Thổ':'Hỏa';
@@ -420,24 +330,23 @@ function luanMenh(K){
   
   const amDuongLy = (cN%2 === K.menh%2) ? "Âm Dương thuận lý. Cuộc đời nhìn chung có nhiều điểm thuận lợi, dễ gặp thời vận, mưu sự dễ thành hơn người." : "Âm Dương nghịch lý. Đòi hỏi nội lực mạnh mẽ. Dù gặp nhiều thử thách thăng trầm nhưng nhờ sự nỗ lực tự thân không ngừng nghỉ mà bứt phá.";
 
-  let t = '<h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Nền tảng Bản mệnh & Cốt cách</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
-  t += `<li><b>Gốc rễ Âm Dương - Ngũ Hành:</b> Đương số mang mệnh <b>${K.naNam}</b> (${nh}), <b>${CUC_TEN[K.cuc]}</b>. Thuộc thế <b>${amDuongLy}</b> Tình thế vận động: <b>${menhCucText}</b></li>`;
+  let t = '<h3 style="color:var(--gold);margin-top:0;font-size:18px;margin-bottom:12px;">☯ Nền tảng Bản mệnh & Cốt cách</h3>';
+  t += `<p style="margin-bottom:12px; padding-bottom:12px; border-bottom: 1px solid rgba(255,255,255,0.05)">☯ <b>Gốc rễ Âm Dương - Ngũ Hành:</b> Đương số mang mệnh <b>${K.naNam}</b> (${nh}), <b>${CUC_TEN[K.cuc]}</b>. Cục diện rơi vào thế <b>${amDuongLy}</b> Tình thế vận động: <b>${menhCucText}</b></p>`;
   t += luanGiaiCung(K, K.menh, 'Mệnh');
-  t += '</ul>';
   return '<div class="phan-box">'+t+'</div>';
 }
 
 function luanCacCung(K){
-  let t = '<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Đường Học hành, Công danh & Tiền bạc</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
+  let t = '<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;margin-bottom:12px;">☯ Đường Học hành, Công danh & Tiền bạc</h3>';
   t += luanGiaiCung(K, m12(K.menh+4), 'Quan Lộc');
   t += luanGiaiCung(K, m12(K.menh+8), 'Tài Bạch');
-  t += `</ul></div>`;
+  t += `</div>`;
 
-  t += '<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Hậu vận, Gia đạo & Nghiệp quả</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
+  t += '<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;margin-bottom:12px;">☯ Hậu vận, Gia đạo & Nghiệp quả</h3>';
   t += luanGiaiCung(K, m12(K.menh+10), 'Phu Thê');
   t += luanGiaiCung(K, m12(K.menh+7), 'Tật Ách');
-  t += luanGiaiCung(K, m12(K.menh+2), 'Ph Phúc Đức');
-  t += `</ul></div>`;
+  t += luanGiaiCung(K, m12(K.menh+2), 'Phúc Đức');
+  t += `</div>`;
   return t;
 }
 
@@ -533,7 +442,7 @@ function runLaso(){
     if(K.LUU.loc===i)lw.push('<span class="s luu">L.Lộc Tồn</span>');
     if(K.LUU.kinh===i)lw.push('<span class="s luu sat">L.Kình Dương</span>');
     if(K.LUU.da===i)lw.push('<span class="s luu sat">L.Đà La</span>');
-    if(K.LUU.ma===i)lw.push('<span class="s luu">L.Thiên Mã</span>');
+    if(K.LUU.ma===i)lw.push('<span class="s luu">L.Thi Mã</span>');
     if(K.LUU.khoc===i)lw.push('<span class="s luu sat">L.Thiên Khốc</span>');
     if(K.LUU.hu===i)lw.push('<span class="s luu sat">L.Thiên Hư</span>');
     if(K.LUU.khoi===i)lw.push('<span class="s luu">L.Thiên Khôi</span>');
