@@ -561,6 +561,64 @@ function luanHanNam(K){
     else if(factors.length>=2)t+='<span class="bad">Không tìm thấy bộ sao cứu giải mạnh hội chiếu Mệnh.</span> Đương số nên chủ động phòng ngừa, tích phúc đức.';}
   return`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☵ XEM HẠN NĂM ${xY}</h3>${t}</div>`;}
 
+const GRID=[5,6,7,8,4,null,null,9,3,null,null,10,2,1,0,11];
+let SEL=null;
+function runLaso(){
+  const v=document.getElementById('lDob').value;if(!v)return;
+  const[y,m,d]=v.split('-').map(Number);saveURL();
+  const K=anSao({dd:d,mm:m,yy:y,gio:+document.getElementById('lHour').value,
+    sex:document.getElementById('lSex').value,xemY:+document.getElementById('lXemY').value||undefined});
+  const ban=document.getElementById('ban');ban.innerHTML='';SEL=null;let c0=false;
+  GRID.forEach(i=>{
+    if(i===null){if(!c0){ban.appendChild(center(K));c0=true;}return;}
+    const el=document.createElement('div');
+    el.className='cung'+(i===K.menh?' menh':'')+(i===K.than?' than':'')+(i===K.daiVanCung?' dai-van':'');
+    el.dataset.chi=i;el.tabIndex=0;el.style.animationDelay=(GRID.indexOf(i)*28)+'ms';
+    const ch=Object.keys(K.S).filter(s=>K.S[s]===i),pu=Object.keys(K.P).filter(s=>K.P[s]===i);
+    const tg=s=>K.HOA[s]?`<span class="hoa ${K.HOA[s]}">${{loc:'LỘC',quyen:'QUYỀN',khoa:'KHOA',ky:'KỴ'}[K.HOA[s]]}</span>`:'';
+    const mh=s=>{if(!MVDH[s])return'';const v=MVDH[s][i],kiem=MH_DAKIEM.has(s+CHI[i]);return`<span class="mh ${v==='Đ'?'D':v} ${kiem?'':'chua'}">${v}</span>`;};
+    let tt='';
+    if(K.TUAN.includes(i))tt+='<span class="tt-tag tuan">TUẦN</span>';
+    if(K.TRIET.includes(i))tt+='<span class="tt-tag triet">TRIỆT</span>';
+    if(K.LUU.tieuHan===i)tt+='<span class="tt-tag lh">TIỂU HẠN</span>';
+    if(K.LUU.thaiTue===i)tt+='<span class="tt-tag lt">L.THÁI TUẾ</span>';
+    if(K.daiVanCung===i)tt+='<span class="tt-tag dv">ĐẠI VẬN</span>';
+    const lw=[];
+    if(K.LUU.loc===i)lw.push('<span class="s luu">L.Lộc Tồn</span>');
+    if(K.LUU.kinh===i)lw.push('<span class="s luu sat">L.Kình Dương</span>');
+    if(K.LUU.da===i)lw.push('<span class="s luu sat">L.Đà La</span>');
+    if(K.LUU.ma===i)lw.push('<span class="s luu">L.Thiên Mã</span>');
+    if(K.LUU.khoc===i)lw.push('<span class="s luu sat">L.Thiên Khốc</span>');
+    if(K.LUU.hu===i)lw.push('<span class="s luu sat">L.Thiên Hư</span>');
+    if(K.LUU.khoi===i)lw.push('<span class="s luu">L.Thiên Khôi</span>');
+    if(K.LUU.viet===i)lw.push('<span class="s luu">L.Thiên Việt</span>');
+    [...ch,...pu].forEach(sn=>{const h=K.LUU.hoa[sn];
+      if(h)lw.push(`<span class="s luu ${h==='ky'?'sat':''}">L.Hóa ${{loc:'Lộc',quyen:'Quyền',khoa:'Khoa',ky:'Kỵ'}[h]}</span>`);});
+    el.innerHTML=`<div class="top"><span class="tl"><span class="ten">${CUNG12[m12(i-K.menh)]}</span>${tt}</span><span class="cc">${K.canCung(i)} ${CHI[i]}</span></div>
+      <div class="stars">${ch.map(s=>`<span class="s chinh">${s}${mh(s)}${tg(s)}</span>`).join('')}
+      ${pu.map(s=>`<span class="s phu ${SAT_LIST.includes(s)?'sat':CAT_LIST.includes(s)?'cat':''}">${s}${tg(s)}</span>`).join('')}${lw.join('')}</div>
+      <div class="vong-group"><span class="s vong">${K.V_TS[i]}</span><span class="s vong">${K.V_TT[i]}</span><span class="s vong">${K.V_BS[i]}</span></div>
+      <div class="van"><span>${K.dv[i]}</span><span>${CHI[i]}</span></div>`;
+    el.onclick=()=>{SEL=(SEL===i?null:i);paint();};
+    ban.appendChild(el);
+  });
+  document.getElementById('outLaso').innerHTML=luanMenh(K)+luanCacCung(K)+luanDaiVan(K)+luanHanNam(K);
+}
+function paint(){document.querySelectorAll('#ban .cung').forEach(c=>{const j=+c.dataset.chi;
+  c.classList.toggle('focus',SEL!==null&&j===SEL);
+  c.classList.toggle('tamhop',SEL!==null&&j!==SEL&&(j===m12(SEL+4)||j===m12(SEL+8)));
+  c.classList.toggle('xung',SEL!==null&&j===m12(SEL+6));});}
+function center(K){const c=document.createElement('div');c.id='center';
+  c.innerHTML=`<h2>☯ LÁ SỐ TỬ VI</h2>
+   <div class="row"><span>Âm lịch</span><span>${K.L.day}/${K.L.month}${K.L.leap?' (nhuận)':''}/${K.L.year}</span></div>
+   <div class="row"><span>Năm sinh</span><span>${K.canNam} ${K.chiNam}</span></div>
+   <div class="row"><span>Nạp âm</span><span>${K.naNam}</span></div>
+   <div class="row hl"><span>Cục</span><span>${CUC_TEN[K.cuc]}</span></div>
+   <div class="row"><span>Mệnh cư</span><span>${CHI[K.menh]}</span></div>
+   <div class="row"><span>Thân cư</span><span>${CUNG12[m12(K.than-K.menh)]}</span></div>
+   <div class="row hl"><span>Năm xem</span><span>${yearName(K.LUU.nam)}</span></div>
+   <div class="row"><span>Tuổi (âm)</span><span>${K.lunarAge}</span></div>`;return c;}
+
 /* ═══ TAB EVENT HANDLERS ═══ */
 let DAYS=[];
 function runCuoi(){
