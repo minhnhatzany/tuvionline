@@ -9,15 +9,12 @@ document.getElementById('btnLaso').addEventListener('click', () => {
     
     const [yy, mm, dd] = dob.split('-').map(Number);
     
-    // Tính Ngũ Trụ
     const truList = calculateNguTru(dd, mm, yy, hour);
     const counts = countNguHanh(truList);
-    const { khuyet, nhuoc } = analyzeKhuyet(counts);
+    const analysis = analyzeBatTu(truList, counts);
     
-    // Hiển thị Thông tin
     document.getElementById('user-info').innerHTML = `<b>${name}</b> - Ngày sinh: ${dd}/${mm}/${yy} (${hour}h)`;
     
-    // Hiển thị Bảng Ngũ Trụ
     const tbody = document.getElementById('tru-table');
     tbody.innerHTML = '';
     truList.forEach(t => {
@@ -32,7 +29,6 @@ document.getElementById('btnLaso').addEventListener('click', () => {
         `;
     });
     
-    // Vẽ Biểu Đồ
     const ctx = document.getElementById('nguHanhChart').getContext('2d');
     if (chartInstance) chartInstance.destroy();
     
@@ -56,40 +52,37 @@ document.getElementById('btnLaso').addEventListener('click', () => {
                     angleLines: { color: 'rgba(255, 255, 255, 0.2)' },
                     grid: { color: 'rgba(255, 255, 255, 0.2)' },
                     pointLabels: { color: '#fff', font: { size: 14, weight: 'bold' } },
-                    ticks: { display: false, min: 0, max: Math.max(...Object.values(counts)) + 1 }
+                    // Cố định thang đo để không bị méo lệch biểu đồ
+                    ticks: { display: false, min: 0, max: 6, stepSize: 2 }
                 }
             },
             plugins: { legend: { display: false } }
         }
     });
 
-    // Kết luận
     const resultDiv = document.getElementById('khuyet-result');
-    let html = '';
-    if (khuyet.length > 0) {
-        html += `<h3 style="color:var(--cinnabar);margin-bottom:10px;">⚠️ BẢN MỆNH KHUYẾT: ${khuyet.join(', ')}</h3>`;
-        khuyet.forEach(k => {
-            html += `<p style="margin-bottom:8px;font-size:15px;color:#eee;">- ${MSG_KHUYET[k]}</p>`;
-        });
-    } else if (nhuoc.length > 0) {
-        html += `<h3 style="color:var(--gold);margin-bottom:10px;">⚠️ BẢN MỆNH NHƯỢC: ${nhuoc.join(', ')}</h3>`;
-        nhuoc.forEach(k => {
-            html += `<p style="margin-bottom:8px;font-size:15px;color:#eee;">- ${MSG_KHUYET[k]}</p>`;
-        });
+    let html = `
+        <h3 style="color:var(--gold);margin-bottom:10px;text-align:center;">ĐÁNH GIÁ BẢN MỆNH</h3>
+        <p style="margin-bottom:8px;font-size:16px;color:#eee;">- <b>Nhật Chủ:</b> <span style="color:${COLOR_NH[analysis.nhatChuHanh]}">${analysis.nhatChuCan} (${analysis.nhatChuHanh})</span></p>
+        <p style="margin-bottom:8px;font-size:16px;color:#eee;">- <b>Trạng Thái Bát Tự:</b> <b style="color:var(--gold)">${analysis.trangThai}</b></p>
+    `;
+    
+    if (analysis.dungThan.length > 0) {
+        const dtColors = analysis.dungThan.map(h => `<span style="color:${COLOR_NH[h]}">${h}</span>`).join(', ');
+        html += `<p style="margin-bottom:8px;font-size:16px;color:#eee;">- <b>Dụng Thần Khuyến Nghị:</b> Mệnh này hợp với các hành ${dtColors}.</p>`;
+        html += `<p style="margin-top:10px;font-size:15px;color:var(--dimmer);font-style:italic;">(Đây là Dụng Thần cơ bản dựa trên đếm số lượng ngũ hành. Để luận dụng thần chính xác nhất, cần xét kỹ sự tương tác Tàng Can và Nguyệt Lệnh trong lá số).</p>`;
     } else {
-        html += `<h3 style="color:#4CAF50;margin-bottom:10px;">✅ BẢN MỆNH CÂN BẰNG</h3>
-                 <p>Ngũ hành của bạn khá cân bằng, tuy nhiên vẫn có thể bổ sung năng lượng theo Dụng Thần.</p>`;
+        html += `<p style="margin-bottom:8px;font-size:16px;color:#eee;">- Bản mệnh cân bằng, cần chuyên gia xem xét chi tiết Nguyệt lệnh để định Dụng thần.</p>`;
     }
+    
     resultDiv.innerHTML = html;
 
-    // Chuyển Tab
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelector('.tab[data-tab="ketqua"]').classList.add('active');
     document.getElementById('pane-nhap').classList.add('hide');
     document.getElementById('pane-ketqua').classList.remove('hide');
 });
 
-// Xử lý Tabs
 document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
         const target = tab.dataset.tab;
@@ -106,7 +99,6 @@ document.querySelectorAll('.tab').forEach(tab => {
     });
 });
 
-// Chụp ảnh
 document.getElementById('btnDownload').addEventListener('click', () => {
     const btn = document.getElementById('btnDownload');
     const ogText = btn.innerHTML;
