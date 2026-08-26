@@ -475,7 +475,7 @@ function luanMenh(K){
   else if (KHAC_H[nh] === cucHanh) menhCucText = "Mệnh khắc Cục. Hoàn cảnh nhiều thử thách nhưng bản lĩnh đương số vô cùng to lớn, kiên cường khắc phục nghịch cảnh để tự tay vươn lên thành tựu.";
   else if (KHAC_H[cucHanh] === nh) menhCucText = "Cục khắc Mệnh. Môi trường hay tạo áp lực chèn ép. Đương số cần sự nhẫn nại, ý chí bền bỉ gấp năm mười lần người thường để vươn tới vinh quang.";
   
-  const amDuongLy = ((K.L.year%2 === K.menh%2)) ? "Âm Dương thuận lý. Cuộc đời nhìn chung có nhiều điểm thuận lợi, dễ gặp thời vận, mưu sự dễ thành hơn người." : "Âm Dương nghịch lý. Đòi hỏi nội lực mạnh mẽ. Dù gặp nhiều thử thách thăng trầm nhưng nhờ sự nỗ lực tự thân không ngừng nghỉ mà bứt phá.";
+  const amDuongLy = K.thuan ? "Âm Dương thuận lý. Cuộc đời nhìn chung có nhiều điểm thuận lợi, dễ gặp thời vận, mưu sự dễ thành hơn người." : "Âm Dương nghịch lý. Đòi hỏi nội lực mạnh mẽ. Dù gặp nhiều thử thách thăng trầm nhưng nhờ sự nỗ lực tự thân không ngừng nghỉ mà bứt phá.";
 
   let t = '<h3 style="color:var(--gold);margin-top:0;font-size:18px;margin-bottom:12px;">☯ Nền tảng Bản mệnh & Cốt cách</h3>';
   t += `<p style="margin-bottom:12px; padding-bottom:12px; border-bottom: 1px solid rgba(255,255,255,0.05)">☯ <b>Gốc rễ Âm Dương - Ngũ Hành:</b> Đương số mang mệnh <b>${K.naNam}</b> (${nh}), <b>${CUC_TEN[K.cuc]}</b>. Cục diện rơi vào thế <b>${amDuongLy}</b> Tình thế vận động: <b>${menhCucText}</b></p>`;
@@ -602,7 +602,7 @@ function xetNgay(d,m,y,ctx){const L=solar2Lunar(d,m,y),dc=dayChiIdx(d,m,y),can=C
   if(NGUYET_KY.includes(L.day))xau.push('nguyệt kỵ');if((DUONG_CONG[L.month]||[]).includes(L.day))xau.push('Dương Công kỵ');
   if(m12(dc-ctx.cB)===6)xau.push(`xung ${CHI[ctx.cB]}`);if(m12(dc-ctx.cG)===6)xau.push(`xung ${CHI[ctx.cG]}`);
   const gio=[];
-  const hdBase=(dc%6)*2;
+  const hdBase=m12((dc-2)*2);
   for(let h=0;h<12;h++){if([0,1,4,5,7,10].includes(m12(h-hdBase)))gio.push(CHI[h]);}
   return{d,m,y,L,can,chi:CHI[dc],truc,hoang,xau,gio,tot:xau.length===0};}
 
@@ -760,6 +760,9 @@ function runCuoi(){
   const y1=+document.getElementById('y1').value,y2=+document.getElementById('y2').value;
   const err=document.getElementById('errCuoi');err.textContent='';
   if(!eB||!eG)return err.textContent='Chưa nhập đủ thông tin.';
+  if(y2<y1)return err.textContent='Năm kết thúc phải lớn hơn hoặc bằng năm bắt đầu.';
+  if(y2-y1>10)return err.textContent='Khoảng thời gian tra cứu tối đa là 10 năm.';
+
   const[by,bm,bd]=eB.split('-').map(Number),[gy,gm,gd]=eG.split('-').map(Number);
   const LB=solar2Lunar(bd,bm,by),LG=solar2Lunar(gd,gm,gy);
   const cB=yearChiI(LB.year),cG=yearChiI(LG.year),ctx={cB,cG,lyB:LB.year,lyG:LG.year};
@@ -782,7 +785,7 @@ function runCuoi(){
   H+=`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Luận giải Cung - Mệnh tình duyên</h3>
   <ul style="padding-left:20px;line-height:1.6">
   <li><b>Tháng cưới đại lợi (theo tuổi Nữ):</b> Đương số nữ tuổi ${CHI[cB]}, tháng cưới hỏi đẹp nhất trong năm là <b>tháng ${dl.join(', ')} âm lịch</b> (Rất tốt, gia đạo êm ấm, dồi dào vượng khí). Nếu quá gấp rút hoặc lỡ dở, có thể dùng tạm tháng Tiểu lợi là <b>tháng ${tl.join(', ')} âm lịch</b>. Tuyệt đối kiêng những tháng kỵ phòng phu thê.</li>
-  <li><b>Hòa hợp Thiên Can:</b> Chú rể can ${CAN[((cG%10)+6)%10]} · Cô dâu can ${CAN[((cB%10)+6)%10]}. Thiên can chi phối lộc lá đất đai. Việc xem xét Can phối ngẫu hợp nhau mang lại nền tảng làm ăn vững vàng cho gia đình nhỏ.</li>
+  <li><b>Hòa hợp Thiên Can:</b> Chú rể can ${CAN[yearCan(Lg.year)]} · Cô dâu can ${CAN[yearCan(Lb.year)]}. Thiên can chi phối lộc lá đất đai. Việc xem xét Can phối ngẫu hợp nhau mang lại nền tảng làm ăn vững vàng cho gia đình nhỏ.</li>
   <li><b>Lời bàn chung:</b> ${lb}</li>
   </ul></div>`;
 
@@ -808,8 +811,10 @@ function runCuoi(){
 const HOANG_OC=[{t:'Nhất Cát',v:'good'},{t:'Nhị Nghi',v:'good'},{t:'Tam Địa Sát',v:'bad'},{t:'Tứ Tấn Tài',v:'good'},{t:'Ngũ Thọ Tử',v:'bad'},{t:'Lục Hoang Ốc',v:'bad'}];
 const TRACH = {1:'Phúc',2:'Đức',3:'Bại',4:'Hư',5:'Khốc',6:'Quỷ',7:'Tử',8:'Bảo',0:'Lộc'};
 function runNha(){
+  const errNha=document.getElementById('errNha'); errNha.textContent='';
   const v=document.getElementById('nDob').value,yX=+document.getElementById('nY').value;if(!v||!yX)return;
   const[y,m,dd]=v.split('-').map(Number),lb=solar2Lunar(dd,m,y),t=yX-lb.year+1;saveURL();
+  if(t<10){errNha.textContent='Tuổi quá nhỏ để tính Hoang Ốc/Kim Lâu (dưới 10 tuổi mụ).';return;}
   
   const ho=HOANG_OC[(t-10)%6],kl=kimLau(lb.year,yX),tt=tamTai(yearChiI(lb.year),yX);
   const trach=TRACH[t%9],trachV=['Phúc','Đức','Bảo','Lộc'].includes(trach)?'good':'bad';
@@ -990,26 +995,108 @@ document.getElementById('btnCuoi').onclick=runCuoi;
 document.getElementById('btnLaso').onclick=runLaso;
 loadURL();runCuoi();runLaso();runNha();runMa();
 
-/* ═══ BĂNG TỰ KIỂM (FIXTURES) ═══ */
-const FIXTURES = [
-  {"dob":"2007-06-12","hour":7,"sex":"nu","menh":8,"than":8,"menhCung":"Thân","cuc":4},
-  {"dob":"1998-02-01","hour":7,"sex":"nu","menh":7,"than":11,"menhCung":"Mùi","cuc":6}
+const FIXTURES=[
+ {ten:'01/02/1998 14h Nam', inp:{dd:1,mm:2,yy:1998,gio:7,sex:'nam'},
+  mong:{am:'5/1/1998',menh:'Mùi',menhCC:'Kỷ Mùi',cuc:6,tv:'Sửu',than:'Phúc Đức',dv6:'Mùi',
+    sao:{'Tỵ':'Liêm Trinh,Tham Lang','Ngọ':'Cự Môn','Mùi':'Thiên Tướng','Thân':'Thiên Đồng,Thiên Lương',
+      'Dậu':'Thất Sát,Vũ Khúc','Tuất':'Thái Dương','Hợi':'','Tý':'Thiên Cơ','Sửu':'Phá Quân,Tử Vi',
+      'Dần':'','Mão':'Thiên Phủ','Thìn':'Thái Âm'},
+    tuan:'Thân,Dậu',triet:'Tý,Sửu',hoa:'Thân',linh:'Thân',
+    ts:{'Dần':'Tràng Sinh','Mão':'Mộc Dục','Thìn':'Quan Đới','Tỵ':'Lâm Quan','Ngọ':'Đế Vượng','Mùi':'Suy','Thân':'Bệnh','Dậu':'Tử','Tuất':'Mộ','Hợi':'Tuyệt','Tý':'Thai','Sửu':'Dưỡng'},
+    tt:{'Dần':'Thái Tuế','Mão':'Thiếu Dương','Thìn':'Tang Môn','Tỵ':'Thiếu Âm','Ngọ':'Quan Phù','Mùi':'Tử Phù','Thân':'Tuế Phá','Dậu':'Long Đức','Tuất':'Bạch Hổ','Hợi':'Phúc Đức','Tý':'Điếu Khách','Sửu':'Trực Phù'},
+    bs:{'Tỵ':'Bác Sĩ','Ngọ':'Lực Sĩ','Mùi':'Thanh Long','Thân':'Tiểu Hao','Dậu':'Tướng Quân','Tuất':'Tấu Thư','Hợi':'Phi Liêm','Tý':'Hỷ Thần','Sửu':'Bệnh Phù','Dần':'Đại Hao','Mão':'Phục Binh','Thìn':'Quan Phủ'},
+    phu:{'Thiên Mã':'Thân','Thiên Quý':'Thân','Tam Thai':'Thân','Thiên Hư':'Thân','Phượng Các':'Thân',
+      'Ân Quang':'Ngọ','Bát Tọa':'Ngọ','Long Trì':'Ngọ','Thiên Khốc':'Thìn','Cô Thần':'Tỵ','Quả Tú':'Sửu',
+      'Thiên Hỷ':'Mùi','Hồng Loan':'Sửu','Đào Hoa':'Mão','Thiên Hình':'Dậu','Thiên Riêu':'Sửu'},
+    luu:{nam:2026,loc:'Tỵ',kinh:'Ngọ',da:'Thìn',thaiTue:'Ngọ',ma:'Thân'}}},
+ {ten:'20/08/2026 21h15 Nữ', inp:{dd:20,mm:8,yy:2026,gio:11,sex:'nu'},
+  mong:{am:'8/7/2026',menh:'Dậu',menhCC:'Đinh Dậu',cuc:6,tv:'Mùi',than:'Phu Thê',dv6:'Dậu',
+    sao:{'Tỵ':'','Ngọ':'Thiên Cơ','Mùi':'Phá Quân,Tử Vi','Thân':'','Dậu':'Thiên Phủ','Tuất':'Thái Âm',
+      'Hợi':'Liêm Trinh,Tham Lang','Tý':'Cự Môn','Sửu':'Thiên Tướng','Dần':'Thiên Đồng,Thiên Lương',
+      'Mão':'Thất Sát,Vũ Khúc','Thìn':'Thái Dương'},
+    tuan:'Dần,Mão',triet:'Thìn,Tỵ',hoa:'Dần',linh:'Dần',
+    ts:{'Dần':'Tràng Sinh','Sửu':'Mộc Dục','Tý':'Quan Đới','Hợi':'Lâm Quan','Tuất':'Đế Vượng','Dậu':'Suy','Thân':'Bệnh','Mùi':'Tử','Ngọ':'Mộ','Tỵ':'Tuyệt','Thìn':'Thai','Mão':'Dưỡng'},
+    tt:{'Ngọ':'Thái Tuế','Mùi':'Thiếu Dương','Thân':'Tang Môn','Dậu':'Thiếu Âm','Tuất':'Quan Phù','Hợi':'Tử Phù','Tý':'Tuế Phá','Sửu':'Long Đức','Dần':'Bạch Hổ','Mão':'Phúc Đức','Thìn':'Điếu Khách','Tỵ':'Trực Phù'},
+    bs:{'Tỵ':'Bác Sĩ','Thìn':'Lực Sĩ','Mão':'Thanh Long','Dần':'Tiểu Hao','Sửu':'Tướng Quân','Tý':'Tấu Thư','Hợi':'Phi Liêm','Tuất':'Hỷ Thần','Dậu':'Bệnh Phù','Thân':'Đại Hao','Mùi':'Phục Binh','Ngọ':'Quan Phủ'},
+    phu:{'Thiên Mã':'Thân','Long Trì':'Tuất','Phượng Các':'Thìn','Thiên Khốc':'Tý','Thiên Hư':'Tý',
+      'Hồng Loan':'Dậu','Thiên Hỷ':'Mão','Đào Hoa':'Mão','Cô Thần':'Thân','Quả Tú':'Thìn',
+      'Tam Thai':'Tỵ','Bát Tọa':'Dậu','Ân Quang':'Tỵ','Thiên Quý':'Dậu','Thiên Hình':'Mão','Thiên Riêu':'Mùi'},
+    luu:{nam:2026,loc:'Tỵ',kinh:'Ngọ',da:'Thìn',thaiTue:'Ngọ',ma:'Thân'}}},
+ /* ─── 3 lá bổ sung 25/08/2026: Kim tứ cục, Thổ ngũ cục, can Canh, can Kỷ, Âm Nam ─── */
+ {ten:'24/12/2000 13h30 Nữ',inp:{dd:24,mm:12,yy:2000,gio:7,sex:'nu'},
+  mong:{am:'29/11/2000',menh:'Tỵ',menhCC:'Tân Tỵ',cuc:4,tv:'Ngọ',than:'Phúc Đức',dv6:'',dvKhoi:['Tỵ',4],
+   sao:{'Tỵ':'Thiên Cơ','Ngọ':'Tử Vi','Mùi':'','Thân':'Phá Quân','Thìn':'Thất Sát','Dậu':'',
+    'Mão':'Thái Dương,Thiên Lương','Tuất':'Liêm Trinh,Thiên Phủ','Dần':'Vũ Khúc,Thiên Tướng',
+    'Sửu':'Thiên Đồng,Cự Môn','Tý':'Tham Lang','Hợi':'Thái Âm'},
+   ts:{'Tỵ':'Tràng Sinh','Thìn':'Mộc Dục','Mão':'Quan Đới','Dần':'Lâm Quan','Sửu':'Đế Vượng','Tý':'Suy',
+    'Hợi':'Bệnh','Tuất':'Tử','Dậu':'Mộ','Thân':'Tuyệt','Mùi':'Thai','Ngọ':'Dưỡng'}}},
+ {ten:'10/01/2001 20h50 Nữ',inp:{dd:10,mm:1,yy:2001,gio:10,sex:'nu'},
+  mong:{am:'16/12/2000',menh:'Mão',menhCC:'Kỷ Mão',cuc:5,tv:'Dậu',than:'Tài Bạch',dvKhoi:['Mão',5],
+   sao:{'Tỵ':'Phá Quân,Vũ Khúc','Ngọ':'Thái Dương','Mùi':'Thiên Phủ','Thân':'Thái Âm,Thiên Cơ',
+    'Thìn':'Thiên Đồng','Dậu':'Tử Vi,Tham Lang','Mão':'','Tuất':'Cự Môn','Dần':'',
+    'Sửu':'Thất Sát,Liêm Trinh','Tý':'Thiên Lương','Hợi':'Thiên Tướng'},
+   ts:{'Thân':'Tràng Sinh','Mùi':'Mộc Dục','Ngọ':'Quan Đới','Tỵ':'Lâm Quan','Thìn':'Đế Vượng','Mão':'Suy',
+    'Dần':'Bệnh','Sửu':'Tử','Tý':'Mộ','Hợi':'Tuyệt','Tuất':'Thai','Dậu':'Dưỡng'}}},
+ {ten:'01/06/2009 07h20 Nam',inp:{dd:1,mm:6,yy:2009,gio:4,sex:'nam'},
+  mong:{am:'9/5/2009',menh:'Dần',menhCC:'Bính Dần',cuc:6,tv:'Tý',than:'Tài Bạch',dvKhoi:['Dần',6],
+   sao:{'Tỵ':'Thái Âm','Ngọ':'Tham Lang','Mùi':'Thiên Đồng,Cự Môn','Thân':'Thiên Tướng,Vũ Khúc',
+    'Thìn':'Liêm Trinh,Thiên Phủ','Dậu':'Thiên Lương,Thái Dương','Mão':'','Tuất':'Thất Sát',
+    'Dần':'Phá Quân','Sửu':'','Tý':'Tử Vi','Hợi':'Thiên Cơ'}}}
 ];
-function selfTest() {
-  let passed = 0;
-  FIXTURES.forEach((f, i) => {
-    const [y,m,d] = f.dob.split('-').map(Number);
-    const K = anSao({dd:d, mm:m, yy:y, gio:f.hour, sex:f.sex, xemY:2026});
-    const errs = [];
-    if(K.menh !== f.menh) errs.push(`Mệnh sai: ${K.menh} != ${f.menh}`);
-    if(K.than !== f.than) errs.push(`Thân sai: ${K.than} != ${f.than}`);
-    if(K.cuc !== f.cuc) errs.push(`Cục sai: ${K.cuc} != ${f.cuc}`);
-    if(errs.length) console.error(`[TEST ${i}] FAILED:`, errs.join(', '));
-    else passed++;
+function selfTest(){
+  let passed=0, errs=[];
+  FIXTURES.forEach((f,i)=>{
+    const inp = f.inp;
+    const K = anSao({dd:inp.dd, mm:inp.mm, yy:inp.yy, gio:inp.gio, sex:inp.sex, xemY:inp.xemY||inp.yy});
+    const M = f.mong;
+    const check = (name, v1, v2) => { if(v1 != v2) errs.push(`[Ca ${i+1}] ${name}: Tính ra '${v1}' - Kỳ vọng '${v2}'`); };
+    if(M.menh) check('Mệnh', CHI[K.menh], M.menh);
+    if(M.than) check('Thân', CHI[K.than], M.than);
+    if(M.cuc) check('Cục', K.cuc, M.cuc);
+    if(M.tv) check('Tử Vi', CHI[K.tv], M.tv);
+    if(M.tuan) {
+      const actual = K.TUAN.map(x=>CHI[x]).join(',');
+      check('Tuần', actual, M.tuan);
+    }
+    if(M.triet) {
+      const actual = K.TRIET.map(x=>CHI[x]).join(',');
+      check('Triệt', actual, M.triet);
+    }
+    if(M.sao) {
+      Object.keys(M.sao).forEach(chi => {
+        const expected = M.sao[chi].split(',').filter(x=>x).sort().join(',');
+        const cid = CHI.indexOf(chi);
+        const actual = Object.keys(K.S).filter(s=>K.S[s]===cid).sort().join(',');
+        if(actual !== expected) check(`Chính tinh tại ${chi}`, actual, expected);
+      });
+    }
+    if(M.ts) {
+      Object.keys(M.ts).forEach(chi => {
+        const cid = CHI.indexOf(chi);
+        if(K.V_TS[cid] !== M.ts[chi]) check(`Tràng Sinh tại ${chi}`, K.V_TS[cid], M.ts[chi]);
+      });
+    }
+    if(M.tt) {
+      Object.keys(M.tt).forEach(chi => {
+        const cid = CHI.indexOf(chi);
+        if(K.V_TT[cid] !== M.tt[chi]) check(`Thái Tuế tại ${chi}`, K.V_TT[cid], M.tt[chi]);
+      });
+    }
   });
-  console.log(`[TEST] Passed ${passed}/${FIXTURES.length} fixtures.`);
+  
+  if(errs.length > 0) {
+    const div = document.createElement('div');
+    div.style = 'background:var(--cinnabar);color:#fff;padding:15px;font-weight:bold;margin-bottom:15px;border-radius:4px;white-space:pre-wrap;border-left:5px solid #ff0000;';
+    div.innerHTML = '⚠ TỰ KIỂM TRA BÁO LỖI (CHƯA ĐỐI CHIẾU HOÀN TOÀN):
+' + errs.join('
+');
+    document.querySelector('.wrap').prepend(div);
+    console.error(errs.join('
+'));
+  }
 }
 setTimeout(selfTest, 1000);
+
 </script>
 </body>
 </html>
