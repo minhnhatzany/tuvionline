@@ -3,11 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Tử Vi Online</title>
-<meta property="og:title" content="Tử Vi Online - An Sao Lập Số & Trạch Cát">
-<meta property="og:description" content="Hệ thống luận giải tử vi, xem ngày đại sự cưới hỏi, làm nhà, tang lễ chuẩn xác. Khám phá vận mệnh của bạn ngay!">
+<title>Tử Vi Online - Lập và Luận Giải Lá Số Tử Vi Chuyên Sâu</title>
+<meta name="description" content="Hệ thống lập lá số tử vi và luận giải chi tiết, chính xác. Xem bói tử vi, xem ngày tốt xấu, ngày cưới hỏi, làm nhà, trạch cát phong thủy chuyên nghiệp.">
+<meta name="keywords" content="tử vi, lá số tử vi, lập lá số tử vi, xem tử vi, tử vi online, tử vi 2026, luận giải tử vi, phong thủy, xem ngày tốt, thầy Thục Linh">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph for Facebook/Zalo -->
+<meta property="og:title" content="Tử Vi Online - An Sao Lập Số & Trạch Cát Chuyên Sâu">
+<meta property="og:description" content="Hệ thống luận giải tử vi chi tiết, xem ngày đại sự cưới hỏi, làm nhà, tang lễ chuẩn xác. Khám phá vận mệnh của bạn ngay!">
 <meta property="og:image" content="https://tuvionline.netlify.app/thumbnail.jpg">
 <meta property="og:type" content="website">
+
+<!-- JSON-LD Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Tử Vi Online",
+  "url": "https://tuvionline.netlify.app",
+  "description": "Ứng dụng lập lá số và luận giải tử vi chuyên sâu, xem ngày tốt xấu.",
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "VND"
+  }
+}
+</script>
 <style>
 :root{--void:#050505;--void-2:#111;--cell:#1a1a1a;--cell-hi:#252525;--line:rgba(255,255,255,.1);--gold:#c4a265;--cinnabar:#a83e35;--jade:#4fa88c;--azure:#5b8fd4;--amber:#dd9440;--txt:#d0d0d0;--dim:#888;--dimmer:#555}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -413,7 +436,7 @@ function luanMenh(K){
   let t = '<h3 style="color:var(--gold);margin-top:0;font-size:18px;margin-bottom:12px;">☯ Nền tảng Bản mệnh & Cốt cách</h3>';
   t += `<p style="margin-bottom:12px; padding-bottom:12px; border-bottom: 1px solid rgba(255,255,255,0.05)">☯ <b>Gốc rễ Âm Dương - Ngũ Hành:</b> Đương số mang mệnh <b>${K.naNam}</b> (${nh}), <b>${CUC_TEN[K.cuc]}</b>. Cục diện rơi vào thế <b>${amDuongLy}</b> Tình thế vận động: <b>${menhCucText}</b></p>`;
   t += luanGiaiCung(K, K.menh, 'Mệnh');
-  return '<div class="phan-box">'+t+'</div>';
+  return '<div class="phan-box">'+t+'<div style="margin:20px 0;padding:15px;background:rgba(196,162,101,0.1);border:1px solid var(--gold);border-radius:4px;text-align:center;">    <h4 style="color:var(--gold);margin-bottom:10px;font-size:16px;">🔍 BẠN CẦN LUẬN GIẢI CHUYÊN SÂU HƠN?</h4>    <p style="font-size:15px;margin-bottom:12px;">Bản luận giải tự động chỉ phản ánh 70% bức tranh tổng thể. Để có định hướng chính xác nhất về Tình duyên, Sự nghiệp, Đầu tư năm 2026, bạn cần cái nhìn phối hợp từ chuyên gia.</p>    <a href="https://www.facebook.com/adeline.1811" target="_blank" style="display:inline-block;background:var(--gold);color:#000;padding:8px 16px;text-decoration:none;font-weight:bold;margin-right:10px;border-radius:2px;font-size:14px;margin-bottom:5px;">💬 Đặt lịch Thầy Thục Linh</a>    <a href="https://www.facebook.com/groups/1451929442272843" target="_blank" style="display:inline-block;background:transparent;color:var(--gold);border:1px solid var(--gold);padding:8px 16px;text-decoration:none;font-weight:bold;border-radius:2px;font-size:14px;margin-bottom:5px;">👥 Tham gia Group Tử Vi</a></div></div>';
 }
 
 function luanCacCung(K){
@@ -623,7 +646,7 @@ function luanHanNam(K){
       t+=`<p><span class="bad">Không tìm thấy tổ hợp Cát tinh đủ mạnh hội chiếu Mệnh để hóa giải.</span> Đương số bắt buộc phải chủ động phòng ngừa, giảm thiểu rủi ro bằng hành động thực tế, không thể trông chờ vào may mắn.</p>`;
     }
   }
-  return`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☵ XEM HẠN NĂM ${xY}</h3>${t}</div>`;
+  return`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☵ XEM HẠN NĂM ${xY}</h3>${t}<div style="margin:20px 0;padding:15px;background:rgba(196,162,101,0.1);border:1px solid var(--gold);border-radius:4px;text-align:center;">    <h4 style="color:var(--gold);margin-bottom:10px;font-size:16px;">🔍 BẠN CẦN LUẬN GIẢI CHUYÊN SÂU HƠN?</h4>    <p style="font-size:15px;margin-bottom:12px;">Bản luận giải tự động chỉ phản ánh 70% bức tranh tổng thể. Để có định hướng chính xác nhất về Tình duyên, Sự nghiệp, Đầu tư năm 2026, bạn cần cái nhìn phối hợp từ chuyên gia.</p>    <a href="https://www.facebook.com/adeline.1811" target="_blank" style="display:inline-block;background:var(--gold);color:#000;padding:8px 16px;text-decoration:none;font-weight:bold;margin-right:10px;border-radius:2px;font-size:14px;margin-bottom:5px;">💬 Đặt lịch Thầy Thục Linh</a>    <a href="https://www.facebook.com/groups/1451929442272843" target="_blank" style="display:inline-block;background:transparent;color:var(--gold);border:1px solid var(--gold);padding:8px 16px;text-decoration:none;font-weight:bold;border-radius:2px;font-size:14px;margin-bottom:5px;">👥 Tham gia Group Tử Vi</a></div></div>`;
 }
 
 const GRID=[5,6,7,8,4,null,null,9,3,null,null,10,2,1,0,11];
