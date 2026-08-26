@@ -430,15 +430,42 @@ function downloadLaso() {
   const btn = document.getElementById('btnDownloadLaso');
   const ogText = btn.innerHTML;
   btn.innerHTML = '⏳ Đang tạo ảnh...';
-  html2canvas(document.getElementById('center'), {
-    backgroundColor: '#111', scale: 2
+  btn.style.visibility = 'hidden'; // Hide during capture but keep layout
+
+  // Bắt nguyên bảng lá số
+  html2canvas(document.getElementById('ban'), {
+    backgroundColor: '#111', scale: 2, useCORS: true
   }).then(canvas => {
-    const link = document.createElement('a');
-    link.download = 'LaSoTuVi_' + (document.getElementById('lName')?.value || 'TuVi') + '.png';
-    link.href = canvas.toDataURL();
-    link.click();
-    btn.innerHTML = '✅ Đã tải xong';
+    btn.style.visibility = 'visible';
+    btn.innerHTML = '✅ Đã tạo xong';
     setTimeout(()=>btn.innerHTML=ogText, 2000);
+    
+    canvas.toBlob(blob => {
+      const file = new File([blob], 'LaSoTuVi.png', {type: 'image/png'});
+      // iOS / Mobile Web Share API support
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share({
+          files: [file],
+          title: 'Lá Số Tử Vi',
+        }).catch(e => {
+          // Fallback if share fails or user cancels
+          fallbackDownload(blob);
+        });
+      } else {
+        fallbackDownload(blob);
+      }
+    }, 'image/png');
+  }).catch(err => {
+    btn.style.visibility = 'visible';
+    btn.innerHTML = '❌ Lỗi tải ảnh';
   });
 }
+
+function fallbackDownload(blob) {
+  const link = document.createElement('a');
+  link.download = 'LaSoTuVi_' + (document.getElementById('lName')?.value || 'TuVi') + '.png';
+  link.href = URL.createObjectURL(blob);
+  link.click();
+}
+
 document.addEventListener('DOMContentLoaded', renderHistory);
