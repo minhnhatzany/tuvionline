@@ -430,33 +430,78 @@ function downloadLaso() {
   const btn = document.getElementById('btnDownloadLaso');
   const ogText = btn.innerHTML;
   btn.innerHTML = '⏳ Đang tạo ảnh...';
-  btn.style.visibility = 'hidden'; // Hide during capture but keep layout
 
-  // Bắt nguyên bảng lá số
-  html2canvas(document.getElementById('ban'), {
-    backgroundColor: '#111', scale: 2, useCORS: true
+  // Chống lỗi CSS Grid của html2canvas bằng cách vẽ lại clone bằng Absolute Positioning
+  const clone = document.createElement('div');
+  clone.style.width = '1200px';
+  clone.style.height = '1000px'; // 4 rows x 250px
+  clone.style.position = 'fixed';
+  clone.style.left = '-15000px';
+  clone.style.top = '0';
+  clone.style.background = 'var(--line, #333)';
+  
+  const CW = 299, CH = 249; // width, height (trừ 1px border)
+  
+  // Tọa độ 12 cung (Mệnh -> Phụ Mẫu... theo index 0-11 là Dần->Sửu)
+  // 0:Dần(0,3), 1:Mão(0,2), 2:Thìn(0,1), 3:Tỵ(0,0), 4:Ngọ(1,0), 5:Mùi(2,0)
+  // 6:Thân(3,0), 7:Dậu(3,1), 8:Tuất(3,2), 9:Hợi(3,3), 10:Tý(2,3), 11:Sửu(1,3)
+  const coords = [
+    {x:0,y:3}, {x:0,y:2}, {x:0,y:1}, {x:0,y:0},
+    {x:1,y:0}, {x:2,y:0}, {x:3,y:0}, {x:3,y:1},
+    {x:3,y:2}, {x:3,y:3}, {x:2,y:3}, {x:1,y:3}
+  ];
+
+  const cungs = document.querySelectorAll('#ban .cung');
+  cungs.forEach((c, i) => {
+    const cc = c.cloneNode(true);
+    cc.style.position = 'absolute';
+    cc.style.left = (coords[i].x * 300) + 'px';
+    cc.style.top = (coords[i].y * 250) + 'px';
+    cc.style.width = CW + 'px';
+    cc.style.height = CH + 'px';
+    cc.style.background = '#111';
+    cc.style.boxSizing = 'border-box';
+    clone.appendChild(cc);
+  });
+
+  const center = document.getElementById('center').cloneNode(true);
+  center.style.position = 'absolute';
+  center.style.left = '300px';
+  center.style.top = '250px';
+  center.style.width = '599px'; // 2 cells
+  center.style.height = '499px'; // 2 cells
+  center.style.background = '#111';
+  center.style.boxSizing = 'border-box';
+  center.style.padding = '30px';
+  const btnC = center.querySelector('#btnDownloadLaso');
+  if(btnC) btnC.remove();
+  clone.appendChild(center);
+
+  document.body.appendChild(clone);
+
+  html2canvas(clone, {
+    backgroundColor: '#000', 
+    scale: 2, 
+    useCORS: true,
+    logging: false
   }).then(canvas => {
-    btn.style.visibility = 'visible';
+    document.body.removeChild(clone);
     btn.innerHTML = '✅ Đã tạo xong';
     setTimeout(()=>btn.innerHTML=ogText, 2000);
     
     canvas.toBlob(blob => {
       const file = new File([blob], 'LaSoTuVi.png', {type: 'image/png'});
-      // iOS / Mobile Web Share API support
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         navigator.share({
           files: [file],
           title: 'Lá Số Tử Vi',
-        }).catch(e => {
-          // Fallback if share fails or user cancels
-          fallbackDownload(blob);
-        });
+        }).catch(e => fallbackDownload(blob));
       } else {
         fallbackDownload(blob);
       }
     }, 'image/png');
   }).catch(err => {
-    btn.style.visibility = 'visible';
+    if(document.body.contains(clone)) document.body.removeChild(clone);
     btn.innerHTML = '❌ Lỗi tải ảnh';
   });
 }
