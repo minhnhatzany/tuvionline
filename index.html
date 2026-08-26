@@ -111,7 +111,24 @@ td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.03)}
 .row span:first-child{color:var(--dimmer);font-style:italic}.row span:last-child{color:#ccc}.row.hl span:last-child{color:var(--gold)}
 footer{text-align:center;margin-top:30px;padding:15px;border-top:1px solid var(--line);color:var(--dimmer);font-size:14px}
 footer button{margin:0 auto 8px;display:flex}
-@media(max-width:700px){body{padding:10px 5px 30px}.cung{min-height:120px;padding:4px}.tt-tag{font-size:10px}.s.vong{font-size:11px}.cung .ten,.cung .cc{font-size:10px}.s.chinh{font-size:15px}.s.phu{font-size:13px}.stars{gap:1px 4px}#center{padding:10px}#center h2{font-size:18px}.row{font-size:13px}.van{font-size:11px;left:4px;right:4px}.f input,.f select{min-width:100%}header h1{font-size:36px}}
+@media(max-width:700px){body{padding:10px 5px 30px}
+#ban{grid-template-columns:repeat(2,1fr);gap:1px}
+#center{grid-column:1/3;grid-row:auto;min-height:auto;padding:12px}
+.cung{min-height:auto;padding:8px 6px 28px}
+.cung .top{margin-bottom:6px}
+.tt-tag{font-size:9px;padding:0 2px}
+.s.vong{font-size:11px}
+.cung .ten{font-size:11px;font-weight:bold}.cung .cc{font-size:10px}
+.s.chinh{font-size:14px;display:block;margin-bottom:2px}.s.phu{font-size:12px}.s.sat{font-size:12px}.s.cat{font-size:12px}
+.stars{gap:2px 5px}
+.vong-group{gap:0 4px}
+.s.luu{font-size:11px}
+#center h2{font-size:18px}.row{font-size:13px}
+.van{font-size:10px;left:4px;right:4px}
+.f input,.f select{min-width:100%}header h1{font-size:36px}
+.mh{font-size:10px;padding:0 1px;margin-left:1px}
+.hoa{font-size:10px;padding:0 1px;margin-left:1px}
+}
 </style>
 </head>
 <body>
@@ -284,18 +301,76 @@ function luanGiaiCung(K, idCung, tenCung) {
      });
   }
 
+  const satTinh = pu.filter(s=>SAT_LIST.includes(s));
+  const catTinh = pu.filter(s=>['Văn Xương','Văn Khúc','Thiên Khôi','Thiên Việt','Lộc Tồn','Tả Phụ','Hữu Bật'].includes(s));
+
+  // Context-aware cung interpretation
+  if (tenCung === 'Phu Thê') {
+     const hasSat = satTinh.length > 0;
+     const hasCat = catTinh.length > 0;
+     const hasDaoHoa = pu.includes('Đào Hoa') || pu.includes('Hồng Loan') || pu.includes('Thiên Hỷ');
+     const hasCoQua = pu.includes('Cô Thần') || pu.includes('Quả Tú');
+     t += '<br><br><b style="color:var(--gold)">♡ Luận về đường Vợ Chồng & Con cái:</b> ';
+     if (ch.length === 0) {
+        t += 'Cung Phu Thê vô chính diệu, đường tình duyên uyển chuyển bất định. Nửa kia của đương số là người khó đoán, mối quan hệ cần nhiều thời gian mài giũa mới thấu hiểu nhau. Hôn nhân nếu đến muộn (sau 25 tuổi) thì bền vững, vội vàng dễ tan vỡ. ';
+     } else if (ch.some(s => ['Tử Vi','Thiên Phủ','Thiên Tướng'].includes(s))) {
+        t += 'Nửa kia là người có phẩm cách đoan trang, gia thế nền nếp, biết vun vén lo liệu cho gia đình. Cuộc hôn nhân mang lại sự ổn định và thăng tiến xã hội cho đương số. Vợ chồng có mô hình "phu xướng phụ tùy", một người chủ ngoài một người giữ trong, rất hòa hợp. ';
+     } else if (ch.some(s => ['Thái Dương','Thái Âm'].includes(s))) {
+        t += 'Nửa kia mang nét dịu dàng, lãng mạn và tinh tế. Mối quan hệ vợ chồng thiên về tình cảm sâu sắc, yêu thương chân thành. Tuy nhiên cũng dễ nhạy cảm, hay giận hờn vặt vãnh. Cần sự bao dung và lắng nghe từ cả hai phía. ';
+     } else if (ch.some(s => ['Tham Lang','Liêm Trinh'].includes(s))) {
+        t += 'Nửa kia là người có sức hút mãnh liệt, đào hoa, quyến rũ. Đường tình cảm trải qua nhiều sóng gió trước khi tìm được bến đỗ. Hôn nhân có thể đến sau một mối tình sâu đậm hoặc sau khoảng thời gian dài tìm kiếm. ';
+     } else if (ch.some(s => ['Phá Quân','Thất Sát'].includes(s))) {
+        t += 'Nửa kia có cá tính mạnh, độc lập, không dễ chiều. Đường vợ chồng nhiều va chạm, tranh cãi nhưng lại rất nồng nhiệt. Cần học cách nhường nhịn, kiểm soát cái tôi. Hôn nhân muộn sẽ bền hơn sớm. ';
+     } else if (ch.some(s => ['Thiên Đồng','Thiên Lương'].includes(s))) {
+        t += 'Nửa kia hiền hậu, phúc hậu, sống tình nghĩa. Hôn nhân êm đềm, vợ chồng cùng nhau xây dựng tổ ấm bằng sự kiên nhẫn và chân thành. Cuộc sống gia đình ấm cúng, ít sóng gió lớn. ';
+     } else if (ch.some(s => ['Vũ Khúc','Thiên Cơ'].includes(s))) {
+        t += 'Nửa kia thông minh, giỏi tính toán, biết giữ tiền. Hôn nhân có nền tảng kinh tế vững chắc nhưng đôi khi thiếu sự lãng mạn. Vợ chồng cùng nhau bàn bạc đầu tư, kinh doanh sẽ rất ăn ý. ';
+     } else if (ch.some(s => ['Cự Môn'].includes(s))) {
+        t += 'Nửa kia có tài ăn nói nhưng cũng hay tranh cãi. Đường vợ chồng dễ xảy ra khẩu chiến, hiểu lầm vì lời nói. Bí quyết giữ gìn hạnh phúc là "ít nói khi giận, nhiều nói khi yêu". ';
+     }
+     if (hasDaoHoa) t += 'Đào Hoa/Hồng Loan chiếu cung Phu Thê, đương số và nửa kia đều có duyên ngầm, dễ thu hút người khác giới. Cần giữ lòng chung thủy và minh bạch để tránh hiểu lầm tai tiếng. ';
+     if (hasCoQua) t += 'Cô Thần/Quả Tú lạc vào cung Phu Thê mang đến nỗi cô đơn trong hôn nhân. Dù ở bên nhau nhưng đôi khi vẫn cảm thấy lẻ loi. Cần chủ động giao tiếp, chia sẻ tâm tư để kéo gần khoảng cách. ';
+     // Tu Tuc (Children)
+     const tuTucId = m12(K.menh + 9);
+     const chTT = Object.keys(K.S).filter(s=>K.S[s]===tuTucId);
+     const puTT = Object.keys(K.P).filter(s=>K.P[s]===tuTucId);
+     const satTT = puTT.filter(s=>SAT_LIST.includes(s));
+     t += '<br><br><b style="color:var(--gold)">♡ Về đường Con cái:</b> ';
+     if (chTT.some(s => ['Tử Vi','Thiên Phủ','Thiên Tướng','Thái Dương'].includes(s))) {
+        t += 'Cung Tử Tức sáng sủa, con cái sau này thông minh lanh lợi, có chí hướng, hiếu thảo với cha mẹ. Gia đình đông vui, con cháu hưng vượng. ';
+     } else if (chTT.length === 0) {
+        t += 'Cung Tử Tức vô chính diệu, đường con cái uyển chuyển, có thể sinh muộn hoặc con cái ở xa. ';
+     } else {
+        t += 'Con cái mang cá tính riêng biệt, cần sự kiên nhẫn dạy dỗ từ cha mẹ. ';
+     }
+     if (satTT.length >= 2) t += 'Tuy nhiên cung Tử Tức có sát tinh hội tụ, đường con cái vất vả hơn người thường, cần chăm sóc sức khỏe thai sản cẩn thận. ';
+     if (puTT.includes('Thiên Hỷ') || puTT.includes('Hồng Loan')) t += 'May mắn có cát tinh hỷ chiếu, tin vui về con cái sẽ đến đúng thời điểm, mang lại niềm hạnh phúc viên mãn cho gia đình. ';
+  }
+
+  if (tenCung === 'Tật Ách') {
+     t += '<br><br><b style="color:var(--gold)">♡ Về sức khỏe cần lưu ý:</b> ';
+     if (ch.some(s => ['Liêm Trinh','Thất Sát','Phá Quân'].includes(s))) t += 'Cung Tật Ách gặp sao dữ, đương số cần chú ý các bệnh về xương khớp, tai nạn va chạm, phẫu thuật. Tránh các hoạt động mạo hiểm, lái xe cẩn thận. ';
+     else if (ch.some(s => ['Thái Âm','Thiên Đồng','Thiên Cơ'].includes(s))) t += 'Sức khỏe tổng thể khá ổn nhưng hay bị suy nhược thần kinh, mất ngủ, stress. Cần giữ tinh thần thoải mái, tập thiền, yoga. ';
+     else t += 'Nhìn chung thể trạng bình ổn, không có dấu hiệu bệnh nặng nổi bật. Tuy nhiên vẫn cần khám sức khỏe định kỳ, phòng bệnh hơn chữa bệnh. ';
+  }
+
+  if (tenCung === 'Phúc Đức') {
+     t += '<br><br><b style="color:var(--gold)">♡ Về phúc phần & hậu vận:</b> ';
+     if (ch.some(s => ['Thiên Lương','Thiên Đồng','Thiên Phủ','Tử Vi'].includes(s))) t += 'Phúc đức dày, tổ tiên để lại nền tảng tốt. Hậu vận an nhàn, về già sung túc, con cháu quây quần. Hay gặp may mắn bất ngờ trong những lúc khó khăn. ';
+     else if (ch.some(s => ['Thất Sát','Phá Quân','Tham Lang'].includes(s))) t += 'Phúc đức mỏng, phải tự thân lập nghiệp, ít được hưởng thừa kế từ gia đình. Hậu vận cần tích cực làm phúc, hành thiện để bồi đắp phúc phần cho con cháu. ';
+     else t += 'Phúc phần ở mức trung bình, cuộc sống hậu vận tùy thuộc vào sự nỗ lực và tích đức của chính đương số trong giai đoạn trung vận. ';
+  }
+
   if (tuantriet === 1) t += `Khúc triết thay, vùng không gian này lại bị <b>Tuần Không</b> bủa vây. Mọi mưu sự ở tiền vận (trước 35 tuổi) thường bế tắc, chậm chạp. Phải nhẫn nại qua trung vận thì sự vững chãi mới bắt đầu đền đáp. `;
   if (tuantriet === 2) t += `Cần cực kỳ cẩn trọng vì có <b>Triệt Lộ</b> án ngữ. Triệt chủ sự đứt đoạn bất thình lình, ban đầu có thể bạo phát hanh thông nhưng dễ sụp đổ nhanh chóng nếu chủ quan hống hách. Vượt qua 35 tuổi, rào cản này sẽ dần được tháo gỡ. `;
   if (tuantriet === 3) t += `Đáng tiếc, cung này bị phong tỏa hoàn toàn bởi lưới <b>Tuần - Triệt đồng cung</b>. Cát tinh mất thiêng mà hung tinh cũng tiêu tán. Những mong cầu mãnh liệt ở đây tốt nhất nên thuận theo tự nhiên, cưỡng cầu chỉ thêm chuốc lấy muộn phiền. `;
 
-  const satTinh = pu.filter(s=>SAT_LIST.includes(s));
   if (satTinh.length >= 2) {
      t += `Chưa kể, bầy hung sát tinh tàn khốc (${satTinh.join(', ')}) hội tụ về đây, mang đến sóng gió trùng trùng. Làm gì cũng đổ mồ hôi sôi nước mắt mới đạt được kết quả, đòi hỏi đương số phải rèn một bản lĩnh thép. `;
   } else if (satTinh.length === 1) {
      t += `Sự góp mặt của hung tinh ${satTinh[0]} mang đến đôi chút chông gai, đóng vai trò như ngọn lửa thử vàng rèn giũa ý chí. `;
   }
 
-  const catTinh = pu.filter(s=>['Văn Xương','Văn Khúc','Thiên Khôi','Thiên Việt','Lộc Tồn','Tả Phụ','Hữu Bật'].includes(s));
   if (catTinh.length >= 2) {
      t += `Nhưng vạn sự vẹn toàn bù trừ, nơi đây hội tụ quần vinh cát tinh (${catTinh.join(', ')}). Báo hiệu quý nhân âm thầm phò trợ, lúc nguy nan luôn có cơ hội vàng bất ngờ xuất hiện kéo đương số vượt qua nghịch cảnh. `;
   }
@@ -462,40 +537,6 @@ function xetNgay(d,m,y,ctx){const L=solar2Lunar(d,m,y),dc=dayChiIdx(d,m,y),can=C
   const gio=[];for(let h=0;h<12;h++)if(HOANG.includes(trucIdx(m12(dc-2),h)))gio.push(CHI[h]);
   return{d,m,y,L,can,chi:CHI[dc],truc,hoang,xau,gio,tot:xau.length===0};}
 
-/* ═══ LUẬN LÁ SỐ (CHUYÊN SÂU V14) ═══ */
-function luanMenh(K){
-  const cN=yearChiI(K.L.year);
-  const cucHanh = K.cuc===2?'Thủy':K.cuc===3?'Mộc':K.cuc===4?'Kim':K.cuc===5?'Thổ':'Hỏa';
-  const nh = K.naHanh;
-  let menhCucText = "";
-  if (nh === cucHanh) menhCucText = "Mệnh Cục bình hòa. Đương số dễ hòa nhập, hoàn cảnh sống ổn định, ít biến động sốc.";
-  else if (SINH_H[nh] === cucHanh) menhCucText = "Mệnh sinh Cục. Bản mệnh có xu hướng hào phóng, hay lo toan cho vạn vật xung quanh, chịu nhiều vất vả thiệt thòi nhưng được người đời nể trọng.";
-  else if (SINH_H[cucHanh] === nh) menhCucText = "Cục sinh Mệnh. Hoàn cảnh đặc biệt ưu ái đương số, đi ra ngoài dễ gặp may mắn bất ngờ, hay được quý nhân hoặc môi trường nâng đỡ tận tình.";
-  else if (KHAC_H[nh] === cucHanh) menhCucText = "Mệnh khắc Cục. Hoàn cảnh nhiều thử thách nhưng bản lĩnh đương số vô cùng to lớn, kiên cường khắc phục nghịch cảnh để tự tay vươn lên thành tựu.";
-  else if (KHAC_H[cucHanh] === nh) menhCucText = "Cục khắc Mệnh. Môi trường hay tạo áp lực chèn ép. Đương số cần sự nhẫn nại, ý chí bền bỉ gấp năm mười lần người thường để vươn tới vinh quang.";
-  
-  const amDuongLy = (cN%2 === K.menh%2) ? "Âm Dương thuận lý. Cuộc đời nhìn chung có nhiều điểm thuận lợi, dễ gặp thời vận, mưu sự dễ thành hơn người." : "Âm Dương nghịch lý. Đòi hỏi nội lực mạnh mẽ. Dù gặp nhiều thử thách thăng trầm nhưng nhờ sự nỗ lực tự thân không ngừng nghỉ mà bứt phá.";
-
-  let t = '<h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Nền tảng Bản mệnh & Cốt cách</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
-  t += `<li><b>Gốc rễ Âm Dương - Ngũ Hành:</b> Đương số mang mệnh <b>${K.naNam}</b> (${nh}), <b>${CUC_TEN[K.cuc]}</b>. Thuộc thế <b>${amDuongLy}</b> Tình thế vận động: <b>${menhCucText}</b></li>`;
-  t += luanGiaiCung(K, K.menh, 'Mệnh');
-  t += '</ul>';
-  return '<div class="phan-box">'+t+'</div>';
-}
-
-function luanCacCung(K){
-  let t = '<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Đường Học hành, Công danh & Tiền bạc</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
-  t += luanGiaiCung(K, m12(K.menh+4), 'Quan Lộc');
-  t += luanGiaiCung(K, m12(K.menh+8), 'Tài Bạch');
-  t += `</ul></div>`;
-
-  t += '<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Hậu vận, Gia đạo & Nghiệp quả</h3><ul style="padding-left:20px;margin-bottom:15px;line-height:1.7;">';
-  t += luanGiaiCung(K, m12(K.menh+10), 'Phu Thê');
-  t += luanGiaiCung(K, m12(K.menh+7), 'Tật Ách');
-  t += luanGiaiCung(K, m12(K.menh+2), 'Ph Phúc Đức');
-  t += `</ul></div>`;
-  return t;
-}
 
 function luanDaiVan(K){
   if(K.daiVanCung<0)return'<div class="phan-box"><b>☳ ĐẠI VẬN</b><br><br>Chưa vào Đại Vận đầu tiên.</div>';
@@ -523,24 +564,24 @@ function luanDaiVan(K){
 }
 
 function luanHanNam(K){
-  const xY=K.LUU.nam,canX=CAN[((xY+6)%10+10)%10],[,,,kyNam]=TU_HOA[canX];
+  const xY=K.LUU.nam,canX=CAN[((xY+6)%10+10)%10],[loNam,quNam,khNam,kyNam]=TU_HOA[canX];
   const kyNamPos=fsp(K,kyNam),diPos=m12(K.menh+6);
   const factors=[];
-  if(kyNamPos===K.menh)factors.push(`<b>${kyNam}</b> Hóa Kỵ năm nay phi trúng <b>cung Mệnh</b>.`);
-  else if(kyNamPos===diPos)factors.push(`<b>${kyNam}</b> Hóa Kỵ tọa Thiên Di, <b>xung chiếu về Mệnh</b>.`);
+  if(kyNamPos===K.menh)factors.push({txt:`<b>${kyNam}</b> Hóa Kỵ năm nay phi trúng <b>cung Mệnh</b>.`, detail:'Hóa Kỵ đáp thẳng vào Mệnh nghĩa là năm nay đương số dễ gặp chuyện buồn phiền, áp lực tinh thần lớn, công việc trục trặc, sức khỏe suy giảm. Cần hết sức bình tĩnh, tránh quyết định lớn khi tâm trạng bất ổn.'});
+  else if(kyNamPos===diPos)factors.push({txt:`<b>${kyNam}</b> Hóa Kỵ tọa Thiên Di, <b>xung chiếu về Mệnh</b>.`, detail:'Kỵ tọa Thiên Di xung Mệnh cho thấy rắc rối đến từ bên ngoài: đối tác làm ăn, khách hàng, hoặc môi trường xung quanh gây bất lợi. Ra ngoài đi lại cẩn thận, đề phòng tiểu nhân sau lưng.'});
   if(K.daiVanCung>=0){const chD=Object.keys(K.S).filter(s=>K.S[s]===K.daiVanCung),puD=Object.keys(K.P).filter(s=>K.P[s]===K.daiVanCung);
     const kyDV=chD.concat(puD).filter(s=>K.HOA[s]==='ky');
-    if(kyDV.length)factors.push(`Gốc Đại Vận có <b>${kyDV.join(', ')}</b> Hóa Kỵ án ngữ.`);}
+    if(kyDV.length)factors.push({txt:`Gốc Đại Vận có <b>${kyDV.join(', ')}</b> Hóa Kỵ án ngữ.`, detail:'Hóa Kỵ nằm sẵn trong Đại Vận (chu kỳ 10 năm) giống như một vết thương cũ chưa lành. Năm nào gặp thêm lưu niên xấu thì vết thương bùng phát, năm tốt thì âm ỉ không đáng ngại.'});}
   const kkM=['Địa Không','Địa Kiếp'].filter(s=>K.P[s]===K.menh||K.P[s]===K.than);
   if(kkM.length&&K.daiVanCung>=0){const chD=Object.keys(K.S).filter(s=>K.S[s]===K.daiVanCung).concat(Object.keys(K.P).filter(s=>K.P[s]===K.daiVanCung));
-    if(chD.some(s=>K.HOA[s]==='ky'))factors.push(`Mệnh/Thân ôm Sát tinh Không Kiếp, lại đang đi qua Đại Vận Hóa Kỵ.`);}
+    if(chD.some(s=>K.HOA[s]==='ky'))factors.push({txt:`Mệnh/Thân ôm Sát tinh Không Kiếp, lại đang đi qua Đại Vận Hóa Kỵ.`, detail:'Địa Không, Địa Kiếp là hai sao phá tán tiền bạc. Khi gặp Hóa Kỵ trong Đại Vận, tài chính dễ biến động mạnh: đầu tư thua lỗ, bị lừa đảo, mất tiền bất ngờ. Tuyệt đối không cho vay, không bảo lãnh, không đầu cơ.'});}
   if(K.daiVanCan){const[,,,kyDVC]=TU_HOA[K.daiVanCan],kyDVCP=fsp(K,kyDVC);
-    if(kyDVCP===K.menh&&kyNamPos!==K.menh)factors.push(`Can Đại Vận (${K.daiVanCan}) phi <b>${kyDVC}</b> Hóa Kỵ về Mệnh.`);}
+    if(kyDVCP===K.menh&&kyNamPos!==K.menh)factors.push({txt:`Can Đại Vận (${K.daiVanCan}) phi <b>${kyDVC}</b> Hóa Kỵ về Mệnh.`, detail:'Đại Vận tự phóng thêm một tia Kỵ nữa vào Mệnh, tạo thành "song Kỵ giáp công". Đương số như bị tấn công từ hai phía, áp lực gấp đôi, cần đặc biệt cẩn trọng sức khỏe và pháp lý.'});}
   const satM=SAT_LIST.filter(s=>K.P[s]===K.menh);
   if(satM.length){const thP=K.LUU.tieuHan,chTH=Object.keys(K.S).filter(s=>K.S[s]===thP).concat(Object.keys(K.P).filter(s=>K.P[s]===thP));
-    if(chTH.some(s=>K.HOA[s]==='ky'||K.LUU.hoa[s]==='ky'))factors.push(`Mệnh có bầy Sát tinh, Tiểu Hạn năm nay lại đụng Hóa Kỵ.`);}
+    if(chTH.some(s=>K.HOA[s]==='ky'||K.LUU.hoa[s]==='ky'))factors.push({txt:`Mệnh có bầy Sát tinh, Tiểu Hạn năm nay lại đụng Hóa Kỵ.`, detail:'Sát tinh (Kình Dương, Đà La, Hỏa Tinh, Linh Tinh, Không Kiếp) vốn đã hung dữ, nay lại bị Kỵ kích hoạt như đổ thêm dầu vào lửa. Nguy cơ tai nạn, bệnh tật, kiện tụng tăng cao.'});}
   const satTh=SAT_LIST.filter(s=>K.P[s]===K.than),hkTh=['Thiên Hình','Thiên Không'].filter(s=>K.P[s]===K.than);
-  if(satTh.length&&hkTh.length)factors.push(`Thân có ${satTh.join(', ')} kèm ${hkTh.join(', ')}, năm Kỵ dễ kích phát tai ương.`);
+  if(satTh.length&&hkTh.length)factors.push({txt:`Thân có ${satTh.join(', ')} kèm ${hkTh.join(', ')}, năm Kỵ dễ kích phát tai ương.`, detail:'Thiên Hình chủ hình phạt, Thiên Không chủ trống rỗng. Kết hợp sát tinh ở cung Thân (phản ánh hành động thực tế), đương số dễ hành xử bốc đồng rồi phải gánh hậu quả nặng nề.'});
   const tamHopM=[K.menh,m12(K.menh+4),m12(K.menh+8),m12(K.menh+6)];
   const rescues=[];const hoaLQK=[];
   Object.keys(K.HOA).forEach(s=>{const h=K.HOA[s],pos=fsp(K,s);
@@ -549,17 +590,39 @@ function luanHanNam(K){
   if(tamHopM.includes(K.P['Thiên Khôi']))rescues.push('Thiên Khôi chiếu');
   if(tamHopM.includes(K.P['Thiên Việt']))rescues.push('Thiên Việt chiếu');
   
-  let t=`Phân tích Lưu đồ năm <b>${yearName(xY)}</b>, lưu Hóa phi tinh báo <b>${kyNam} Hóa Kỵ</b>.<br><br>`;
-  if(!factors.length){t+=`<span class="good">✓ Không phát hiện lưới Hóa Kỵ bủa vây.</span> Năm nay vận trình khá êm ả mượt mà, vạn sự thuận theo tự nhiên mà đơm hoa kết trái.<br>`;}
-  else{t+=`<b class="bad">Phát hiện ${factors.length}/6 yếu tố Kỵ/Sát kích hoạt:</b><br>`;
-    factors.forEach(f=>t+=`<span class="bad">✗</span> ${f}<br>`);t+='<br>';
-    if(factors.length===1)t+='Một yếu tố hung – năm nay có lúc vất vả, đau đầu nhưng tựu chung vẫn nằm trong tầm kiểm soát.';
-    else if(factors.length<=3)t+=`<b>Chồng ${factors.length} tầng Hóa Kỵ/Sát</b> – cảnh báo một năm hung hiểm, sóng gió bủa vây. Đương số cần đề phòng sức khỏe, công việc gãy đổ, pháp lý. Hạn chế tối đa đầu tư mạo hiểm.`;
-    else t+=`<b class="bad">HẠN CỰC NẶNG!</b> Chồng ${factors.length} tầng Kỵ Sát. Báo động đỏ toàn diện! Phải hết sức cẩn trọng đường đi nước bước, tránh mọi mưu cầu lớn. Tranh thủ hành thiện, phóng sinh tích phúc để hóa giải tai kiếp.`;
-    t+='<br><br>';
-    if(rescues.length){t+=`<span class="good"><b>Đường sinh tinh chiếu mạng:</b> ${rescues.join('; ')}.</span> Tuy trong hung có hiểm nhưng vẫn có cơ hội thoát hiểm ngoạn mục. `;
-      if(hoaLQK.length>=3)t+='<b class="good">Đủ Tam Hóa (Khoa-Quyền-Lộc) hội tụ – sức cứu giải vô cùng mạnh, phùng hung hóa cát, biển lửa hóa đài sen.</b>';}
-    else if(factors.length>=2)t+='<span class="bad">Không tìm thấy tổ hợp Cát tinh đủ mạnh hội chiếu Mệnh để hóa giải.</span> Đương số bắt buộc phải chủ động phòng ngừa, không được chủ quan lơ là.';}
+  // Tieu Han analysis
+  const thP=K.LUU.tieuHan, thCung=CUNG12[m12(thP-K.menh)];
+  const chTH=Object.keys(K.S).filter(s=>K.S[s]===thP);
+  
+  let t=`<p><b>Năm ${yearName(xY)}</b> (Can ${canX}), đương số ${K.lunarAge} tuổi âm.</p>`;
+  t+=`<p><b>Tứ Hóa Lưu Niên:</b> Năm nay Can ${canX} tung ra 4 tia năng lượng: <span class="good">${loNam} Hóa Lộc</span> (tiền bạc, may mắn) · <span class="good">${quNam} Hóa Quyền</span> (quyền lực, thăng tiến) · <span class="good">${khNam} Hóa Khoa</span> (danh tiếng, thi cử) · <span class="bad">${kyNam} Hóa Kỵ</span> (trắc trở, thị phi). Trong đó, Hóa Kỵ là yếu tố nguy hiểm nhất cần đặc biệt chú ý.</p>`;
+  
+  t+=`<p><b>Tiểu Hạn năm nay:</b> Rơi vào cung <b>${thCung}</b> (${CHI[thP]}). `;
+  if(chTH.length) t+=`Có sự cai quản của ${chTH.join(' và ')}, `;
+  t+=`chi phối trực tiếp vận may rủi trong 12 tháng tới.</p>`;
+
+  if(!factors.length){
+    t+=`<p><span class="good"><b>✓ KẾT QUẢ: AN TOÀN</b></span></p>`;
+    t+=`<p>Không phát hiện tổ hợp Hóa Kỵ nguy hiểm nào bủa vây Mệnh. Năm nay vận trình khá thuận lợi, êm ả. Đương số có thể tự tin triển khai các kế hoạch lớn: đầu tư, mua nhà, chuyển việc, lập gia đình đều hanh thông.</p>`;
+    t+=`<p><b>Lời khuyên:</b> Tận dụng tối đa vận may, chủ động nắm bắt cơ hội. Đặc biệt chú ý các tháng có Lộc Tồn và Thiên Mã lưu niên đi qua cung Mệnh hoặc Tài Bạch, đó là thời điểm vàng để bứt phá tài chính.</p>`;
+  } else {
+    t+=`<p><b class="bad">⚠ CẢNH BÁO: Phát hiện ${factors.length} yếu tố Kỵ/Sát kích hoạt</b></p>`;
+    factors.forEach(f=>{
+      t+=`<p style="margin-left:15px;padding:8px;background:rgba(168,62,53,.05);border-left:2px solid var(--cinnabar);margin-bottom:8px"><span class="bad">✗</span> ${f.txt}<br><i style="color:#999;font-size:14px">${f.detail}</i></p>`;
+    });
+    
+    if(factors.length===1) t+=`<p><b>Tổng đánh giá:</b> Mức độ <b style="color:var(--amber)">CẢNH GIÁC NHẸ</b>. Năm nay có lúc vất vả, đau đầu nhưng tựu chung vẫn nằm trong tầm kiểm soát. Chỉ cần tỉnh táo trong giai đoạn tháng 3, 6, 9 âm lịch (đó thường là thời điểm Kỵ bùng phát mạnh nhất).</p>`;
+    else if(factors.length<=3) t+=`<p><b>Tổng đánh giá:</b> Mức độ <b class="bad">NGUY HIỂM</b>. Chồng ${factors.length} tầng Kỵ/Sát cảnh báo một năm nhiều sóng gió. Đương số cần: (1) Hạn chế đầu tư mạo hiểm, (2) Chú ý sức khỏe, khám định kỳ, (3) Tránh kiện tụng tranh chấp, (4) Không cho vay số lớn, không bảo lãnh ai.</p>`;
+    else t+=`<p><b>Tổng đánh giá:</b> Mức độ <b class="bad">BÁO ĐỘNG ĐỎ!</b> Chồng ${factors.length} tầng Kỵ Sát. Đây là năm cực kỳ hung hiểm. Đương số phải: (1) Thu mình, không khởi sự gì mới, (2) Hạn chế di chuyển xa, (3) Kiểm tra sức khỏe toàn diện, (4) Tranh thủ hành thiện, phóng sinh, cúng sao giải hạn đầu năm, (5) Tuyệt đối không mạo hiểm tài chính.</p>`;
+    
+    if(rescues.length){
+      t+=`<p><span class="good"><b>✓ Đường giải cứu:</b></span> ${rescues.join('; ')}. Tuy trong hung vẫn có cánh cửa thoát hiểm. Đương số nên bám vào các lĩnh vực có Hóa Lộc, Hóa Khoa chiếu để tìm đường sáng. `;
+      if(hoaLQK.length>=3)t+=`<b class="good">Đặc biệt: Đủ Tam Hóa Khoa-Quyền-Lộc hội tụ, sức cứu giải vô cùng mạnh mẽ! Phùng hung hóa cát, lội ngược dòng ngoạn mục.</b>`;
+      t+=`</p>`;
+    } else if(factors.length>=2) {
+      t+=`<p><span class="bad">Không tìm thấy tổ hợp Cát tinh đủ mạnh hội chiếu Mệnh để hóa giải.</span> Đương số bắt buộc phải chủ động phòng ngừa, giảm thiểu rủi ro bằng hành động thực tế, không thể trông chờ vào may mắn.</p>`;
+    }
+  }
   return`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☵ XEM HẠN NĂM ${xY}</h3>${t}</div>`;
 }
 
