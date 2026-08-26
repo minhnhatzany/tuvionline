@@ -7,7 +7,7 @@ function runLaso(){
   const K=anSao({dd:d,mm:m,yy:y,gio:+document.getElementById('lHour').value,
     sex:document.getElementById('lSex').value,xemY:+document.getElementById('lXemY').value||undefined});
   const name=document.getElementById('lName')?.value||'';
-  saveHistory(name, v, gio, sex, xY);
+  saveHistory(name, v, document.getElementById('lHour').value, document.getElementById('lSex').value, document.getElementById('lXemY').value);
   const ban=document.getElementById('ban');ban.innerHTML='';SEL=null;let c0=false;
   GRID.forEach(i=>{
     if(i===null){if(!c0){ban.appendChild(center(K));c0=true;}return;}
@@ -393,12 +393,9 @@ function selfTest(){
   if(errs.length > 0) {
     const div = document.createElement('div');
     div.style = 'background:var(--cinnabar);color:#fff;padding:15px;font-weight:bold;margin-bottom:15px;border-radius:4px;white-space:pre-wrap;border-left:5px solid #ff0000;';
-    div.innerHTML = '⚠ TỰ KIỂM TRA BÁO LỖI (CHƯA ĐỐI CHIẾU HOÀN TOÀN):
-' + errs.join('
-');
+    div.innerHTML = '⚠ TỰ KIỂM TRA BÁO LỖI (CHƯA ĐỐI CHIẾU HOÀN TOÀN):\n' + errs.join('\n');
     document.querySelector('.wrap').prepend(div);
-    console.error(errs.join('
-'));
+    console.error(errs.join('\n'));
   }
 }
 setTimeout(selfTest, 1000);
