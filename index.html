@@ -1,116 +1,408 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ngũ Trụ Khuyết Mệnh - Phân Tích Bát Tự</title>
-<link rel="stylesheet" href="assets/css/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ngũ Trụ — Lập lá số Bát Tự</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Be+Vietnam+Pro:wght@300;400;600&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
 <style>
-/* CSS bổ sung cho Ngũ Trụ */
-.tru-table { width:100%; margin-bottom:20px; border-collapse:collapse; color:#fff; }
-.tru-table th { padding:10px; border-bottom:1px solid var(--gold); }
-.tru-table td { padding:10px; border-bottom:1px solid rgba(255,255,255,0.1); }
-#capture-area { background:var(--void); padding:30px; border:2px solid var(--gold); border-radius:8px; max-width:800px; margin:0 auto; }
+:root{
+  /* sơn mài */
+  --son:#0b0908; --son-2:#15100b; --son-3:#1e1710;
+  /* thếp vàng */
+  --vang:#c9a227; --vang-sang:#f2dc9b; --vang-mo:#7d6528;
+  --net:rgba(201,162,39,.22);
+  /* ngũ hành — quy ước cổ, không đổi */
+  --kim:#dcd8cc; --moc:#4f9d63; --thuy:#3f6ea6; --hoa:#bf4032; --tho:#c99a3c;
+  --chu:#e6ded0; --chu-mo:#9c9285; --chu-nhat:#6b6459;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--son); color:var(--chu);
+  font-family:'Be Vietnam Pro',system-ui,sans-serif; font-weight:300;
+  min-height:100vh; padding:28px 16px 64px; line-height:1.55;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative;
+}
+.han{font-family:'Noto Serif SC',serif}
+.wrap{max-width:640px;margin:0 auto;position:relative;z-index:1}
+
+/* ── sương: gradient mềm sẵn, không filter:blur toàn màn ── */
+#suong{position:fixed;inset:-30%;z-index:-1;pointer-events:none;overflow:hidden}
+#suong i{position:absolute;display:block;border-radius:50%;will-change:transform}
+#suong i:nth-child(1){width:80vw;height:80vw;left:-16vw;top:-24vw;
+  background:radial-gradient(circle,rgba(201,162,39,.10),rgba(201,162,39,.02) 46%,transparent 68%);
+  animation:troi-a 78s ease-in-out infinite}
+#suong i:nth-child(2){width:70vw;height:70vw;right:-18vw;top:34vh;
+  background:radial-gradient(circle,rgba(191,64,50,.07),transparent 64%);
+  animation:troi-b 96s ease-in-out infinite}
+#suong i:nth-child(3){width:86vw;height:86vw;left:6vw;bottom:-38vw;
+  background:radial-gradient(circle,rgba(63,110,166,.07),transparent 64%);
+  animation:troi-c 118s ease-in-out infinite}
+@keyframes troi-a{0%,100%{transform:none}50%{transform:translate(8vw,6vh) scale(1.16)}}
+@keyframes troi-b{0%,100%{transform:scale(1.08)}50%{transform:translate(-7vw,-5vh) scale(.94)}}
+@keyframes troi-c{0%,100%{transform:scale(.96)}50%{transform:translate(5vw,-7vh) scale(1.12)}}
+/* bụi vàng */
+#bui{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5}
+#bui b{position:absolute;width:1px;height:1px;border-radius:50%;background:var(--vang-sang)}
+
+/* ── đầu trang ── */
+header{text-align:center;margin-bottom:26px}
+.quai{font-size:13px;letter-spacing:.7em;color:var(--vang-mo);margin-bottom:12px;padding-left:.7em}
+h1{
+  font-family:'Playfair Display',serif; font-weight:400;
+  font-size:clamp(36px,9vw,56px); line-height:1; letter-spacing:.03em;
+  background:linear-gradient(172deg,#fff8e4 4%,var(--vang) 48%,#8f7325 96%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 26px rgba(201,162,39,.22));
+}
+.phu{margin-top:10px;font-size:10.5px;letter-spacing:.42em;color:var(--chu-nhat);
+  text-transform:uppercase;padding-left:.42em}
+
+/* ── băng tự kiểm ── */
+#kiem{margin:16px auto 0;max-width:460px;text-align:center;padding:6px 12px;
+  font-size:10.5px;letter-spacing:.05em;border-radius:2px}
+#kiem.dat{color:#7fae86;background:rgba(79,157,99,.08);border:1px solid rgba(79,157,99,.24)}
+#kiem.hong{color:#d2705f;background:rgba(191,64,50,.12);border:1px solid rgba(191,64,50,.42)}
+
+/* ── biểu mẫu ── */
+form{margin:26px 0 0;display:grid;gap:14px}
+.o{display:flex;flex-direction:column;gap:6px}
+label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--chu-nhat)}
+input,select{
+  background:var(--son-2);border:1px solid var(--net);color:var(--chu);
+  padding:11px 13px;border-radius:2px;font:inherit;font-size:15px;width:100%;
+}
+input:focus,select:focus{outline:none;border-color:var(--vang);box-shadow:0 0 0 3px rgba(201,162,39,.13)}
+.doi{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+button{
+  font:inherit;font-size:14px;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;
+  background:linear-gradient(168deg,var(--vang-sang),var(--vang) 42%,#96792a);
+  color:#191203;border:none;padding:13px 26px;border-radius:2px;font-weight:600;
+  transition:filter .2s,transform .12s;
+}
+button:hover{filter:brightness(1.1)} button:active{transform:translateY(1px)}
+button:focus-visible{outline:2px solid var(--vang-sang);outline-offset:3px}
+button.mo{background:none;border:1px solid var(--net);color:var(--vang);font-weight:400}
+button.mo:hover{background:rgba(201,162,39,.07)}
+.loi{color:#d2705f;font-size:13px;min-height:18px;text-align:center}
+
+/* ── khung thếp vàng ── */
+#bang{margin-top:30px;display:none}
+#bang.hien{display:block;animation:len .6s ease-out}
+@keyframes len{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#khung{
+  position:relative;padding:30px 22px 26px;
+  background:linear-gradient(168deg,var(--son-2),var(--son) 62%);
+  border:1px solid var(--vang-mo);
+  box-shadow:0 0 0 1px rgba(11,9,8,1) inset, 0 0 0 4px rgba(201,162,39,.13),
+             0 22px 60px rgba(0,0,0,.62);
+}
+#khung::before{content:'';position:absolute;inset:7px;border:1px solid rgba(201,162,39,.16);pointer-events:none}
+.goc{position:absolute;width:16px;height:16px;border:1px solid var(--vang);opacity:.5;pointer-events:none}
+.goc.tl{top:2px;left:2px;border-right:0;border-bottom:0}
+.goc.tr{top:2px;right:2px;border-left:0;border-bottom:0}
+.goc.bl{bottom:2px;left:2px;border-right:0;border-top:0}
+.goc.br{bottom:2px;right:2px;border-left:0;border-top:0}
+
+.ten-ls{font-family:'Playfair Display',serif;font-size:21px;text-align:center;color:var(--vang-sang);letter-spacing:.03em}
+.ngay-ls{text-align:center;font-size:12px;color:var(--chu-nhat);margin-top:4px;letter-spacing:.04em}
+.gach{height:1px;background:linear-gradient(90deg,transparent,var(--vang-mo),transparent);margin:20px 0}
+
+/* ── năm trụ ── */
+.tru{display:grid;grid-template-columns:26px 1fr auto;gap:12px;align-items:center;
+  padding:9px 4px;border-bottom:1px solid rgba(201,162,39,.09)}
+.tru:last-child{border-bottom:0}
+.tru.nhat{background:linear-gradient(90deg,rgba(201,162,39,.07),transparent)}
+.tru .nhan{font-size:16px;color:var(--vang-mo);text-align:center}
+.tru .canchi{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.tru .hz{font-size:23px;letter-spacing:.06em}
+.tru .vi{font-size:14px;color:var(--chu)}
+.tru .hanh{font-size:10px;letter-spacing:.13em;color:var(--chu-nhat);text-transform:uppercase;white-space:nowrap}
+.tru .chu{font-size:9px;letter-spacing:.16em;color:var(--vang);border:1px solid var(--net);padding:2px 5px;border-radius:1px}
+
+/* ── vòng ngũ hành ── */
+.vong{margin:8px auto 4px;display:block;width:100%;max-width:330px;height:auto}
+.vong .nen{fill:none;stroke:rgba(201,162,39,.14);stroke-width:.7}
+.vong .sinh{fill:none;stroke:rgba(201,162,39,.34);stroke-width:1.1}
+.vong .khac{fill:none;stroke:rgba(230,222,208,.10);stroke-width:.7;stroke-dasharray:3 4}
+.vong .tia{stroke:rgba(201,162,39,.13);stroke-width:.6}
+.vong .da{fill:rgba(201,162,39,.17);stroke:var(--vang);stroke-width:1.6;stroke-linejoin:round}
+.vong .nhan{font-family:'Noto Serif SC',serif;font-size:15px;fill:var(--chu)}
+.vong .so{font-family:'Be Vietnam Pro',sans-serif;font-size:9px;font-weight:600;fill:var(--chu-nhat)}
+.chu-thich{display:flex;gap:16px;justify-content:center;font-size:10px;color:var(--chu-nhat);margin-top:2px;flex-wrap:wrap}
+.chu-thich i{display:inline-block;width:14px;height:0;border-top:1px solid;margin-right:5px;vertical-align:3px}
+
+/* ── đánh giá ── */
+.danh-gia{margin-top:6px;padding:16px 18px;background:rgba(201,162,39,.045);
+  border-left:2px solid var(--vang-mo)}
+.dong{display:flex;justify-content:space-between;gap:14px;padding:6px 0;font-size:14px;align-items:baseline}
+.dong .nh{color:var(--chu-nhat);font-size:12px;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap}
+.dong .gt{text-align:right;font-weight:600}
+.ghi{margin-top:12px;padding-top:12px;border-top:1px solid rgba(201,162,39,.13);
+  font-size:12px;line-height:1.65;color:var(--chu-nhat);font-style:italic}
+
+.nut-hang{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+footer{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid rgba(201,162,39,.11);
+  font-size:11px;color:var(--chu-nhat);letter-spacing:.1em}
+
+@media(max-width:520px){
+  body{padding:20px 12px 48px}
+  #khung{padding:24px 15px 20px}
+  .tru{grid-template-columns:22px 1fr;gap:9px}
+  .tru .hanh{grid-column:2;font-size:9.5px}
+  .tru .hz{font-size:20px}
+  .doi{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  #suong{display:none}
+}
 </style>
 </head>
 <body>
-<div id="sao"></div>
 <div id="suong"><i></i><i></i><i></i></div>
+<div id="bui"></div>
+
 <div class="wrap">
 <header>
-  <div class="bagua">☰ ☱ ☲ ☳ ☴ ☵ ☶ ☷</div>
-  <h1>NGŨ TRỤ KHUYẾT MỆNH</h1>
-  <div class="sub">T H Ấ U &nbsp; H I Ể U &nbsp; B Ả N &nbsp; M Ệ N H &nbsp;·&nbsp; C Â N &nbsp; B Ằ N G &nbsp; N G Ũ &nbsp; H À N H</div>
+  <div class="quai">☰ ☱ ☲ ☳ ☴ ☵ ☶ ☷</div>
+  <h1>Ngũ Trụ</h1>
+  <div class="phu">Lập lá số Bát Tự</div>
+  <div id="kiem"></div>
 </header>
 
-<div class="tabs">
-  <div class="tab active" data-tab="nhap">📝 Nhập thông tin</div>
-  <div class="tab" data-tab="ketqua">☯ Kết Quả Ngũ Trụ</div>
-</div>
+<form id="nhap" autocomplete="off">
+  <div class="o"><label for="ten">Họ và tên</label>
+    <input type="text" id="ten" placeholder="Để trống cũng được"></div>
+  <div class="doi">
+    <div class="o"><label for="ngay">Ngày sinh dương lịch</label>
+      <input type="date" id="ngay" value="1998-02-01"></div>
+    <div class="o"><label for="gio">Giờ sinh</label><select id="gio"></select></div>
+  </div>
+  <div class="o"><label for="gioi">Giới tính</label>
+    <select id="gioi"><option value="nam">Nam</option><option value="nu">Nữ</option></select></div>
+  <div style="text-align:center;margin-top:6px"><button type="submit">Lập lá số</button></div>
+  <div class="loi" id="loi"></div>
+</form>
 
-<div id="pane-nhap">
-  <div class="panel" style="max-width:500px;margin:0 auto;">
-    <div class="f">
-        <label>Họ và tên</label>
-        <input type="text" id="lName" placeholder="VD: Nguyễn Văn A">
+<div id="bang">
+  <div id="khung">
+    <span class="goc tl"></span><span class="goc tr"></span><span class="goc bl"></span><span class="goc br"></span>
+    <div class="ten-ls" id="ls-ten"></div>
+    <div class="ngay-ls" id="ls-ngay"></div>
+    <div class="gach"></div>
+    <div id="ls-tru"></div>
+    <div class="gach"></div>
+    <svg class="vong" id="ls-vong" viewBox="0 0 300 300" role="img" aria-label="Phân bố ngũ hành trên vòng sinh khắc"></svg>
+    <div class="chu-thich">
+      <span><i style="border-color:rgba(201,162,39,.34)"></i>viền ngoài — vòng tương sinh</span>
+      <span><i style="border-top-style:dashed;border-color:rgba(230,222,208,.3)"></i>đường chéo — vòng tương khắc</span>
     </div>
-    <div class="f">
-        <label>Ngày sinh (Dương lịch)</label>
-        <input type="date" id="lDob" value="1998-02-01">
-    </div>
-    <div class="f">
-        <label>Giờ sinh</label>
-        <select id="lHour">
-            <option value="0">Tý (23h - 01h)</option>
-            <option value="2">Sửu (01h - 03h)</option>
-            <option value="4">Dần (03h - 05h)</option>
-            <option value="6">Mão (05h - 07h)</option>
-            <option value="8">Thìn (07h - 09h)</option>
-            <option value="10">Tỵ (09h - 11h)</option>
-            <option value="12" selected>Ngọ (11h - 13h)</option>
-            <option value="14">Mùi (13h - 15h)</option>
-            <option value="16">Thân (15h - 17h)</option>
-            <option value="18">Dậu (17h - 19h)</option>
-            <option value="20">Tuất (19h - 21h)</option>
-            <option value="22">Hợi (21h - 23h)</option>
-        </select>
-    </div>
-    <div class="f">
-        <label>Giới tính</label>
-        <select id="lSex"><option value="1">Nam</option><option value="0">Nữ</option></select>
-    </div>
-    <div style="text-align:center;margin-top:20px;">
-        <button type="button" id="btnLaso" style="padding:12px 30px;font-size:18px;">Phân Tích Ngũ Trụ ➔</button>
-    </div>
+    <div class="gach"></div>
+    <div class="danh-gia" id="ls-danhgia"></div>
+  </div>
+  <div class="nut-hang">
+    <button type="button" class="mo" id="btn-anh">Tải ảnh lá số</button>
+    <a href="https://zalo.me/0366110096" target="_blank" rel="noopener"><button type="button">Nhờ thầy luận sâu</button></a>
   </div>
 </div>
 
-<div id="pane-ketqua" class="hide" style="text-align:center;">
-    <div id="capture-area">
-        <h2 style="color:var(--gold);margin-bottom:10px;font-size:24px;">BIỂU ĐỒ NGŨ TRỤ KHUYẾT MỆNH</h2>
-        <div id="user-info" style="color:#ddd;margin-bottom:20px;font-size:16px;"></div>
-        
-        <table class="tru-table">
-            <thead>
-                <tr>
-                    <th>Trụ</th>
-                    <th>Thiên Can</th>
-                    <th>Địa Chi</th>
-                </tr>
-            </thead>
-            <tbody id="tru-table">
-            </tbody>
-        </table>
-
-        <div style="width:100%;max-width:400px;margin:0 auto 20px;">
-            <canvas id="nguHanhChart"></canvas>
-        </div>
-
-        <div id="khuyet-result" style="background:rgba(255,0,0,0.1);border-left:4px solid var(--cinnabar);padding:15px;text-align:left;margin-bottom:15px;">
-        </div>
-    </div>
-    
-    <div style="margin-top:20px;">
-        <button id="btnDownload" style="background:var(--gold);color:#000;border:none;padding:12px 24px;border-radius:4px;cursor:pointer;font-weight:bold;font-size:16px;margin-bottom:15px;">📸 Tải Ảnh Biểu Đồ</button>
-        <br>
-        <a href="https://zalo.me/0366110096" target="_blank" style="display:inline-block;background:var(--azure);color:#000;padding:12px 24px;text-decoration:none;font-weight:bold;border-radius:4px;font-size:16px;">💬 Liên Hệ Thầy Thục Linh Tư Vấn Bù Khuyết</a>
-    </div>
+<footer>Ngũ Trụ · Đức năng thắng số</footer>
 </div>
 
-<footer>
-  <button onclick="navigator.clipboard.writeText(location.href);this.textContent='✓ Đã copy link!'">📋 Chia sẻ</button>
-  <div>☯ Ngũ Trụ Khuyết Mệnh · Đức năng thắng số ☯</div>
-</footer>
-</div>
-
-<!-- Libraries -->
-<script src="https://unpkg.com/lunar-javascript/lunar.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+/* ═══════════ HẰNG SỐ ═══════════ */
+const CAN=['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
+const CAN_H='甲乙丙丁戊己庚辛壬癸';
+const CHI=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+const CHI_H='子丑寅卯辰巳午未申酉戌亥';
+const H_CAN=['Mộc','Mộc','Hỏa','Hỏa','Thổ','Thổ','Kim','Kim','Thủy','Thủy'];
+const H_CHI=['Thủy','Thổ','Mộc','Mộc','Thổ','Hỏa','Hỏa','Thổ','Kim','Kim','Thổ','Thủy'];
+const HANH_H={'Kim':'金','Mộc':'木','Thủy':'水','Hỏa':'火','Thổ':'土'};
+const MAU={'Kim':'var(--kim)','Mộc':'var(--moc)','Thủy':'var(--thuy)','Hỏa':'var(--hoa)','Thổ':'var(--tho)'};
+const SINH={'Mộc':'Hỏa','Hỏa':'Thổ','Thổ':'Kim','Kim':'Thủy','Thủy':'Mộc'};
+const KHAC={'Mộc':'Thổ','Thổ':'Thủy','Thủy':'Hỏa','Hỏa':'Kim','Kim':'Mộc'};
+const m12=n=>((n%12)+12)%12;
 
-<!-- App logic -->
-<script src="assets/js/data.js"></script>
-<script src="assets/js/engine.js"></script>
-<script src="assets/js/ui.js"></script>
+/* ═══════════ TỨ TRỤ THEO TIẾT KHÍ ═══════════
+   Trụ Năm đổi tại Lập Xuân (~4/2), KHÔNG đổi tại Tết.
+   Trụ Tháng đổi tại 12 tiết, KHÔNG đổi tại mùng 1 âm.        */
+function jdn(d,m,y){const a=Math.floor((14-m)/12),Y=y+4800-a,M=m+12*a-3;
+  let j=d+Math.floor((153*M+2)/5)+365*Y+Math.floor(Y/4)-Math.floor(Y/100)+Math.floor(Y/400)-32045;
+  if(j<2299161)j=d+Math.floor((153*M+2)/5)+365*Y+Math.floor(Y/4)-32083;return j;}
+function kinhDo(jd){const T=(jd-2451545.0-7/24)/36525,dr=Math.PI/180;
+  const M=357.52911+35999.05029*T-0.0001537*T*T, L0=280.46646+36000.76983*T+0.0003032*T*T;
+  const C=(1.914602-0.004817*T-0.000014*T*T)*Math.sin(M*dr)
+        +(0.019993-0.000101*T)*Math.sin(2*M*dr)+0.000289*Math.sin(3*M*dr);
+  return ((L0+C)%360+360)%360;}
+function lapXuan(y){for(let d=2;d<=8;d++){const a=kinhDo(jdn(d,2,y)+0.5-7/24);
+  if(a>=315&&a<316.6)return d;} return 4;}
+
+function nguTru(d,mo,y,gio){
+  const J=jdn(d,mo,y), lam=kinhDo(J+0.5-7/24);
+  const iThang=Math.floor((((lam-315)%360+360)%360)/30);          // 0 = tháng Dần
+  const truocLX=(mo<2)||(mo===2&&d<lapXuan(y));
+  const namBT=truocLX?y-1:y;
+  const cNam=((namBT+6)%10+10)%10, zNam=((namBT+8)%12+12)%12;
+  const NGU_HO={0:2,5:2,1:4,6:4,2:6,7:6,3:8,8:8,4:0,9:0};          // ngũ hổ độn
+  const zThang=m12(2+iThang), cThang=(NGU_HO[cNam]+iThang)%10;
+  const cNgay=(J+9)%10, zNgay=(J+1)%12;
+  const cGio=((cNgay%5)*2+gio)%10;                                 // ngũ thử độn
+  const cThai=(cThang+1)%10, zThai=m12(zThang+3);                  // Thai Nguyên
+  return [
+    {ten:'Năm', han:'年', can:cNam,  chi:zNam},
+    {ten:'Tháng',han:'月',can:cThang,chi:zThang},
+    {ten:'Ngày',han:'日', can:cNgay, chi:zNgay, nhat:true},
+    {ten:'Giờ', han:'時', can:cGio,  chi:gio},
+    {ten:'Thai Nguyên',han:'胎',can:cThai,chi:zThai}
+  ];
+}
+function demHanh(tru){const c={Kim:0,Mộc:0,Thủy:0,Hỏa:0,Thổ:0};
+  tru.forEach(t=>{c[H_CAN[t.can]]++;c[H_CHI[t.chi]]++;});return c;}
+
+/* thân vượng / thân nhược + dụng thần cơ bản */
+function danhGia(tru,dem){
+  const nc=tru[2].can, nh=H_CAN[nc];
+  const an=Object.keys(SINH).find(k=>SINH[k]===nh);               // hành sinh ra nhật chủ
+  const dongDang=dem[nh]+dem[an];                                  // tỷ kiếp + ấn
+  const tong=Object.values(dem).reduce((a,b)=>a+b,0);
+  const vuong=dongDang>tong/2;
+  const dungThan = vuong
+    ? [SINH[nh], KHAC[nh], Object.keys(KHAC).find(k=>KHAC[k]===nh)] // tiết, hao, khắc
+    : [an, nh];                                                     // ấn, tỷ
+  return {nhatChu:nc, nhatChuHanh:nh, an, dongDang, tong, vuong,
+    trangThai: vuong?'Thân vượng':'Thân nhược',
+    dungThan:[...new Set(dungThan)]};
+}
+
+/* ═══════════ TỰ KIỂM ═══════════
+   Đối chiếu với lá số Bát Tự thật (ảnh chụp): 01/02/1998 14h giờ Mùi. */
+const MAU_KIEM=[
+  {d:1,mo:2,y:1998,gio:7, mong:['Đinh Sửu','Quý Sửu','Kỷ Mão','Tân Mùi','Giáp Thìn']}
+];
+function tuKiem(){
+  const loi=[];
+  MAU_KIEM.forEach(k=>{
+    const t=nguTru(k.d,k.mo,k.y,k.gio).map(x=>CAN[x.can]+' '+CHI[x.chi]);
+    k.mong.forEach((m,i)=>{ if(t[i]!==m) loi.push(`${t[i]} ≠ ${m}`); });
+  });
+  const el=document.getElementById('kiem');
+  if(loi.length){el.className='hong';el.textContent='Tự kiểm hỏng — '+loi.slice(0,2).join(' · ');}
+  else{el.className='dat';el.textContent='Tự kiểm: tứ trụ theo tiết khí khớp 5/5 trụ với lá số đối chiếu';}
+}
+
+/* ═══════════ VẼ VÒNG NGŨ HÀNH ═══════════
+   Năm đỉnh xếp theo đúng vòng tương sinh, nên:
+     · cạnh kề nhau  = tương sinh (cung tròn viền ngoài)
+     · cách một đỉnh = tương khắc (ngôi sao năm cánh)  */
+const VONG=['Mộc','Hỏa','Thổ','Kim','Thủy'];
+const TRAN=6;                                    // thang cố định cho mọi lá số
+function veVong(dem){
+  const C=150, R=104, gocDau=-Math.PI/2;
+  const P=i=>{const a=gocDau+i*2*Math.PI/5;return[C+R*Math.cos(a),C+R*Math.sin(a)];};
+  const Pv=(i,v)=>{const a=gocDau+i*2*Math.PI/5,r=R*(v/TRAN);return[C+r*Math.cos(a),C+r*Math.sin(a)];};
+  let s='';
+  /* lưới nền: 3 ngũ giác đồng dạng */
+  [2,4,6].forEach(v=>{ s+=`<polygon class="nen" points="${VONG.map((_,i)=>Pv(i,v).map(n=>n.toFixed(1)).join(',')).join(' ')}"/>`; });
+  /* tia */
+  VONG.forEach((_,i)=>{const[x,y]=P(i);s+=`<line class="tia" x1="${C}" y1="${C}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/>`;});
+  /* vòng tương khắc: nối cách một đỉnh */
+  VONG.forEach((_,i)=>{const[x1,y1]=P(i),[x2,y2]=P((i+2)%5);
+    s+=`<line class="khac" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;});
+  /* vòng tương sinh: cung tròn ngoài rìa, có khe ở mỗi đỉnh */
+  const Rs=R+17;
+  VONG.forEach((_,i)=>{
+    const a1=gocDau+i*2*Math.PI/5+0.30, a2=gocDau+(i+1)*2*Math.PI/5-0.30;
+    const x1=C+Rs*Math.cos(a1),y1=C+Rs*Math.sin(a1),x2=C+Rs*Math.cos(a2),y2=C+Rs*Math.sin(a2);
+    s+=`<path class="sinh" d="M${x1.toFixed(1)},${y1.toFixed(1)} A${Rs},${Rs} 0 0 1 ${x2.toFixed(1)},${y2.toFixed(1)}"/>`;
+  });
+  /* đa giác phân bố */
+  s+=`<polygon class="da" points="${VONG.map((h,i)=>Pv(i,Math.min(dem[h],TRAN)).map(n=>n.toFixed(1)).join(',')).join(' ')}"/>`;
+  /* nút + nhãn */
+  VONG.forEach((h,i)=>{
+    const[px,py]=Pv(i,Math.min(dem[h],TRAN)),[lx,ly]=P(i);
+    const nx=C+(R+34)*Math.cos(gocDau+i*2*Math.PI/5), ny=C+(R+34)*Math.sin(gocDau+i*2*Math.PI/5);
+    s+=`<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="4.6" fill="${MAU[h]}" stroke="var(--son)" stroke-width="1.4"/>`;
+    s+=`<text class="nhan" x="${nx.toFixed(1)}" y="${(ny+2).toFixed(1)}" text-anchor="middle" fill="${MAU[h]}">${HANH_H[h]}</text>`;
+    s+=`<text class="so" x="${nx.toFixed(1)}" y="${(ny+15).toFixed(1)}" text-anchor="middle">${h} ${dem[h]}</text>`;
+  });
+  document.getElementById('ls-vong').innerHTML=s;
+}
+
+/* ═══════════ HIỂN THỊ ═══════════ */
+function lap(e){
+  if(e)e.preventDefault();
+  const loi=document.getElementById('loi'); loi.textContent='';
+  const v=document.getElementById('ngay').value;
+  if(!v){loi.textContent='Chưa nhập ngày sinh.';return;}
+  const [y,mo,d]=v.split('-').map(Number);
+  if(y<1900||y>2100){loi.textContent='Năm sinh phải trong khoảng 1900–2100.';return;}
+  const gio=+document.getElementById('gio').value;
+  const ten=document.getElementById('ten').value.trim();
+
+  const tru=nguTru(d,mo,y,gio), dem=demHanh(tru), dg=danhGia(tru,dem);
+
+  document.getElementById('ls-ten').textContent=ten||'Lá số Bát Tự';
+  document.getElementById('ls-ngay').textContent=
+    `${d}/${mo}/${y} · giờ ${CHI[gio]} · ${document.getElementById('gioi').value==='nam'?'Nam':'Nữ'}`;
+
+  document.getElementById('ls-tru').innerHTML=tru.map(t=>{
+    const hc=H_CAN[t.can],hz=H_CHI[t.chi];
+    return `<div class="tru${t.nhat?' nhat':''}">
+      <span class="nhan han">${t.han}</span>
+      <span class="canchi">
+        <span class="hz han" style="color:${MAU[hc]}">${CAN_H[t.can]}</span><span class="hz han" style="color:${MAU[hz]}">${CHI_H[t.chi]}</span>
+        <span class="vi">${CAN[t.can]} ${CHI[t.chi]}</span>
+        <span class="hanh">${hc} · ${hz}</span>
+      </span>
+      ${t.nhat?'<span class="chu">nhật chủ</span>':'<span></span>'}
+    </div>`;}).join('');
+
+  veVong(dem);
+
+  const dt=dg.dungThan.map(h=>`<span style="color:${MAU[h]}">${h}</span>`).join(' · ');
+  document.getElementById('ls-danhgia').innerHTML=`
+    <div class="dong"><span class="nh">Nhật chủ</span>
+      <span class="gt" style="color:${MAU[dg.nhatChuHanh]}">${CAN[dg.nhatChu]} — ${dg.nhatChuHanh}</span></div>
+    <div class="dong"><span class="nh">Trạng thái</span>
+      <span class="gt" style="color:var(--vang-sang)">${dg.trangThai}</span></div>
+    <div class="dong"><span class="nh">Đồng đảng</span>
+      <span class="gt">${dg.dongDang}/${dg.tong} chữ &nbsp;<span style="color:var(--chu-nhat);font-weight:300">(${dg.nhatChuHanh} + ${dg.an})</span></span></div>
+    <div class="dong"><span class="nh">Dụng thần</span><span class="gt">${dt}</span></div>
+    <div class="ghi">Đây là dụng thần cơ bản, suy từ việc đếm số lượng ngũ hành.
+      Muốn định dụng thần cho chuẩn còn phải xét tàng can và nguyệt lệnh — phần đó cần người luận,
+      trang này chỉ lập số.</div>`;
+
+  const b=document.getElementById('bang'); b.classList.add('hien');
+  if(e&&b.scrollIntoView) b.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ═══════════ KHỞI ĐỘNG ═══════════ */
+const sel=document.getElementById('gio');
+CHI.forEach((c,i)=>{const a=(i*2+23)%24,b=(i*2)%24;
+  sel.insertAdjacentHTML('beforeend',
+    `<option value="${i}">${c} — ${String(a).padStart(2,'0')}h đến ${String(b).padStart(2,'0')}h59</option>`);});
+sel.value=7;
+
+(function bui(){const el=document.getElementById('bui');let h='';
+  for(let i=0;i<70;i++)h+=`<b style="left:${(Math.random()*100).toFixed(1)}%;top:${(Math.random()*100).toFixed(1)}%;opacity:${(.1+Math.random()*.4).toFixed(2)}"></b>`;
+  el.innerHTML=h;})();
+
+document.getElementById('nhap').addEventListener('submit',lap);
+document.getElementById('btn-anh').addEventListener('click',function(){
+  const n=this, cu=n.textContent; n.textContent='Đang tạo ảnh…';
+  html2canvas(document.getElementById('khung'),{backgroundColor:'#0b0908',scale:2,useCORS:true})
+    .then(c=>{n.textContent='Đã tạo xong'; setTimeout(()=>n.textContent=cu,2000);
+      c.toBlob(bl=>{const a=document.createElement('a');
+        a.download='ngu-tru.png'; a.href=URL.createObjectURL(bl); a.click();},'image/png');})
+    .catch(()=>{n.textContent='Không tạo được ảnh'; setTimeout(()=>n.textContent=cu,2200);});
+});
+
+tuKiem(); lap();
+</script>
 </body>
 </html>
