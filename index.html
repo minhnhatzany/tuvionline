@@ -164,11 +164,13 @@ footer button{margin:0 auto 8px;display:flex}
   <div class="sub">A N &nbsp; S A O &nbsp;·&nbsp; L U Ậ N &nbsp; S Ố &nbsp;·&nbsp; T R Ạ C H &nbsp; C Á T</div>
 </header>
 <a href="https://huyetchieuhoa.netlify.app" target="_blank" id="ad-banner"><span class="ad-tag">Góc truyện hay</span><b>Huyết Chiêu Hoa</b> — Tiểu thuyết trinh thám, tâm linh, lịch sử của nhà văn Thục Linh và Hà Trung Vương. Đọc thử ngay!</a>
-<div class="tabs">
+<div class="tabs" style="flex-wrap:wrap">
   <div class="tab on" data-tab="cuoi" tabindex="0">Cưới hỏi</div>
   <div class="tab" data-tab="laso" tabindex="0">Lá số</div>
   <div class="tab" data-tab="nha" tabindex="0">Làm nhà</div>
   <div class="tab" data-tab="ma" tabindex="0">Tang lễ</div>
+  <div class="tab" data-tab="huongdan" tabindex="0" style="color:var(--azure);border-color:var(--azure)">Hướng dẫn</div>
+  <div class="tab" data-tab="phongthuy" tabindex="0" style="color:var(--gold);border-color:var(--gold)">Phong Thủy</div>
 </div>
 <div id="pane-cuoi">
   <div class="panel">
@@ -213,6 +215,48 @@ footer button{margin:0 auto 8px;display:flex}
   <div class="err" id="errMa"></div><div id="outMa"></div>
 </div>
 <div id="tip"></div>
+<div id="pane-huongdan" class="hide">
+    <div class="phan-box" style="line-height:1.8">
+        <h3 style="color:var(--azure);font-size:22px;margin-bottom:15px;text-align:center">BÍ KÍP ĐỌC HIỂU TỬ VI ONLINE</h3>
+        
+        <b style="color:var(--gold);font-size:18px">1. Tử vi là gì? Xem được những gì?</b>
+        <p style="margin-bottom:15px">Tử Vi Đẩu Số là môn khoa học phương Đông dự trắc vận mệnh dựa trên ngày tháng năm sinh và giờ sinh. Qua lá số Tử Vi, bạn có thể nắm bắt được bức tranh toàn cảnh về cuộc đời: tính cách cốt lõi, đường học hành, sự nghiệp, tiền tài, tình duyên gia đạo, và sức khỏe.</p>
+        
+        <b style="color:var(--gold);font-size:18px">2. Web Tử Vi Online có gì đặc biệt?</b>
+        <ul style="margin-bottom:15px">
+            <li><b>Lá số chính xác 100%:</b> Thuật toán an sao chuẩn xác, hiển thị đầy đủ cả chính tinh và phụ tinh quan trọng.</li>
+            <li><b>Luận giải miễn phí cực sâu:</b> Thay vì phán chung chung, hệ thống tự động kết hợp Ngũ hành sinh khắc, sao Tuần/Triệt, vòng Tràng Sinh để đưa ra bài luận mang tính "Cá nhân hóa" cao nhất.</li>
+            <li><b>Tích hợp xem Trạch Cát:</b> Công cụ chọn ngày giờ tốt cho Cưới Hỏi, Làm Nhà, Tang Lễ dựa trên lịch pháp cổ.</li>
+        </ul>
+
+        <b style="color:var(--gold);font-size:18px">3. Cách xem lá số cho người mới bắt đầu</b>
+        <p style="margin-bottom:5px">Chỉ cần 3 bước đơn giản:</p>
+        <ul style="margin-bottom:15px">
+            <li><b>Bước 1:</b> Chuyển sang tab <b>Lá số</b>, nhập chính xác ngày tháng năm và giờ sinh (Dương lịch).</li>
+            <li><b>Bước 2:</b> Bấm "Tra cứu". Kéo xuống phần <b>"Nền tảng Bản mệnh"</b> và <b>"Đường Công danh, Tiền bạc"</b> để đọc luận giải.</li>
+            <li><b>Bước 3:</b> Xem vận hạn năm hiện tại ở phần <b>"XEM HẠN NĂM"</b> dưới cùng để biết năm nay tốt hay xấu.</li>
+        </ul>
+
+        <div style="margin:20px 0;padding:20px;background:rgba(196,162,101,0.1);border:1px dashed var(--gold);border-radius:4px;text-align:center;">
+            <h4 style="color:var(--gold);margin-bottom:10px;font-size:18px;">Bạn có quá nhiều câu hỏi mà máy móc không thể trả lời?</h4>
+            <p style="font-size:16px;margin-bottom:15px;">Máy tính chỉ là công cụ. Để tháo gỡ các nút thắt thực sự trong cuộc đời, định hướng lối đi đúng đắn, bạn cần một người Thầy có tâm và có tầm.</p>
+            <p style="font-size:16px;margin-bottom:15px;color:#fff">☎️ Liên hệ & Zalo Thầy Thục Linh: <b>0366.110.096</b></p>
+            <a href="https://www.facebook.com/adeline.1811" target="_blank" style="display:inline-block;background:var(--gold);color:#000;padding:10px 20px;text-decoration:none;font-weight:bold;margin-right:10px;border-radius:2px;font-size:15px;">💬 Nhắn tin qua Facebook</a>
+        </div>
+    </div>
+</div>
+
+<div id="pane-phongthuy" class="hide">
+    <div class="phan-box" style="text-align:center;padding:40px 15px">
+        <h3 style="color:var(--gold);font-size:22px;margin-bottom:15px">VẬT PHẨM PHONG THỦY & TRẦM HƯƠNG</h3>
+        <p style="font-size:16px;margin-bottom:20px;">Gian hàng đang trong quá trình hoàn thiện. Sắp tới, chúng tôi sẽ ra mắt các bộ sưu tập vòng tay trầm hương, đá phong thủy tự nhiên giúp tăng cường vượng khí, hóa giải sát khí theo từng bản mệnh.</p>
+        <p style="font-size:15px;color:var(--dimmer);margin-bottom:25px;">(Mỗi vật phẩm đều được Thầy Thục Linh trực tiếp xem xét, khai quang và trì chú trước khi gửi đến tay bạn)</p>
+        
+        <p style="font-size:18px;margin-bottom:20px;color:#fff">☎️ Hotline/Zalo tư vấn: <b>0366.110.096</b></p>
+        <a href="https://www.facebook.com/adeline.1811" target="_blank" style="display:inline-block;background:var(--gold);color:#000;padding:10px 20px;text-decoration:none;font-weight:bold;border-radius:2px;font-size:15px;">🛍️ Đặt trước vật phẩm phong thủy</a>
+    </div>
+</div>
+
 <footer>
   <button onclick="navigator.clipboard.writeText(location.href);this.textContent='✓ Đã copy link!'">📋 Chia sẻ lá số</button>
   <div>☯ Tử Vi Online · Đức năng thắng số ☯</div>
@@ -436,7 +480,7 @@ function luanMenh(K){
   let t = '<h3 style="color:var(--gold);margin-top:0;font-size:18px;margin-bottom:12px;">☯ Nền tảng Bản mệnh & Cốt cách</h3>';
   t += `<p style="margin-bottom:12px; padding-bottom:12px; border-bottom: 1px solid rgba(255,255,255,0.05)">☯ <b>Gốc rễ Âm Dương - Ngũ Hành:</b> Đương số mang mệnh <b>${K.naNam}</b> (${nh}), <b>${CUC_TEN[K.cuc]}</b>. Cục diện rơi vào thế <b>${amDuongLy}</b> Tình thế vận động: <b>${menhCucText}</b></p>`;
   t += luanGiaiCung(K, K.menh, 'Mệnh');
-  return '<div class="phan-box">'+t+'<div style="margin:20px 0;padding:15px;background:rgba(196,162,101,0.1);border:1px solid var(--gold);border-radius:4px;text-align:center;">    <h4 style="color:var(--gold);margin-bottom:10px;font-size:16px;">🔍 BẠN CẦN LUẬN GIẢI CHUYÊN SÂU HƠN?</h4>    <p style="font-size:15px;margin-bottom:12px;">Bản luận giải tự động chỉ phản ánh 70% bức tranh tổng thể. Để có định hướng chính xác nhất về Tình duyên, Sự nghiệp, Đầu tư năm 2026, bạn cần cái nhìn phối hợp từ chuyên gia.</p>    <a href="https://www.facebook.com/adeline.1811" target="_blank" style="display:inline-block;background:var(--gold);color:#000;padding:8px 16px;text-decoration:none;font-weight:bold;margin-right:10px;border-radius:2px;font-size:14px;margin-bottom:5px;">💬 Đặt lịch Thầy Thục Linh</a>    <a href="https://www.facebook.com/groups/1451929442272843" target="_blank" style="display:inline-block;background:transparent;color:var(--gold);border:1px solid var(--gold);padding:8px 16px;text-decoration:none;font-weight:bold;border-radius:2px;font-size:14px;margin-bottom:5px;">👥 Tham gia Group Tử Vi</a></div></div>';
+  return '<div class="phan-box">'+t+'<div style="margin:20px 0;padding:15px;background:rgba(196,162,101,0.1);border:1px dashed var(--gold);border-radius:4px;text-align:center;">    <h4 style="color:var(--gold);margin-bottom:10px;font-size:16px;">🔍 BẠN CẦN LUẬN GIẢI CHUYÊN SÂU HƠN?</h4>    <p style="font-size:15px;margin-bottom:10px;">Bản luận giải tự động chỉ phản ánh 70% bức tranh tổng thể. Để có định hướng chuẩn xác, tháo gỡ nút thắt Tình duyên, Sự nghiệp, Đầu tư, bạn cần cái nhìn phối hợp từ chuyên gia.</p>    <p style="font-size:15px;margin-bottom:12px;color:#fff">☎️ Điện thoại / Zalo Thầy Thục Linh: <b>0366.110.096</b></p>    <a href="https://www.facebook.com/adeline.1811" target="_blank" style="display:inline-block;background:var(--gold);color:#000;padding:8px 16px;text-decoration:none;font-weight:bold;margin-right:10px;border-radius:2px;font-size:14px;margin-bottom:5px;">💬 Đặt lịch Thầy Thục Linh</a>    <a href="https://www.facebook.com/groups/1451929442272843" target="_blank" style="display:inline-block;background:transparent;color:var(--gold);border:1px solid var(--gold);padding:8px 16px;text-decoration:none;font-weight:bold;border-radius:2px;font-size:14px;margin-bottom:5px;">👥 Tham gia Group Tử Vi</a></div></div>';
 }
 
 function luanCacCung(K){
@@ -646,7 +690,7 @@ function luanHanNam(K){
       t+=`<p><span class="bad">Không tìm thấy tổ hợp Cát tinh đủ mạnh hội chiếu Mệnh để hóa giải.</span> Đương số bắt buộc phải chủ động phòng ngừa, giảm thiểu rủi ro bằng hành động thực tế, không thể trông chờ vào may mắn.</p>`;
     }
   }
-  return`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☵ XEM HẠN NĂM ${xY}</h3>${t}<div style="margin:20px 0;padding:15px;background:rgba(196,162,101,0.1);border:1px solid var(--gold);border-radius:4px;text-align:center;">    <h4 style="color:var(--gold);margin-bottom:10px;font-size:16px;">🔍 BẠN CẦN LUẬN GIẢI CHUYÊN SÂU HƠN?</h4>    <p style="font-size:15px;margin-bottom:12px;">Bản luận giải tự động chỉ phản ánh 70% bức tranh tổng thể. Để có định hướng chính xác nhất về Tình duyên, Sự nghiệp, Đầu tư năm 2026, bạn cần cái nhìn phối hợp từ chuyên gia.</p>    <a href="https://www.facebook.com/adeline.1811" target="_blank" style="display:inline-block;background:var(--gold);color:#000;padding:8px 16px;text-decoration:none;font-weight:bold;margin-right:10px;border-radius:2px;font-size:14px;margin-bottom:5px;">💬 Đặt lịch Thầy Thục Linh</a>    <a href="https://www.facebook.com/groups/1451929442272843" target="_blank" style="display:inline-block;background:transparent;color:var(--gold);border:1px solid var(--gold);padding:8px 16px;text-decoration:none;font-weight:bold;border-radius:2px;font-size:14px;margin-bottom:5px;">👥 Tham gia Group Tử Vi</a></div></div>`;
+  return`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☵ XEM HẠN NĂM ${xY}</h3>${t}<div style="margin:20px 0;padding:15px;background:rgba(196,162,101,0.1);border:1px dashed var(--gold);border-radius:4px;text-align:center;">    <h4 style="color:var(--gold);margin-bottom:10px;font-size:16px;">🔍 BẠN CẦN LUẬN GIẢI CHUYÊN SÂU HƠN?</h4>    <p style="font-size:15px;margin-bottom:10px;">Bản luận giải tự động chỉ phản ánh 70% bức tranh tổng thể. Để có định hướng chuẩn xác, tháo gỡ nút thắt Tình duyên, Sự nghiệp, Đầu tư, bạn cần cái nhìn phối hợp từ chuyên gia.</p>    <p style="font-size:15px;margin-bottom:12px;color:#fff">☎️ Điện thoại / Zalo Thầy Thục Linh: <b>0366.110.096</b></p>    <a href="https://www.facebook.com/adeline.1811" target="_blank" style="display:inline-block;background:var(--gold);color:#000;padding:8px 16px;text-decoration:none;font-weight:bold;margin-right:10px;border-radius:2px;font-size:14px;margin-bottom:5px;">💬 Đặt lịch Thầy Thục Linh</a>    <a href="https://www.facebook.com/groups/1451929442272843" target="_blank" style="display:inline-block;background:transparent;color:var(--gold);border:1px solid var(--gold);padding:8px 16px;text-decoration:none;font-weight:bold;border-radius:2px;font-size:14px;margin-bottom:5px;">👥 Tham gia Group Tử Vi</a></div></div>`;
 }
 
 const GRID=[5,6,7,8,4,null,null,9,3,null,null,10,2,1,0,11];
@@ -939,7 +983,7 @@ CHI.forEach((c,i)=>{const a=(i*2+23)%24,b=(i*2)%24;
 sh.value=7;mah.value=7;
 document.querySelectorAll('.tab').forEach(t=>{t.onclick=()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));
-  ['cuoi','laso','nha','ma'].forEach(id=>document.getElementById('pane-'+id).classList.toggle('hide',t.dataset.tab!==id));saveURL();};});
+  ['cuoi','laso','nha','ma','huongdan','phongthuy'].forEach(id=>document.getElementById('pane-'+id).classList.toggle('hide',t.dataset.tab!==id));saveURL();};});
 document.getElementById('btnCuoi').onclick=runCuoi;
 document.getElementById('btnLaso').onclick=runLaso;
 loadURL();runCuoi();runLaso();runNha();runMa();
