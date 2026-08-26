@@ -248,8 +248,8 @@ footer button{margin:0 auto 8px;display:flex}
 <div id="pane-phongthuy" class="hide">
     <div class="phan-box" style="text-align:center;padding:40px 15px">
         <h3 style="color:var(--gold);font-size:22px;margin-bottom:15px">VẬT PHẨM PHONG THỦY & TRẦM HƯƠNG</h3>
-        <p style="font-size:16px;margin-bottom:20px;">Gian hàng đang trong quá trình hoàn thiện. Sắp tới, chúng tôi sẽ ra mắt các bộ sưu tập vòng tay trầm hương, đá phong thủy tự nhiên giúp tăng cường vượng khí, hóa giải sát khí theo từng bản mệnh.</p>
-        <p style="font-size:15px;color:var(--dimmer);margin-bottom:25px;">(Mỗi vật phẩm đều được Thầy Thục Linh trực tiếp xem xét, khai quang và trì chú trước khi gửi đến tay bạn)</p>
+        <p style="font-size:16px;margin-bottom:20px;">Gian hàng đang trong quá trình hoàn thiện. Sắp tới, chúng tôi sẽ ra mắt các bộ sưu tập vòng tay trầm hương, đá phong thủy tự nhiên giúp tăng cường vượng khí, cân bằng năng lượng theo từng bản mệnh.</p>
+        <p style="font-size:15px;color:var(--dimmer);margin-bottom:25px;">(Mỗi vật phẩm đều được Thầy Thục Linh trực tiếp xem xét, tuyển chọn kỹ lưỡng trước khi gửi đến tay bạn)</p>
         
         <p style="font-size:18px;margin-bottom:20px;color:#fff">☎️ Hotline/Zalo tư vấn: <b>0366.110.096</b></p>
         <a href="https://www.facebook.com/adeline.1811" target="_blank" style="display:inline-block;background:var(--gold);color:#000;padding:10px 20px;text-decoration:none;font-weight:bold;border-radius:2px;font-size:15px;">🛍️ Đặt trước vật phẩm phong thủy</a>
@@ -280,7 +280,7 @@ const m12=n=>((n%12)+12)%12;
 const NA_IDX={};for(let i=0;i<60;i++)NA_IDX[CAN[i%10]+'-'+CHI[i%12]]=Math.floor(i/2);
 const GLOSS={'tam hợp':'Ba con giáp cách nhau 4 cung, hợp tính hòa thuận.','tứ hành xung':'Bốn con giáp khắc nhau, dễ sinh trắc trở.','lục xung':'Đối diện vòng chi, xung mạnh nhất.','lục hại':'Sáu cặp hại nhau, dễ mếch lòng.','lục hợp':'Sáu cặp hợp nhau, dễ đồng điệu.','nạp âm':'Mệnh ngũ hành năm sinh.','cung phi':'Bát trạch (Đông/Tây tứ mệnh).','kim lâu':'Năm hạn của Nữ, phạm thì cưới/làm nhà trục trặc.','tam tai':'Hạn 3 năm liên tiếp trắc trở.','hoàng đạo':'Ngày/giờ tốt, cát tinh chiếu.','tam nương':'Ngày âm xấu, kiêng việc lớn.','nguyệt kỵ':'Mùng 5, 14, 23 – ngày kỵ.','hoang ốc':'Tính tuổi xây nhà.','trạch tuổi':'Cửu trạch tính hướng sinh khí tốt xấu khi xây cất.'};
 const MVDH={"Tử Vi":"BĐMVĐVMĐVBĐV","Thiên Cơ":"ĐHVMHVĐHVHHĐ","Thái Dương":"HHVVVVMĐĐHHH","Vũ Khúc":"VMVĐMHHMVĐMH","Thiên Đồng":"VHMHHĐHHMHĐM","Liêm Trinh":"VĐMHHHVĐMHMH","Thiên Phủ":"MMMBVĐVĐĐBVV","Thái Âm":"MMHHHHHĐVVMM","Tham Lang":"HMVĐMHHMĐHMH","Cự Môn":"VHMMHĐVHMĐHV","Thiên Tướng":"MĐMĐVĐVĐMĐVĐ","Thiên Lương":"VVVVMHMVVHMH","Thất Sát":"MĐMHHVVĐMHHV","Phá Quân":"MVHĐVHMVHĐVH"};
-const MH_DAKIEM=new Set(["Tham LangTỵ","Liêm TrinhTỵ","Cự MônNgọ","Thiên TướngMùi","Thiên ĐồngThân","Thiên LươngThân","Vũ KhúcDậu","Thất SátDậu","Thái DươngTuất","Thiên CơTý","Tử ViSửu","Phá QuânSửu","Thiên PhủMão","Thái ÂmThìn","Thiên CơNgọ","Tử ViMùi","Phá QuânMùi","Thiên PhủDậu","Thái ÂmTuất","Liêm TrinhHợi","Tham LangHợi","Cự MônTý","Thiên TướngSửu","Thi ĐồngDần","Thiên LươngDần","Vũ KhúcMão","Thất SátMão","Thái DươngThìn","Thiên CơTỵ","Tử ViNgọ","Phá QuânThân","Thất SátThìn","Thái DươngMão","Thiên LươngMão","Liêm TrinhTuất","Thiên PhủTuất","Vũ KhúcDần","Thiên TướngDần","Thiên ĐồngSửu","Cự MônSửu","Tham LangTý","Thái ÂmHợi","Phá QuânTỵ","Vũ KhúcTỵ","Thái DươngNgọ","Thiên PhủMùi","Thái ÂmThân","Thiên CơThân","Thiên ĐồngThìn","Tử ViDậu","Tham LangDậu","Cự MônTuất","Thất SátSửu","Liêm TrinhSửu","Thiên LươngTý","Thiên TướngHợi","Thái ÂmTỵ","Tham LangNgọ","Thiên ĐồngMùi","Cự MônMùi","Thiên TướngThân","Vũ KhúcThân","Liêm TrinhThìn","Thiên PhủThìn","Thiên LươngDậu","Thái DươngDậu","Thất SátTuất","Tử ViTý","Thiên CơHợi","Phá QuânDần"]);
+const MH_DAKIEM=new Set(["Tham LangTỵ","Liêm TrinhTỵ","Cự MônNgọ","Thiên TướngMùi","Thiên ĐồngThân","Thiên LươngThân","Vũ KhúcDậu","Thất SátDậu","Thái DươngTuất","Thiên CơTý","Tử ViSửu","Phá QuânSửu","Thiên PhủMão","Thái ÂmThìn","Thiên CơNgọ","Tử ViMùi","Phá QuânMùi","Thiên PhủDậu","Thái ÂmTuất","Liêm TrinhHợi","Tham LangHợi","Cự MônTý","Thiên TướngSửu","Thiên ĐồngDần","Thiên LươngDần","Vũ KhúcMão","Thất SátMão","Thái DươngThìn","Thiên CơTỵ","Tử ViNgọ","Phá QuânThân","Thất SátThìn","Thái DươngMão","Thiên LươngMão","Liêm TrinhTuất","Thiên PhủTuất","Vũ KhúcDần","Thiên TướngDần","Thiên ĐồngSửu","Cự MônSửu","Tham LangTý","Thái ÂmHợi","Phá QuânTỵ","Vũ KhúcTỵ","Thái DươngNgọ","Thiên PhủMùi","Thái ÂmThân","Thiên CơThân","Thiên ĐồngThìn","Tử ViDậu","Tham LangDậu","Cự MônTuất","Thất SátSửu","Liêm TrinhSửu","Thiên LươngTý","Thiên TướngHợi","Thái ÂmTỵ","Tham LangNgọ","Thiên ĐồngMùi","Cự MônMùi","Thiên TướngThân","Vũ KhúcThân","Liêm TrinhThìn","Thiên PhủThìn","Thiên LươngDậu","Thái DươngDậu","Thất SátTuất","Tử ViTý","Thiên CơHợi","Phá QuânDần"]);
 const SAT_LIST=['Kình Dương','Đà La','Địa Không','Địa Kiếp','Hỏa Tinh','Linh Tinh'];
 const CAT_LIST=['Thiên Khôi','Thiên Việt','Tả Phụ','Hữu Bật','Văn Xương','Văn Khúc','Lộc Tồn','Long Trì','Phượng Các','Hồng Loan','Thiên Hỷ','Đào Hoa','Thiên Mã','Ân Quang','Thiên Quý','Tam Thai','Bát Tọa','Thiên Y','Thiên Không','Giải Thần'];
 const G=(t,k)=>`<span class="gl" data-g="${k||t.toLowerCase()}">${t}</span>`;
@@ -441,7 +441,8 @@ function luanGiaiCung(K, idCung, tenCung) {
      t += `Nhưng vạn sự vẹn toàn bù trừ, nơi đây hội tụ quần vinh cát tinh (${catTinh.join(', ')}). Báo hiệu quý nhân âm thầm phò trợ, lúc nguy nan luôn có cơ hội vàng bất ngờ xuất hiện kéo đương số vượt qua nghịch cảnh. `;
   }
   
-  const hL = K.HOA['Hóa Lộc'], hQ = K.HOA['Hóa Quyền'], hK = K.HOA['Hóa Khoa'];
+  const getPos = h => { const s = Object.keys(K.HOA).find(k=>K.HOA[k]===h); return s ? K.S[s] ?? K.P[s] : -1; };
+  const hL = getPos('loc'), hQ = getPos('quyen'), hK = getPos('khoa');
   if(hL===idCung || hQ===idCung || hK===idCung) {
       let th=[]; if(hL===idCung)th.push('Hóa Lộc'); if(hQ===idCung)th.push('Hóa Quyền'); if(hK===idCung)th.push('Hóa Khoa');
       t += `Tuyệt vời hơn, ${tenCung} còn ôm trọn vượng khí của <b>${th.join(', ')}</b>. Đây chính là mảnh đất màu mỡ bậc nhất trên lá số để đương số bạo phát tài danh, hóa rồng hóa phượng. `;
@@ -474,7 +475,7 @@ function luanMenh(K){
   else if (KHAC_H[nh] === cucHanh) menhCucText = "Mệnh khắc Cục. Hoàn cảnh nhiều thử thách nhưng bản lĩnh đương số vô cùng to lớn, kiên cường khắc phục nghịch cảnh để tự tay vươn lên thành tựu.";
   else if (KHAC_H[cucHanh] === nh) menhCucText = "Cục khắc Mệnh. Môi trường hay tạo áp lực chèn ép. Đương số cần sự nhẫn nại, ý chí bền bỉ gấp năm mười lần người thường để vươn tới vinh quang.";
   
-  const amDuongLy = (cN%2 === K.menh%2) ? "Âm Dương thuận lý. Cuộc đời nhìn chung có nhiều điểm thuận lợi, dễ gặp thời vận, mưu sự dễ thành hơn người." : "Âm Dương nghịch lý. Đòi hỏi nội lực mạnh mẽ. Dù gặp nhiều thử thách thăng trầm nhưng nhờ sự nỗ lực tự thân không ngừng nghỉ mà bứt phá.";
+  const amDuongLy = ((K.L.year%2 === K.menh%2)) ? "Âm Dương thuận lý. Cuộc đời nhìn chung có nhiều điểm thuận lợi, dễ gặp thời vận, mưu sự dễ thành hơn người." : "Âm Dương nghịch lý. Đòi hỏi nội lực mạnh mẽ. Dù gặp nhiều thử thách thăng trầm nhưng nhờ sự nỗ lực tự thân không ngừng nghỉ mà bứt phá.";
 
   let t = '<h3 style="color:var(--gold);margin-top:0;font-size:18px;margin-bottom:12px;">☯ Nền tảng Bản mệnh & Cốt cách</h3>';
   t += `<p style="margin-bottom:12px; padding-bottom:12px; border-bottom: 1px solid rgba(255,255,255,0.05)">☯ <b>Gốc rễ Âm Dương - Ngũ Hành:</b> Đương số mang mệnh <b>${K.naNam}</b> (${nh}), <b>${CUC_TEN[K.cuc]}</b>. Cục diện rơi vào thế <b>${amDuongLy}</b> Tình thế vận động: <b>${menhCucText}</b></p>`;
@@ -593,14 +594,16 @@ function tamTai(c,yL){const g=TAM_HOP.find(x=>x.includes(c)),nam=TAM_TAI_MAP[g.j
 
 const TRUC=['Kiến','Trừ','Mãn','Bình','Định','Chấp','Phá','Nguy','Thành','Thu','Khai','Bế'];
 const HOANG=[1,2,4,5,8,10];
-const TAM_NUONG=[3,7,13,18,22,27],NGUYET_KY=[5,14,23],DUONG_CONG={1:[13],2:[11],3:[9],4:[7],5:[5],6:[3],7:[8,29],8:[27],9:[25],10:[23],11:[21],12:[19]};
-const trucIdx=(mTh,dc)=>m12(dc-mTh);
+const TAM_NUONG=[3,7,13,18,22,27],NGUYET_KY=[5,14,23],DUONG_CONG={1:[13],2:[11],3:[9],4:[7],5:[5],6:[3],7:[1,29],8:[27],9:[25],10:[23],11:[21],12:[19]};
+const trucIdx=(m,dc)=>m12(dc-(m+1));
 function xetNgay(d,m,y,ctx){const L=solar2Lunar(d,m,y),dc=dayChiIdx(d,m,y),can=CAN[dayCanIdx(d,m,y)];
-  const ti=trucIdx(L.month-1,dc),truc=TRUC[ti],hoang=HOANG.includes(ti);const xau=[];
+  const ti=trucIdx(L.month,dc),truc=TRUC[ti],hoang=HOANG.includes(ti);const xau=[];
   if(!hoang)xau.push(`hắc đạo (${truc})`);if(TAM_NUONG.includes(L.day))xau.push('tam nương');
   if(NGUYET_KY.includes(L.day))xau.push('nguyệt kỵ');if((DUONG_CONG[L.month]||[]).includes(L.day))xau.push('Dương Công kỵ');
   if(m12(dc-ctx.cB)===6)xau.push(`xung ${CHI[ctx.cB]}`);if(m12(dc-ctx.cG)===6)xau.push(`xung ${CHI[ctx.cG]}`);
-  const gio=[];for(let h=0;h<12;h++)if(HOANG.includes(trucIdx(m12(dc-2),h)))gio.push(CHI[h]);
+  const gio=[];
+  const hdBase=(dc%6)*2;
+  for(let h=0;h<12;h++){if([0,1,4,5,7,10].includes(m12(h-hdBase)))gio.push(CHI[h]);}
   return{d,m,y,L,can,chi:CHI[dc],truc,hoang,xau,gio,tot:xau.length===0};}
 
 
@@ -678,8 +681,8 @@ function luanHanNam(K){
     });
     
     if(factors.length===1) t+=`<p><b>Tổng đánh giá:</b> Mức độ <b style="color:var(--amber)">CẢNH GIÁC NHẸ</b>. Năm nay có lúc vất vả, đau đầu nhưng tựu chung vẫn nằm trong tầm kiểm soát. Chỉ cần tỉnh táo trong giai đoạn tháng 3, 6, 9 âm lịch (đó thường là thời điểm Kỵ bùng phát mạnh nhất).</p>`;
-    else if(factors.length<=3) t+=`<p><b>Tổng đánh giá:</b> Mức độ <b class="bad">NGUY HIỂM</b>. Chồng ${factors.length} tầng Kỵ/Sát cảnh báo một năm nhiều sóng gió. Đương số cần: (1) Hạn chế đầu tư mạo hiểm, (2) Chú ý sức khỏe, khám định kỳ, (3) Tránh kiện tụng tranh chấp, (4) Không cho vay số lớn, không bảo lãnh ai.</p>`;
-    else t+=`<p><b>Tổng đánh giá:</b> Mức độ <b class="bad">BÁO ĐỘNG ĐỎ!</b> Chồng ${factors.length} tầng Kỵ Sát. Đây là năm cực kỳ hung hiểm. Đương số phải: (1) Thu mình, không khởi sự gì mới, (2) Hạn chế di chuyển xa, (3) Kiểm tra sức khỏe toàn diện, (4) Tranh thủ hành thiện, phóng sinh, cúng sao giải hạn đầu năm, (5) Tuyệt đối không mạo hiểm tài chính.</p>`;
+    else if(factors.length<=3) t+=`<p><b>Tổng đánh giá:</b> Mức độ <b class="bad">CẨN TRỌNG</b>. Chồng ${factors.length} tầng Kỵ/Sát cảnh báo một năm nhiều sóng gió. Đương số cần: (1) Hạn chế đầu tư mạo hiểm, (2) Chú ý sức khỏe, khám định kỳ, (3) Tránh kiện tụng tranh chấp, (4) Không cho vay số lớn, không bảo lãnh ai.</p>`;
+    else t+=`<p><b>Tổng đánh giá:</b> Mức độ <b class="bad">LƯU Ý ĐẶC BIỆT</b> Chồng ${factors.length} tầng Kỵ Sát. Đây là năm nhiều thử thách. Đương số phải: (1) Thu mình, không khởi sự gì mới, (2) Hạn chế di chuyển xa, (3) Kiểm tra sức khỏe toàn diện, (4) Nên tĩnh tâm, hành thiện tích đức, không mạo hiểm, (5) Tuyệt đối không mạo hiểm tài chính.</p>`;
     
     if(rescues.length){
       t+=`<p><span class="good"><b>✓ Đường giải cứu:</b></span> ${rescues.join('; ')}. Tuy trong hung vẫn có cánh cửa thoát hiểm. Đương số nên bám vào các lĩnh vực có Hóa Lộc, Hóa Khoa chiếu để tìm đường sáng. `;
@@ -779,7 +782,7 @@ function runCuoi(){
   H+=`<div class="phan-box"><h3 style="color:var(--gold);margin-top:0;font-size:18px;">☯ Luận giải Cung - Mệnh tình duyên</h3>
   <ul style="padding-left:20px;line-height:1.6">
   <li><b>Tháng cưới đại lợi (theo tuổi Nữ):</b> Đương số nữ tuổi ${CHI[cB]}, tháng cưới hỏi đẹp nhất trong năm là <b>tháng ${dl.join(', ')} âm lịch</b> (Rất tốt, gia đạo êm ấm, dồi dào vượng khí). Nếu quá gấp rút hoặc lỡ dở, có thể dùng tạm tháng Tiểu lợi là <b>tháng ${tl.join(', ')} âm lịch</b>. Tuyệt đối kiêng những tháng kỵ phòng phu thê.</li>
-  <li><b>Hòa hợp Thiên Can:</b> Chú rể can ${CAN[cG%10]} · Cô dâu can ${CAN[cB%10]}. Thiên can chi phối lộc lá đất đai. Việc xem xét Can phối ngẫu hợp nhau mang lại nền tảng làm ăn vững vàng cho gia đình nhỏ.</li>
+  <li><b>Hòa hợp Thiên Can:</b> Chú rể can ${CAN[((cG%10)+6)%10]} · Cô dâu can ${CAN[((cB%10)+6)%10]}. Thiên can chi phối lộc lá đất đai. Việc xem xét Can phối ngẫu hợp nhau mang lại nền tảng làm ăn vững vàng cho gia đình nhỏ.</li>
   <li><b>Lời bàn chung:</b> ${lb}</li>
   </ul></div>`;
 
@@ -868,8 +871,8 @@ function runMa(){
 
   let countTrung=arrTypes.filter(x=>x==='Trùng tang').length,countMo=arrTypes.filter(x=>x==='Nhập mộ').length;
   let kl='';
-  if(countTrung===4)kl='<b class="bad">ĐẠI HUNG: TRÙNG TANG LIÊN TÁNG TOÀN TẬP.</b> Lá số khai tử mang sát khí cực thịnh. Buộc phải tức tốc thỉnh cao tăng pháp sư trấn yểm. Linh cữu phải gửi lên chùa ngay, tuyệt nhiên cấm lập bàn thờ tại gia trong 3 năm đầu. Tránh để người hợp tuổi khóc lóc cạnh quan tài.';
-  else if(countTrung>=2)kl='<b class="bad">HUNG: Phạm Trùng Tang nặng nề.</b> Có bóng đen xui xẻo rình rập gia đạo. Phải làm lễ siêu độ cắt trùng thật chu toàn, tốt nhất nên rước linh vị vào nương nhờ cửa Phật để vong giải bớt oán khí.';
+  if(countTrung===4)kl='<b class="bad">HUNG: PHẠM TRÙNG TANG LIÊN TÁNG.</b> Lá số khai tử mang sát khí cực thịnh. Buộc phải tức tốc thỉnh cao tăng pháp sư trấn yểm. Linh cữu phải gửi lên chùa ngay, tuyệt nhiên nên tham khảo ý kiến chuyên gia tâm linh để an vị bát hương. Tránh để người hợp tuổi khóc lóc cạnh quan tài.';
+  else if(countTrung>=2)kl='<b class="bad">HUNG: Phạm Trùng Tang nặng nề.</b> Gia đạo cần chú ý giữ gìn sức khỏe. Nên làm lễ cầu siêu, thành tâm hướng Phật để vong linh sớm siêu thoát.';
   else if(countTrung===1)kl='Vướng 1 Trùng tang nhẹ. Dẫu không họa hại to lớn nhưng chớ vội chủ quan. Người nhà năng niệm Phật, tụng chú Đại Bi để dẫn lối cho vong hồn mau chóng siêu thoát.';
   else if(countMo>=2)kl='<b class="good">ĐẠI CÁT: Được vòng Nhập Mộ.</b> Người mất nhẹ bước tiêu diêu cõi Phật. Đất lành chim đậu, mồ yên mả ấm. Sự viên mãn này chính là đại phước đức báu vật để lại cho con cháu, thế hệ sau hứa hẹn phát đạt rực rỡ.';
   else kl='Cục diện bình hòa. Tang ma tiến hành theo nghi thức truyền thống thuận tự nhiên. Chỉ cần cẩn thận xem ngày giờ hạ huyệt tránh hắc đạo là vạn sự êm xuôi.';
@@ -882,7 +885,7 @@ function runMa(){
   <li><b>Thiết lập Linh Tọa:</b> Trên linh tọa phải có ảnh bài vị, 2 bát cơm úp thành ngọn, 1 quả trứng luộc, 1 đôi đũa bông cắm thẳng, 7 ngọn nến (nếu người nam) hoặc 9 ngọn (nếu nữ). Nhang đèn phải giữ cháy liên tục không đứt đoạn trong suốt những ngày quàn tại gia để dẫn đường cho linh hồn.</li>
   <li><b>Đại Kỵ trong Tang Ma:</b> 
      <br>- Không để chó, mèo đen nhảy qua thi hài (tránh hiện tượng quỷ nhập tràng). 
-     <br>- Nước mắt người sống (đặc biệt là con cháu) tuyệt đối không được rơi vào thi hài lúc khâm liệm kẻo vong luyến trần không thể siêu thoát. 
+     <br>- Tránh để nước mắt rơi vào thi hài lúc khâm liệm. 
      <br>- Phụ nữ mang thai, người bị chó dại cắn, hoặc người có tuổi Tứ hành xung với người mất nên lánh mặt lúc hạ huyệt để tránh nhiễm âm khí.
   </li>
   </ul></div>`;
@@ -986,6 +989,27 @@ document.querySelectorAll('.tab').forEach(t=>{t.onclick=()=>{
 document.getElementById('btnCuoi').onclick=runCuoi;
 document.getElementById('btnLaso').onclick=runLaso;
 loadURL();runCuoi();runLaso();runNha();runMa();
+
+/* ═══ BĂNG TỰ KIỂM (FIXTURES) ═══ */
+const FIXTURES = [
+  {"dob":"2007-06-12","hour":7,"sex":"nu","menh":8,"than":8,"menhCung":"Thân","cuc":4},
+  {"dob":"1998-02-01","hour":7,"sex":"nu","menh":7,"than":11,"menhCung":"Mùi","cuc":6}
+];
+function selfTest() {
+  let passed = 0;
+  FIXTURES.forEach((f, i) => {
+    const [y,m,d] = f.dob.split('-').map(Number);
+    const K = anSao({dd:d, mm:m, yy:y, gio:f.hour, sex:f.sex, xemY:2026});
+    const errs = [];
+    if(K.menh !== f.menh) errs.push(`Mệnh sai: ${K.menh} != ${f.menh}`);
+    if(K.than !== f.than) errs.push(`Thân sai: ${K.than} != ${f.than}`);
+    if(K.cuc !== f.cuc) errs.push(`Cục sai: ${K.cuc} != ${f.cuc}`);
+    if(errs.length) console.error(`[TEST ${i}] FAILED:`, errs.join(', '));
+    else passed++;
+  });
+  console.log(`[TEST] Passed ${passed}/${FIXTURES.length} fixtures.`);
+}
+setTimeout(selfTest, 1000);
 </script>
 </body>
 </html>
