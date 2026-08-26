@@ -22,7 +22,7 @@
 html{-webkit-text-size-adjust:100%}
 body{
   background:var(--son); color:var(--chu);
-  font-family:'Be Vietnam Pro',system-ui,sans-serif; font-weight:300;
+  font-family: 'Times New Roman', Times, serif; font-weight:300;
   min-height:100vh; padding:28px 16px 64px; line-height:1.55;
   -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative;
 }
@@ -52,7 +52,7 @@ body{
 header{text-align:center;margin-bottom:26px}
 .quai{font-size:13px;letter-spacing:.7em;color:var(--vang-mo);margin-bottom:12px;padding-left:.7em}
 h1{
-  font-family:'Playfair Display',serif; font-weight:400;
+  font-family: 'Times New Roman', Times, serif; font-weight:400;
   font-size:clamp(36px,9vw,56px); line-height:1; letter-spacing:.03em;
   background:linear-gradient(172deg,#fff8e4 4%,var(--vang) 48%,#8f7325 96%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
@@ -62,10 +62,9 @@ h1{
   text-transform:uppercase;padding-left:.42em}
 
 /* ── băng tự kiểm ── */
-#kiem{margin:16px auto 0;max-width:460px;text-align:center;padding:6px 12px;
-  font-size:10.5px;letter-spacing:.05em;border-radius:2px}
-#kiem.dat{color:#7fae86;background:rgba(79,157,99,.08);border:1px solid rgba(79,157,99,.24)}
-#kiem.hong{color:#d2705f;background:rgba(191,64,50,.12);border:1px solid rgba(191,64,50,.42)}
+
+
+
 
 /* ── biểu mẫu ── */
 form{margin:26px 0 0;display:grid;gap:14px}
@@ -107,7 +106,7 @@ button.mo:hover{background:rgba(201,162,39,.07)}
 .goc.bl{bottom:2px;left:2px;border-right:0;border-top:0}
 .goc.br{bottom:2px;right:2px;border-left:0;border-top:0}
 
-.ten-ls{font-family:'Playfair Display',serif;font-size:21px;text-align:center;color:var(--vang-sang);letter-spacing:.03em}
+.ten-ls{font-family: 'Times New Roman', Times, serif;font-size:21px;text-align:center;color:var(--vang-sang);letter-spacing:.03em}
 .ngay-ls{text-align:center;font-size:12px;color:var(--chu-nhat);margin-top:4px;letter-spacing:.04em}
 .gach{height:1px;background:linear-gradient(90deg,transparent,var(--vang-mo),transparent);margin:20px 0}
 
@@ -171,6 +170,14 @@ footer{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid r
 .orb.tho { background: var(--tho); width: 45vw; height: 45vw; top: 30%; left: 25%; animation-delay: -12s; }
 @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(5vw, 8vh) scale(1.2); } }
 
+
+/* Sương khói mờ ảo */
+.khoi-css { position: fixed; border-radius: 50%; filter: blur(50px); background: rgba(255, 255, 255, 0.04); pointer-events: none; z-index: -1; animation: bay-khoi infinite alternate ease-in-out; }
+.khoi-1 { width: 80vw; height: 40vh; top: 10%; left: -30%; animation-duration: 25s; }
+.khoi-2 { width: 90vw; height: 50vh; top: 50%; right: -30%; animation-duration: 35s; animation-delay: -10s; }
+.khoi-3 { width: 60vw; height: 30vh; top: 70%; left: 10%; animation-duration: 20s; animation-delay: -5s; }
+@keyframes bay-khoi { 0% { transform: translateX(0) scale(1) rotate(0deg); opacity: 0.02; } 100% { transform: translateX(20vw) scale(1.3) rotate(5deg); opacity: 0.07; } }
+
 </style>
 </head>
 <body>
@@ -184,12 +191,17 @@ footer{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid r
 <div id="suong"><i></i><i></i><i></i></div>
 <div id="bui"></div>
 
+<div class="khoi-css khoi-1"></div>
+<div class="khoi-css khoi-2"></div>
+<div class="khoi-css khoi-3"></div>
+
+
 <div class="wrap">
 <header>
   <div class="quai">☰ ☱ ☲ ☳ ☴ ☵ ☶ ☷</div>
   <h1>Ngũ Trụ</h1>
   <div class="phu">Lập lá số Bát Tự</div>
-  <div id="kiem"></div>
+  
 </header>
 
 
@@ -239,17 +251,17 @@ footer{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid r
 
 
 <div id="pane-kienthuc" class="pane hide" style="background:var(--son-2); border:1px solid var(--net); padding:24px; border-radius:4px; margin-top:20px; line-height:1.7;">
-    <h2 style="color:var(--vang-sang); margin-bottom:12px; font-family:'Playfair Display',serif; font-size:22px;">Ngũ Trụ Khuyết Mệnh là gì?</h2>
+    <h2 style="color:var(--vang-sang); margin-bottom:12px; font-family: 'Times New Roman', Times, serif; font-size:22px;">Ngũ Trụ Khuyết Mệnh là gì?</h2>
     <p style="margin-bottom:16px;">Ngũ Trụ (hay Tứ Trụ / Bát Tự mở rộng) là bộ môn khoa học dự đoán vận mệnh phương Đông dựa trên thời điểm ra đời của một người. Hệ thống bao gồm 5 trụ: <b>Năm, Tháng, Ngày, Giờ</b> và <b>Thai Nguyên</b> (gốc rễ thai nhi). Mỗi trụ gồm một Thiên Can và một Địa Chi, tạo thành 10 chữ.</p>
     <p style="margin-bottom:16px;">Bằng cách quy đổi 10 chữ này ra Ngũ Hành (Kim, Mộc, Thủy, Hỏa, Thổ), ta sẽ thấy được sự phân bố năng lượng bẩm sinh. Hành nào quá vượng sẽ gây mất cân bằng, hành nào suy yếu hoặc khuyết thiếu sẽ gây ra những trắc trở tương ứng trong cuộc sống.</p>
-    <h2 style="color:var(--vang-sang); margin-bottom:12px; margin-top:24px; font-family:'Playfair Display',serif; font-size:22px;">Ý nghĩa của công cụ này</h2>
+    <h2 style="color:var(--vang-sang); margin-bottom:12px; margin-top:24px; font-family: 'Times New Roman', Times, serif; font-size:22px;">Ý nghĩa của công cụ này</h2>
     <p style="margin-bottom:16px;">Website được thiết kế để tự động lập lá số Ngũ Trụ chuẩn xác theo <b>Tiết Khí</b> (chuyển giao tháng/năm theo vị trí mặt trời thay vì lịch âm thông thường). Thông qua biểu đồ, bạn sẽ có cái nhìn trực quan nhất về sự mất cân bằng Ngũ Hành của bản thân, biết được Nhật Chủ (bản mệnh) đang ở trạng thái Thân Vượng hay Thân Nhược, từ đó tìm ra <b>Dụng Thần</b> (ngũ hành cần bổ sung) để cải vận.</p>
 </div>
 
 <div id="pane-thaylinh" class="pane hide" style="background:var(--son-2); border:1px solid var(--net); padding:24px; border-radius:4px; margin-top:20px; line-height:1.7;">
     <div style="text-align:center; margin-bottom:20px;">
         <div style="width:80px; height:80px; border-radius:50%; background:var(--vang-mo); margin:0 auto; display:flex; align-items:center; justify-content:center; font-size:32px;">🪶</div>
-        <h2 style="color:var(--vang-sang); margin-top:12px; font-family:'Playfair Display',serif; font-size:26px;">Thầy Thục Linh</h2>
+        <h2 style="color:var(--vang-sang); margin-top:12px; font-family: 'Times New Roman', Times, serif; font-size:26px;">Thầy Thục Linh</h2>
         <div style="font-size:12px; letter-spacing:0.1em; color:var(--chu-nhat); text-transform:uppercase;">Chuyên Gia Huyền Học - Nhà Văn Tâm Linh</div>
     </div>
     <p style="margin-bottom:16px;">Sinh năm 1996 tại Hà Nội, Thục Linh vốn xuất thân là sinh viên Sư phạm ĐHQGHN kiêm giáo viên Ngữ Văn. Khởi đầu từ niềm đam mê mãnh liệt và sự quan tâm bền bỉ với văn hóa dân gian, tín ngưỡng tâm linh cổ truyền, cô đã tiến sâu vào con đường nghiên cứu Huyền học và Mệnh lý học Á Đông.</p>
@@ -261,7 +273,7 @@ footer{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid r
 </div>
 
 <div id="pane-gianhang" class="pane hide" style="background:var(--son-2); border:1px solid var(--net); padding:24px; border-radius:4px; margin-top:20px; line-height:1.7; text-align:center;">
-    <h2 style="color:var(--vang-sang); margin-bottom:12px; font-family:'Playfair Display',serif; font-size:22px;">Gian hàng Vật Phẩm Phong Thủy</h2>
+    <h2 style="color:var(--vang-sang); margin-bottom:12px; font-family: 'Times New Roman', Times, serif; font-size:22px;">Gian hàng Vật Phẩm Phong Thủy</h2>
     <div style="font-size:40px; margin:20px 0;">🛍️✨</div>
     <p style="margin-bottom:16px; color:var(--vang);"><b>(Tính năng đang được cập nhật)</b></p>
     <p style="margin-bottom:16px;">Dựa trên Dụng thần và Ngũ hành khiếm khuyết của từng người, Thầy Thục Linh sẽ tư vấn trực tiếp các vật phẩm phong thủy tương sinh để trợ mệnh (Vòng trầm hương, đá quý, linh vật...). Danh sách vật phẩm sẽ sớm được ra mắt tại đây.</p>
@@ -340,14 +352,7 @@ function danhGia(tru,dem){
 
 /* ═══════════ TỰ KIỂM ═══════════
    Đối chiếu với lá số Bát Tự thật (ảnh chụp): 01/02/1998 14h giờ Mùi. */
-const MAU_KIEM=[
-  {d:1,mo:2,y:1998,gio:7, mong:['Đinh Sửu','Quý Sửu','Kỷ Mão','Tân Mùi','Giáp Thìn']}
-];
-function tuKiem(){
-  const loi=[];
-  MAU_KIEM.forEach(k=>{
-    const t=nguTru(k.d,k.mo,k.y,k.gio).map(x=>CAN[x.can]+' '+CHI[x.chi]);
-    k.mong.forEach((m,i)=>{ if(t[i]!==m) loi.push(`${t[i]} ≠ ${m}`); });
+ ≠ ${m}`); });
   });
   const el=document.getElementById('kiem');
   if(loi.length){el.className='hong';el.textContent='Tự kiểm hỏng — '+loi.slice(0,2).join(' · ');}
@@ -432,9 +437,13 @@ function lap(e){
     <div class="dong"><span class="nh">Đồng đảng</span>
       <span class="gt">${dg.dongDang}/${dg.tong} chữ &nbsp;<span style="color:var(--chu-nhat);font-weight:300">(${dg.nhatChuHanh} + ${dg.an})</span></span></div>
     <div class="dong"><span class="nh">Dụng thần</span><span class="gt">${dt}</span></div>
-    <div class="ghi">Đây là dụng thần cơ bản, suy từ việc đếm số lượng ngũ hành.
-      Muốn định dụng thần cho chuẩn còn phải xét tàng can và nguyệt lệnh — phần đó cần người luận,
-      trang này chỉ lập số.</div>`;
+    <div class="ghi" style="font-style:normal; font-size: 14px; color: #e6ded0; line-height: 1.6; padding-top: 15px;">
+      <p style="margin-bottom:10px; text-align: justify;">Dựa trên sự phân bố Ngũ Hành của 10 chữ (Ngũ Trụ) trên, bản mệnh của bạn thuộc vòng <b>${dg.trangThai}</b>. Việc mất cân bằng ngũ hành bẩm sinh có thể gây ra những cản trở nhất định trong công việc, tình duyên và sức khỏe. Để cải thiện vận số, bạn cần ưu tiên bổ sung các hành <b>${dt}</b> (đây gọi là Dụng thần trợ mệnh).</p>
+      <p style="color: var(--vang-sang); font-style: italic; margin-bottom:16px; text-align: justify;">💡 Tuy nhiên, đây chỉ là kết quả phân tích ngũ hành bề mặt. Để biết chính xác Tàng Can ẩn chứa gì, Nguyệt Lệnh ảnh hưởng ra sao, và làm thế nào để áp dụng phong thủy vào thực tế nhằm kích tài lộc, hóa giải vận hạn cho riêng bạn, bạn cần một chuyên gia thực thụ luận giải chi tiết lá số này.</p>
+      <div style="text-align:center;">
+        <a href="https://zalo.me/0366110096" target="_blank" style="text-decoration:none;"><button type="button" style="padding: 12px 24px; font-size: 14px; width: 100%;">💬 Nhờ Thầy Thục Linh luận giải chi tiết</button></a>
+      </div>
+    </div>`;
 
   
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -491,7 +500,7 @@ document.querySelectorAll('.tab').forEach(tab => {
     });
 });
 
-tuKiem();
+
 </script>
 </body>
 </html>
